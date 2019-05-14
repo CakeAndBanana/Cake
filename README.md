@@ -1,4 +1,6 @@
 # CakeBot
+![](https://cake.s-ul.eu/lbofRWcs)
+
 Welcome to the repo of CakeBot! Here you can find the source code for this bot.
 
 CakeBot is a multipurpose bot that is made to create your life a bit easier.
