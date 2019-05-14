@@ -1,0 +1,2 @@
+# CakeBot
+Multipurpose Discord Bot
