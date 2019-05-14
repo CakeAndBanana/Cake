@@ -150,6 +150,11 @@ namespace CakeBot.Modules.Services
 
                 var user = GetJsonUser(osuId, findWithUsername, mode);
 
+                if (user == null)
+                {
+                    throw new CakeException("No user found with the given username of id");
+                }
+
                 var embedResult = new CakeEmbedBuilder();
                 embedResult.WithAuthor(author =>
                     {
@@ -518,7 +523,15 @@ namespace CakeBot.Modules.Services
                 UserId = osuId,
                 Type = findWithUsername ? "string" : "id"
             };
-            return userBuilder.Execute();
+
+            var user = userBuilder.Execute();
+
+            if (user == null)
+            {
+                throw new CakeException("No user found with the given username of id");
+            }
+
+            return user;
         }
     }
 }

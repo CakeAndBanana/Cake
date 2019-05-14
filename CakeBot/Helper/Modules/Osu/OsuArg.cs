@@ -8,12 +8,26 @@ namespace CakeBot.Helper.Modules.Osu
 {
     public class OsuArg
     {
-        private readonly bool _useId;
+        private readonly bool _userUsername;
         private readonly bool _recent;
         private readonly int? _play;
         private readonly string _userId;
 
         public OsuArg(string arg)
+        {
+            if (arg.Contains("-id"))
+            {
+                _userId = Regex.Match(arg, @"\d+").Value;
+                _userUsername = false;
+            }
+            else
+            {
+                _userId = arg;
+                _userUsername = true;
+            }
+        }
+
+        public OsuArg(string arg, bool best)
         {
             if (arg.Contains("-r"))
             {
@@ -30,17 +44,18 @@ namespace CakeBot.Helper.Modules.Osu
             else if (arg.Contains("-id"))
             {
                 _userId = Regex.Match(arg, @"\d+").Value;
-                _useId = true;
+                _userUsername = false;
             }
             else
             {
-                _userId = "";
+                _userId = arg;
+                _userUsername = true;
             }
         }
 
-        public bool IsUseId()
+        public bool UseUsername()
         {
-            return _useId;
+            return _userUsername;
         }
 
         public bool IsRecent()

@@ -71,7 +71,7 @@ namespace CakeBot.Modules.Modules
             {
                 await Context.Channel.SendMessageAsync(embed: e.GetEmbededError().Build());
             }
-            await _service.GetUser(osuDiscordArg.GetUserId(), osuDiscordArg.IsUseId());
+            await _service.GetUser(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
 
         [Alias("b")]
@@ -83,7 +83,7 @@ namespace CakeBot.Modules.Modules
             OsuArg osuDiscordArg = null;
             try
             {
-                osuDiscordArg = new OsuArg(arg);
+                osuDiscordArg = new OsuArg(arg,true);
             }
             catch (CakeException e)
             {
@@ -92,7 +92,7 @@ namespace CakeBot.Modules.Modules
 
             if (osuDiscordArg != null)
             {
-                await _service.GetUserBest(osuDiscordArg.GetUserId(), osuDiscordArg.IsUseId(), osuDiscordArg.IsRecent(), osuDiscordArg.GetPlayNumber());
+                await _service.GetUserBest(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), osuDiscordArg.IsRecent(), osuDiscordArg.GetPlayNumber());
             }
         }
 
@@ -101,7 +101,7 @@ namespace CakeBot.Modules.Modules
         public async Task RecentNoNumber([Remainder] string arg = "")
         {
             var osuDiscordArg = new OsuArg(arg);
-            await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.IsUseId());
+            await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
             if (GetMapId() != null)
             {
                 await Helper.Database.Queries.ChannelQueries.InsertMapId(Context.Channel.Id, Context.Guild.Id, (int)GetMapId());
@@ -123,7 +123,7 @@ namespace CakeBot.Modules.Modules
             {
                 await Context.Channel.SendMessageAsync(embed: e.GetEmbededError().Build());
             }
-            await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.IsUseId(), n);
+            await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), n);
             if (GetMapId() != null)
             {
                 await Helper.Database.Queries.ChannelQueries.InsertMapId(Context.Channel.Id, Context.Guild.Id, (int)GetMapId());
@@ -145,7 +145,7 @@ namespace CakeBot.Modules.Modules
             {
                 await Context.Channel.SendMessageAsync(embed: e.GetEmbededError().Build());
             }
-            await _service.GetCompare(osuDiscordArg.GetUserId(), osuDiscordArg.IsUseId());
+            await _service.GetCompare(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
 
         [Alias("t")]
@@ -163,7 +163,7 @@ namespace CakeBot.Modules.Modules
             {
                 await Context.Channel.SendMessageAsync(embed: e.GetEmbededError().Build());
             }
-            await _service.SetTrack(osuDiscordArg.GetUserId(), osuDiscordArg.IsUseId());
+            await _service.SetTrack(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
     }
 }
