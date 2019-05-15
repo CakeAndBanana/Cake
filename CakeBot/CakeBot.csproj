@@ -79,6 +79,7 @@
     <Compile Include="Helper\Modules\Background\PurchasingUser.cs" />
     <Compile Include="Helper\Modules\BF4\BF4.cs" />
     <Compile Include="Helper\BotUtil.cs" />
+    <Compile Include="Helper\Modules\Osu\OsuDlBeatmap.cs" />
     <Compile Include="Helper\ThreadSafeRandom.cs" />
     <Compile Include="Helper\Database\Model\BotInfo.cs">
       <DependentUpon>DbModel.tt</DependentUpon>

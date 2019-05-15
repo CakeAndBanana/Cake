@@ -10,7 +10,7 @@ namespace CakeBot.Helper.Modules.Osu.Builder
     {
         public string Since; // since
         public string BeatmapSetId; // s
-        public string BeatmapId; // b
+        public int? BeatmapId; // b
         public string UserId; // u
         public string Type; // type
         public string Mode; // m
@@ -92,7 +92,7 @@ namespace CakeBot.Helper.Modules.Osu.Builder
                 urlBuilder.Append(BeatmapSetId);
             }
 
-            if (!BeatmapId.IsNullOrEmpty())
+            if (BeatmapId != null)
             {
                 urlBuilder.Append("&b=");
                 urlBuilder.Append(BeatmapId);

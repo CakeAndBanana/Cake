@@ -42,10 +42,9 @@ namespace CakeBot.Helper.Modules.Osu.Builder
                 if (item.enabled_mods > 0)
                 {
                     //Star rating
-                    var data = new WebClient().DownloadData($"https://osu.ppy.sh/osu/{item.beatmap_id}");
-                    var beatmapDownload = Beatmap.Read(new StreamReader(new MemoryStream(data, false))) ?? throw new ArgumentNullException("Beatmap.Read(new StreamReader(new MemoryStream(data, false)))");
-                    var mods = (Mods)item.enabled_mods;
-                    var diff = new DiffCalc().Calc(beatmapDownload, mods);
+                    var data = OsuDlBeatmap.FindMap(item.beatmap_id);
+                    var beatmapData = Beatmap.Read(new StreamReader(new MemoryStream(data, false))) ?? throw new ArgumentNullException("Beatmap.Read(new StreamReader(new MemoryStream(data, false)))");
+                    var diff = new DiffCalc().Calc(beatmapData, (Mods)item.enabled_mods);
                     item.starrating = diff.Total;
                 }
 

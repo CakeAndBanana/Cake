@@ -36,16 +36,15 @@ namespace CakeBot.Helper.Modules.Osu.Builder
                 if (retrycount) continue;
 
                 GetCalculatedAccuracy(item, Mode);
-                var data = new WebClient().DownloadData($"https://osu.ppy.sh/osu/{item.beatmap_id}");
-                var beatmapDownload = Beatmap.Read(new StreamReader(new MemoryStream(data, false))) ?? throw new ArgumentNullException("Beatmap.Read(new StreamReader(new MemoryStream(data, false)))");
-                var mods = (Mods)Convert.ToInt32(item.enabled_mods);
-                var diff = new DiffCalc().Calc(beatmapDownload, mods);
+                var data = OsuDlBeatmap.FindMap(item.beatmap_id);
+                var beatmapData = Beatmap.Read(new StreamReader(new MemoryStream(data, false))) ?? throw new ArgumentNullException("Beatmap.Read(new StreamReader(new MemoryStream(data, false)))");
+                var diff = new DiffCalc().Calc(beatmapData, (Mods)item.enabled_mods);
 
                 if (pp && Mode == "0")
                 {
-                    var rawPp = new PPv2(new PPv2Parameters(beatmapDownload, diff, new Accuracy(item.count300, item.count100, item.count50, item.countmiss).Value(), item.countmiss, item.maxcombo, mods));
+                    var rawPp = new PPv2(new PPv2Parameters(beatmapData, diff, new Accuracy(item.count300, item.count100, item.count50, item.countmiss).Value(), item.countmiss, item.maxcombo, (Mods)item.enabled_mods));
                     item.nochokeaccuracy = new Accuracy(item.count300 + item.countmiss, item.count100, item.count50, 0).Value() * 100;
-                    var nochokePp = new PPv2(new PPv2Parameters(beatmapDownload, diff, (item.nochokeaccuracy / 100), 0, diff.Beatmap.GetMaxCombo(), mods));
+                    var nochokePp = new PPv2(new PPv2Parameters(beatmapData, diff, (item.nochokeaccuracy / 100), 0, diff.Beatmap.GetMaxCombo(), (Mods)item.enabled_mods));
                     item.pp = rawPp.Total;
                     item.nochokepp = nochokePp.Total;
                 }
@@ -61,7 +60,7 @@ namespace CakeBot.Helper.Modules.Osu.Builder
 
                 item.starrating = diff.Total;
 
-                item.counttotal = beatmapDownload.CountCircles + beatmapDownload.CountSliders + beatmapDownload.CountSpinners;
+                item.counttotal = beatmapData.CountCircles + beatmapData.CountSliders + beatmapData.CountSpinners;
 
                 item.rounded_score = item.score.ToString("C0", _nfi);
 

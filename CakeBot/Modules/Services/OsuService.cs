@@ -466,7 +466,7 @@ namespace CakeBot.Modules.Services
                 {
                     Mode = mode.ToString(),
                     ConvertedIncluded = "1",
-                    BeatmapId = mapId.ToString()
+                    BeatmapId = mapId
                 };
 
                 var beatMap = beatMapBuilder.Execute();
