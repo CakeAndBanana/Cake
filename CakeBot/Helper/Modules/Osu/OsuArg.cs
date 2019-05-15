@@ -1,7 +1,5 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using CakeBot.Helper.Exceptions;
-using CakeBot.Helper.Logging;
 using static System.Int32;
 
 namespace CakeBot.Helper.Modules.Osu
