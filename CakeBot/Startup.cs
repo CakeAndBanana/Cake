@@ -353,7 +353,7 @@ namespace CakeBot
         public async Task Ready()
         {
             GetBotAvatarUrl();
-            await TwitterRealtime.ToggleStream();
+            TwitterRealtime.ToggleStream();
             await _client.SetGameAsync("Baking a cake ^^");
             BotUtil.Init();
         }

@@ -9,7 +9,7 @@ namespace CakeBot.Helper.Modules.Osu
 {
     public static class OsuDlBeatmap
     {
-        private static readonly string _path = AppDomain.CurrentDomain.BaseDirectory + @"\osu";
+        private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + @"\osu";
 
         public static byte[] FindMap(int beatmapId)
         {
@@ -28,12 +28,12 @@ namespace CakeBot.Helper.Modules.Osu
 
         private static void CreateFolder()
         {
-            if (Exists(_path))
+            if (Exists(Path))
             {
                 return;
             }
 
-            CreateDirectory(_path);
+            CreateDirectory(Path);
         }
 
         private static byte[] DownloadData(string filename, int beatmapId)
@@ -46,7 +46,7 @@ namespace CakeBot.Helper.Modules.Osu
 
         private static byte[] GetMap(int beatmapId)
         {
-            var filename = _path + $@"\{beatmapId}.txt";
+            var filename = Path + $@"\{beatmapId}.txt";
             if (File.Exists(filename))
             {
                 return File.ReadAllBytes(filename);

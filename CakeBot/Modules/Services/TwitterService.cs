@@ -64,7 +64,7 @@ namespace CakeBot.Modules.Services
                             user.Id,
                             Module.Context.Channel.Id,
                             Module.Context.Guild.Id);
-                        await TwitterRealtime.ToggleStream();
+                        TwitterRealtime.ToggleStream();
                         await SendMessageAsync("`Twitter user added to this channel`");
                     }
                     else
@@ -103,7 +103,7 @@ namespace CakeBot.Modules.Services
                             user.Id,
                             Module.Context.Channel.Id,
                             Module.Context.Guild.Id);
-                        await TwitterRealtime.ToggleStream();
+                        TwitterRealtime.ToggleStream();
                         await SendMessageAsync("`Twitter user removed from this channel`");
                     }
                     else
@@ -132,6 +132,12 @@ namespace CakeBot.Modules.Services
         {
             await SendMessageAsync(
                 $"`Status : {TwitterRealtime.GetStatus()}`");
+        }
+
+        public async Task RestartTwitter()
+        {
+            await SendMessageAsync("`Restarting Twitter Module`");
+            TwitterRealtime.ToggleStream();
         }
     }
 }

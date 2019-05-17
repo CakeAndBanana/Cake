@@ -24,7 +24,7 @@ namespace CakeBot.Modules.Services
                 if (databaseProfile == null)
                 {
                     await SendMessageAsync(
-                        "`No osu account has been linked to this discord account, use osu set or type in username or user id after command.`");
+                        "`No osu account has been linked to this discord account, use osu set (username / user id).`");
                 }
             }
             catch (Exception e)
@@ -150,11 +150,6 @@ namespace CakeBot.Modules.Services
 
                 var user = GetJsonUser(osuId, findWithUsername, mode);
 
-                if (user == null)
-                {
-                    throw new CakeException("No user found with the given username of id");
-                }
-
                 var embedResult = new CakeEmbedBuilder();
                 embedResult.WithAuthor(author =>
                     {
@@ -209,7 +204,7 @@ namespace CakeBot.Modules.Services
                 embedTop.WithAuthor(author =>
                 {
                     author
-                        .WithName($"Top plays of {user.username}")
+                        .WithName($"Top play(s) of {user.username}")
                         .WithUrl($"{user.url}")
                         .WithIconUrl($"{user.image}");
                 })
@@ -322,7 +317,7 @@ namespace CakeBot.Modules.Services
 
                 if (recent.Count == 0)
                 {
-                    throw new CakeException("No recently plays found");
+                    throw new CakeException("No recent play(s) has been found");
                 }
 
                 for (var i = 0; i < recent.Count; i++)
@@ -374,7 +369,7 @@ namespace CakeBot.Modules.Services
                     }
                     else
                     {
-                        var retryCount = CheckRetries.Tries(mode.ToString(), t.user_id, beatmap[0].beatmap_id);
+                        var retryCount = OsuCheckRetries.Tries(mode.ToString(), t.user_id, beatmap[0].beatmap_id);
 
                         embedRecent.WithUrl($"{beatmap[0].beatmap_url}")
                             .WithThumbnailUrl($"{beatmap[0].thumbnail}")
@@ -485,7 +480,7 @@ namespace CakeBot.Modules.Services
 
                 foreach (var t in score)
                 {
-                    var modName = t.enabled_mods == "0" ? "Nomod" : OsuMods.Modnames(Convert.ToInt32(t.enabled_mods));
+                    var modName = t.enabled_mods == "0" ? "NoMod" : OsuMods.Modnames(Convert.ToInt32(t.enabled_mods));
 
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - t.date.Ticks);
 
@@ -528,7 +523,7 @@ namespace CakeBot.Modules.Services
 
             if (user == null)
             {
-                throw new CakeException("No user found with the given username of id");
+                throw new CakeException("User with given username or id is not found on osu!");
             }
 
             return user;
