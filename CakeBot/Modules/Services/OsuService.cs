@@ -281,8 +281,9 @@ namespace CakeBot.Modules.Services
             {
                 if (total > 5)
                 {
-                    throw new CakeException("Total max = 5");
+                    throw new CakeException("Total amount must be lower than 5");
                 }
+
                 var databaseProfile = GetDatabaseEntity(Module.Context.User.Id).Result;
                 var mapId = 0;
                 var info = "";
@@ -375,7 +376,7 @@ namespace CakeBot.Modules.Services
                             .WithThumbnailUrl($"{beatmap[0].thumbnail}")
                             .WithTimestamp(t.date)
                             .WithTitle($"{beatmap[0].complete_title} {Math.Round(t.starrating, 2)}★")
-                            .WithFooter($"{(OsuModeEnum)mode} ⌑ Status : {beatmap[0].approved_string} ⌑ #{retryCount} Try");
+                            .WithFooter($"{(OsuModeEnum)mode} ⌑ Status: {beatmap[0].approved_string} ⌑ #{retryCount} Try");
 
                         info = $"**{t.rounded_score} ♢ " +
                                       $"{t.rank.LevelEmotes()} ♢ {t.maxcombo}x*({beatmap[0].max_combo}x)*** {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))} \n " +
@@ -437,7 +438,7 @@ namespace CakeBot.Modules.Services
 
                 if (mapId == 0)
                 {
-                    throw new CakeException("No map found");
+                    throw new CakeException("No beatmap found");
                 }
 
                 var embedCompare = new CakeEmbedBuilder();
