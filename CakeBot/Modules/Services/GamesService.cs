@@ -7,6 +7,7 @@ using CakeBot.Helper.Database.Model;
 using CakeBot.Helper.Database.Queries;
 using CakeBot.Helper.Exceptions;
 using CakeBot.Helper.Logging;
+using CakeBot.Helper.Modules.BF4;
 
 namespace CakeBot.Modules.Services
 {
@@ -85,5 +86,33 @@ namespace CakeBot.Modules.Services
                 Logger.LogError(e.ToString());
             }
         }
+
+        public async Task BattlefieldStats(string platform, string name, Discord.IUser user)
+        {
+            try
+            {
+                var UserBf = Bf4Stats.GetPlayerInfo(platform, name);
+                var embedBuilder = new CakeEmbedBuilder();
+                embedBuilder.WithAuthor(author =>
+                {
+                    author
+                    .WithName($"Battlefield stats of {UserBf.player.name}");
+                });
+                // Dit werkt toch?, ik zie geen errors namelijk met live share xD/
+                //Wat is de error? nu niks meer. Was gwn een typo. had UserBf4.
+                // Test dit uit dat het werkt.
+                //Uhm pim. bij BF4.cs
+            }
+            catch(CakeException e)
+            {
+                var embedError = e.GetEmbededError();
+                await SendEmbedAsync(embedError);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.ToString());
+            }
+        }
+        
     }
 }
