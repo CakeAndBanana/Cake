@@ -36,7 +36,7 @@ namespace CakeBot.Helper.Modules.Osu
                 _play = Parse(Regex.Match(arg, @"\d+").Value);
                 if (_play > 100 || _play == 0)
                 {
-                    throw new CakeException("``The top play has to be between 1 and 100``");
+                    throw new CakeException("``Play number has to be between 1 and 100``");
                 }
             }
             else if (arg.Contains("-id"))

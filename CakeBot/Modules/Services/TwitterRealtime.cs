@@ -21,7 +21,7 @@ namespace CakeBot.Modules.Services
     {
         private static readonly CakeBotEntities Db = new CakeBotEntities();
         private static List<TwitterPost> _users = new List<TwitterPost>();
-        private static IFilteredStream _stream = Stream.CreateFilteredStream();
+        private static readonly IFilteredStream _stream = Stream.CreateFilteredStream();
 
         private static IAuthenticatedUser _authenticatedUser;
 
@@ -120,6 +120,7 @@ namespace CakeBot.Modules.Services
         {
             Auth.SetCredentials(GetCredentials());
             _authenticatedUser = User.GetAuthenticatedUser();
+            SetupStream();
         }
 
         private static TwitterCredentials GetCredentials()
@@ -151,7 +152,7 @@ namespace CakeBot.Modules.Services
             return result;
         }
 
-        public static async Task ToggleStream()
+        public static void ToggleStream()
         {
             if (_stream.StreamState == StreamState.Running)
             {
@@ -166,7 +167,7 @@ namespace CakeBot.Modules.Services
             }
 
             FillUsers();
-            await _stream.StartStreamMatchingAnyConditionAsync();
+            _stream.StartStreamMatchingAnyCondition();
         }
 
         public static string GetStatus()

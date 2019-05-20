@@ -194,7 +194,7 @@
     <Compile Include="Helper\Modules\Osu\Builder\OsuBeatmapBuilder.cs" />
     <Compile Include="Helper\Modules\Osu\Builder\OsuJsonBaseBuilder.cs" />
     <Compile Include="Helper\Modules\Osu\Builder\OsuUserBuilder.cs" />
-    <Compile Include="Helper\Modules\Osu\CheckRetries.cs" />
+    <Compile Include="Helper\Modules\Osu\OsuCheckRetries.cs" />
     <Compile Include="Helper\Modules\Osu\OsuArg.cs" />
     <Compile Include="Helper\Modules\Osu\OsuEmotes.cs" />
     <Compile Include="Helper\Modules\Osu\OsuMode.cs" />

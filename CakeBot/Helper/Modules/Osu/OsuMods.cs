@@ -2,13 +2,12 @@
 {
     internal class OsuMods
     {
-        private static string _mods { get; set; }
         public static string Modnames(int mods)
         {
             string modString;
             if (mods > 0)
             {
-                modString = $"+";
+                modString = "+";
             }
             else
             {

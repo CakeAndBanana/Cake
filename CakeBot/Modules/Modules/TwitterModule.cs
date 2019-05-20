@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CakeBot.Helper;
 using CakeBot.Modules.Services;
 using Discord.Commands;
 
@@ -24,6 +25,16 @@ namespace CakeBot.Modules.Modules
         public async Task TwitterList()
         {
             await _service.ListTwitter();
+        }
+
+        [Command("restart")]
+        [Remarks(">twitter restart")]
+        [Summary("Restart twitter module")]
+        [RequireDeveloper]
+        [Alias("r")]
+        public async Task TwitterRestart()
+        {
+            await _service.RestartTwitter();
         }
 
         [Command("status")]
