@@ -6,7 +6,7 @@ namespace CakeBot.Helper.Modules.Osu.Model
     public class OsuJsonUserBest : OsuJsonScorable
     {
         public int play_number { get; set; }
-        public string beatmap_id { get; set; }
+        public int beatmap_id { get; set; }
         public string score { get; set; }
         public double starrating { get; set; }
         public string maxcombo { get; set; }

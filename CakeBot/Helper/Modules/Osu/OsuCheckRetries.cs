@@ -2,9 +2,9 @@
 
 namespace CakeBot.Helper.Modules.Osu
 {
-    public class CheckRetries
+    public class OsuCheckRetries
     {
-        public static int Tries(string mode, string userid, string beatmapid)
+        public static int Tries(string mode, string userid, int beatmapid)
         {
             int count = 0;
 

@@ -64,7 +64,7 @@ namespace CakeBot.Helper.Modules.Osu
                 return OsuModeEnum.Mania;
             }
             
-            throw new CakeException($"Osu mode not found with the given name: {name}");
+            throw new CakeException($"No osu! mode found with the following name: {name}");
         }
     }
 }

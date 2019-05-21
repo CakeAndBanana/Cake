@@ -168,12 +168,14 @@ namespace CakeBot
 
         internal async Task<bool> CheckMessage(SocketUserMessage message, int argPos)
         {
-            if (!await UserQueries.CheckUser(message.Author.Id))
-                Logger.LogInfo($"Added {message.Author.Id} to the database");
-            var restrictStatus = await UserQueries.GetRestrictStatus(message.Author.Id);
-
-            if (!message.Author.IsBot && !message.Author.IsWebhook || !restrictStatus)
+            if (!message.Author.IsBot && !message.Author.IsWebhook)
             {
+                if (!await UserQueries.CheckUser(message.Author.Id))
+                    Logger.LogInfo($"Added {message.Author.Id} to the database");
+                var restrictStatus = await UserQueries.GetRestrictStatus(message.Author.Id);
+
+                if (!restrictStatus)
+                {
 #if DEBUG
                 if (message.HasCharPrefix(Convert.ToChar(Config.BotPrefix), ref argPos) ||
                     message.HasMentionPrefix(_client.CurrentUser, ref argPos))
@@ -189,8 +191,10 @@ namespace CakeBot
                         return true;
                     }
 #endif
-                await GiveXp(message, 2);
+                    await GiveXp(message, 2);
+                }
             }
+
             return false;
         }
 
@@ -349,7 +353,7 @@ namespace CakeBot
         public async Task Ready()
         {
             GetBotAvatarUrl();
-            await TwitterRealtime.ToggleStream();
+            TwitterRealtime.ToggleStream();
             await _client.SetGameAsync("Baking a cake ^^");
             BotUtil.Init();
         }

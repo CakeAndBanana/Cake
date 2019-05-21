@@ -4,7 +4,7 @@ namespace CakeBot.Helper
 {
     public class CakeEmbedBuilder : EmbedBuilder
     {
-        private const string DefaultThumbnailUrl = "https://Cake.s-ul.eu/lbofRWcs";
+        private const string DefaultThumbnailUrl = "http://cakebot.org/resource/bot/cake-logo.png";
 
         private static readonly Color NoneColor = new Color(80, 0, 80);
         private static readonly Color ErrorColor = new Color(128, 0, 0);

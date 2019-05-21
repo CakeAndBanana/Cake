@@ -7,6 +7,7 @@ using CakeBot.Helper.Database.Model;
 using CakeBot.Helper.Database.Queries;
 using CakeBot.Helper.Exceptions;
 using CakeBot.Helper.Logging;
+using CakeBot.Helper.Modules.BF4;
 
 namespace CakeBot.Modules.Services
 {
@@ -85,5 +86,33 @@ namespace CakeBot.Modules.Services
                 Logger.LogError(e.ToString());
             }
         }
+
+        public async Task BattlefieldStats(string platform, string name, Discord.IUser user)
+        {
+            try
+            {
+                var userBf = Bf4Data.GetPlayerInfo(platform, name);
+                var embedBuilder = new CakeEmbedBuilder()
+                    .WithAuthor(author =>
+                    {
+                        author
+                            .WithName($"Battlefield 4 stats of {userBf.player.name}")
+                            .WithUrl(userBf.player.blPlayer);
+                    })
+                    .WithThumbnailUrl(Bf4Helper.RankToUrl(userBf.stats.rank))
+                    .WithDescription("Data here") as CakeEmbedBuilder;
+                await SendEmbedAsync(embedBuilder);
+            }
+            catch (CakeException e)
+            {
+                var embedError = e.GetEmbededError();
+                await SendEmbedAsync(embedError);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.ToString());
+            }
+        }
+        
     }
 }

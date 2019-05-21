@@ -33,8 +33,7 @@ namespace CakeBot.Modules.Modules
         [Remarks("Sends your Battlefield 4 Stats")]
         public async Task BattleFieldStats(string platform, string name)
         {
-            var bf4 = new Bf4Stats();
-            await Context.Channel.SendMessageAsync("", embed: await bf4.GetStats(platform, name, Context.User));
+            await _service.BattlefieldStats(platform, name, Context.User);
         }
 
         [Command("deaths")]

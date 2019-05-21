@@ -23,15 +23,6 @@ namespace CakeBot.Helper.Modules.Osu
         public const string OsuSkills = "http://osuskills.tk/user/";
         public const string OsuChan = "https://syrin.me/osuchan/u/";
 
-        public const string RankingD = "<:rankingD:487304280827494410>";
-        public const string RankingC = "<:rankingC:487304280496406528>";
-        public const string RankingB = "<:rankingB:487304280680693766>";
-        public const string RankingA = "<:rankingA:487304280534155267>";
-        public const string RankingS = "<:rankingS:487304280827494420>";
-        public const string RankingSH = "<:rankingSH:487304280517115904>";
-        public const string RankingX = "<:rankingX:487304280844533770>";
-        public const string RankingXH = "<:rankingXH:487304281070764063>";
-
         public const string EmoteX = "<:miss:486635818224713739>";
         public const string Emote50 = "<:hit50:486637577286189056>";
         public const string Emote100 = "<:hit100:486637577181593610>";

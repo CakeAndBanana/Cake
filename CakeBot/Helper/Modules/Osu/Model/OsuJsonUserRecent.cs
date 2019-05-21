@@ -4,7 +4,7 @@ namespace CakeBot.Helper.Modules.Osu.Model
 {
     public class OsuJsonUserRecent : OsuJsonScorable
     {
-        public string beatmap_id { get; set; }
+        public int beatmap_id { get; set; }
         public int score { get; set; }
         public string rounded_score { get; set; }
         public double starrating { get; set; }
@@ -13,7 +13,7 @@ namespace CakeBot.Helper.Modules.Osu.Model
         public int standardhit { get; set; }
         public int hitted { get; set; }
         public string perfect { get; set; }
-        public string enabled_mods { get; set; }
+        public int enabled_mods { get; set; }
         public string user_id { get; set; }
         public DateTimeOffset date { get; set; }
         public string rank { get; set; }
