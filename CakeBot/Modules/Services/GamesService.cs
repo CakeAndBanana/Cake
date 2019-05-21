@@ -91,19 +91,19 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var UserBf = Bf4Stats.GetPlayerInfo(platform, name);
-                var embedBuilder = new CakeEmbedBuilder();
-                embedBuilder.WithAuthor(author =>
-                {
-                    author
-                    .WithName($"Battlefield stats of {UserBf.player.name}");
-                });
-                // Dit werkt toch?, ik zie geen errors namelijk met live share xD/
-                //Wat is de error? nu niks meer. Was gwn een typo. had UserBf4.
-                // Test dit uit dat het werkt.
-                //Uhm pim. bij BF4.cs
+                var userBf = Bf4Data.GetPlayerInfo(platform, name);
+                var embedBuilder = new CakeEmbedBuilder()
+                    .WithAuthor(author =>
+                    {
+                        author
+                            .WithName($"Battlefield 4 stats of {userBf.player.name}")
+                            .WithUrl(userBf.player.blPlayer);
+                    })
+                    .WithThumbnailUrl(Bf4Helper.RankToUrl(userBf.stats.rank))
+                    .WithDescription("Data here") as CakeEmbedBuilder;
+                await SendEmbedAsync(embedBuilder);
             }
-            catch(CakeException e)
+            catch (CakeException e)
             {
                 var embedError = e.GetEmbededError();
                 await SendEmbedAsync(embedError);

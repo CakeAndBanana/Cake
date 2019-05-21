@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace CakeBot.Helper.Modules.BF4.Model
 {
     [DataContract]
-    public class Bf4Data
+    public class Bf4Model
     {
         [DataMember]
         public PlayerData player { get; set; }
@@ -24,6 +19,8 @@ namespace CakeBot.Helper.Modules.BF4.Model
         public string plat { get; set; }
         [DataMember]
         public string name { get; set; }
+        [DataMember]
+        public string blPlayer { get; set; }
 
     }
 
