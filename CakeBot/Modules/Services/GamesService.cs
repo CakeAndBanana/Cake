@@ -92,6 +92,10 @@ namespace CakeBot.Modules.Services
             try
             {
                 var userBf = Bf4Data.GetPlayerInfo(platform, name);
+                if (userBf == null)
+                {
+                    throw new CakeException("`User doesn't exist in Battlefield 4.`");
+                }
                 var embedBuilder = new CakeEmbedBuilder()
                     .WithAuthor(author =>
                     {
@@ -100,13 +104,27 @@ namespace CakeBot.Modules.Services
                             .WithUrl(userBf.player.blPlayer);
                     })
                     .WithThumbnailUrl(Bf4Helper.RankToUrl(userBf.stats.rank))
-                    .WithDescription("Data here") as CakeEmbedBuilder;
+                    .WithDescription(
+                    $"**Skill rating: **{ userBf.stats.skill }\n" +
+                    $"**Kills: **{ userBf.stats.kills }\n" +
+                    $"**Deaths: **{ userBf.stats.deaths }\n" +
+                    $"**Headshots: **{ userBf.stats.headshots }\n" +
+                    $"**KDR: **{ Math.Round(Bf4Helper.KDR(userBf.stats.kills, userBf.stats.deaths), 2) }\n" +
+                    $"**Shots fired: **{ userBf.stats.shotsFired }\n" +
+                    $"**Shots hit: **{ userBf.stats.shotsHit }\n" +
+                    $"**Accuracy: **{ Math.Round(Bf4Helper.Accuracy(userBf.stats.shotsFired, userBf.stats.shotsHit), 2) }\n" +
+                    $"**Longest Killstreak: **{ userBf.stats.killStreakBonus }\n" +
+                    $"**Longest Headshot (Units): **{ userBf.stats.longestHeadshot }\n" +
+                    $"**Wins: **{ userBf.stats.numWins }\n" +
+                    $"**Losses: **{ userBf.stats.numLosses }\n" +
+                    $"**W/L Ratio: **{ Bf4Helper.WLRatio(userBf.stats.numWins, userBf.stats.numLosses) }\n" +
+                    $"**Time played: **{ Bf4Helper.TimePlayed(userBf.stats.timePlayed) }\n"
+                    ) as CakeEmbedBuilder;
                 await SendEmbedAsync(embedBuilder);
             }
             catch (CakeException e)
             {
-                var embedError = e.GetEmbededError();
-                await SendEmbedAsync(embedError);
+                await SendMessageAsync(e.Message);
             }
             catch (Exception e)
             {
