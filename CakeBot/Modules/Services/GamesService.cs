@@ -105,7 +105,7 @@ namespace CakeBot.Modules.Services
                     })
                     .WithThumbnailUrl(Bf4Helper.RankToUrl(userBf.stats.rank))
                     .WithDescription(
-                    $"**Skill rating: **{ userBf.stats.kills }\n" +
+                    $"**Skill rating: **{ userBf.stats.skill }\n" +
                     $"**Kills: **{ userBf.stats.kills }\n" +
                     $"**Deaths: **{ userBf.stats.deaths }\n" +
                     $"**Headshots: **{ userBf.stats.headshots }\n" +
