@@ -21,13 +21,13 @@ namespace CakeBot.Modules.Services
     {
         private static readonly CakeBotEntities Db = new CakeBotEntities();
         private static List<TwitterPost> _users = new List<TwitterPost>();
-        private static readonly IFilteredStream _stream = Stream.CreateFilteredStream();
+        private static readonly IFilteredStream Stream = Tweetinvi.Stream.CreateFilteredStream();
 
         private static IAuthenticatedUser _authenticatedUser;
 
         private static void SetupStream()
         {
-            _stream.MatchingTweetReceived += async (sender, args) =>
+            Stream.MatchingTweetReceived += async (sender, args) =>
             {
                 var sendlist = new List<TwitterPost>();
                 try
@@ -97,21 +97,21 @@ namespace CakeBot.Modules.Services
 
             foreach (var user in _users)
             {
-                if (!friends.Exists(u => u.Id == user.TwitterId) || _stream.ContainsFollow(user.TwitterId))
+                if (!friends.Exists(u => u.Id == user.TwitterId) || Stream.ContainsFollow(user.TwitterId))
                 {
-                    if (_stream.ContainsFollow(user.TwitterId))
+                    if (Stream.ContainsFollow(user.TwitterId))
                     {
 
                     }
                     else
                     {
                         _authenticatedUser.FollowUser(user.TwitterId);
-                        _stream.AddFollow(user.TwitterId);
+                        Stream.AddFollow(user.TwitterId);
                     }
                 }
                 else
                 {
-                    _stream.AddFollow(user.TwitterId);
+                    Stream.AddFollow(user.TwitterId);
                 }
             }
         }
@@ -154,25 +154,25 @@ namespace CakeBot.Modules.Services
 
         public static void ToggleStream()
         {
-            if (_stream.StreamState == StreamState.Running)
+            if (Stream.StreamState == StreamState.Running)
             {
-                _stream.StopStream();
-                _stream.Credentials = GetCredentials();
+                Stream.StopStream();
+                Stream.Credentials = GetCredentials();
             }
 
-            if (_stream.Credentials == null)
+            if (Stream.Credentials == null)
             {
                 Init();
-                _stream.Credentials = GetCredentials();
+                Stream.Credentials = GetCredentials();
             }
 
             FillUsers();
-            _stream.StartStreamMatchingAnyCondition();
+            Stream.StartStreamMatchingAnyCondition();
         }
 
         public static string GetStatus()
         {
-            return _stream.StreamState.ToString();
+            return Stream.StreamState.ToString();
         }
 
         public static async Task AddId(ulong discordId, long twitterId, ulong channelId , ulong guildId)
