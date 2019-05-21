@@ -31,13 +31,15 @@ namespace CakeBot.Helper.Modules.BF4.Model
         [DataMember]
         public int rank { get; set; }
         [DataMember]
-        public int timeplayed { get; set; }
+        public int timePlayed { get; set; }
         [DataMember]
         public int kills { get; set; }
         [DataMember]
         public int deaths { get; set; }
         [DataMember]
         public int headshots { get; set; }
+        [DataMember]
+        public double longestHeadshot { get; set; }
         //Accuracy
         [DataMember]
         public int shotsFired { get; set; }
@@ -53,8 +55,6 @@ namespace CakeBot.Helper.Modules.BF4.Model
         [DataMember]
         public int killStreakBonus { get; set; }
 
+
     }
-    // Lets test.
-
-
 }
