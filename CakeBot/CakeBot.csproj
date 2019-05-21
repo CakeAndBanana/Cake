@@ -81,6 +81,9 @@
     <Compile Include="Helper\BotUtil.cs" />
     <Compile Include="Helper\Modules\BF4\Bf4Helper.cs" />
     <Compile Include="Helper\Modules\BF4\Model\Bf4Model.cs" />
+    <Compile Include="Helper\Modules\MAL\MalData.cs" />
+    <Compile Include="Helper\Modules\MAL\MalHelper.cs" />
+    <Compile Include="Helper\Modules\MAL\Model\MALModel.cs" />
     <Compile Include="Helper\Modules\Osu\OsuDlBeatmap.cs" />
     <Compile Include="Helper\ThreadSafeRandom.cs" />
     <Compile Include="Helper\Database\Model\BotInfo.cs">
@@ -209,12 +212,14 @@
     <Compile Include="Core\IBotTasks.cs" />
     <Compile Include="Helper\Logging\Logger.cs" />
     <Compile Include="Modules\Modules\AdminModule.cs" />
+    <Compile Include="Modules\Modules\MALModule.cs" />
     <Compile Include="Modules\Modules\ProfileModule.cs" />
     <Compile Include="Modules\Modules\CakeModule.cs" />
     <Compile Include="Modules\Modules\CustomBaseModule.cs" />
     <Compile Include="Helper\Exceptions\DisabledCommandException.cs" />
     <Compile Include="Helper\Exceptions\NoPermissionException.cs" />
     <Compile Include="Helper\Exceptions\NoSelfCommandException.cs" />
+    <Compile Include="Modules\Services\MALService.cs" />
     <Compile Include="Modules\Services\ProfileService.cs" />
     <Compile Include="Modules\Services\EconomyService.cs" />
     <Compile Include="Modules\Services\FishService.cs" />
