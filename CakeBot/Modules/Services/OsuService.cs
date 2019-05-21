@@ -104,16 +104,16 @@ namespace CakeBot.Modules.Services
                 switch (mode)
                 {
                     case 0:
-                        embedResult.WithThumbnailUrl("https://Cake.s-ul.eu/E0mwl85b");
+                        embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/osu.png");
                         break;
                     case 1:
-                        embedResult.WithThumbnailUrl("https://Cake.s-ul.eu/e3NwsiS7");
+                        embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/taiko.png");
                         break;
                     case 2:
-                        embedResult.WithThumbnailUrl("https://Cake.s-ul.eu/7pDuSReU");
+                        embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/ctb.png");
                         break;
                     case 3:
-                        embedResult.WithThumbnailUrl("https://Cake.s-ul.eu/NsbLFL7e");
+                        embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/mania.png");
                         break;
                 }
 
@@ -481,20 +481,19 @@ namespace CakeBot.Modules.Services
 
                 foreach (var t in score)
                 {
-                    var modName = t.enabled_mods == "0" ? "NoMod" : OsuMods.Modnames(Convert.ToInt32(t.enabled_mods));
+                    var modName = t.enabled_mods == "0" ? "No mod" : OsuMods.Modnames(Convert.ToInt32(t.enabled_mods));
 
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - t.date.Ticks);
 
                     var date = dateTicks.TotalDays > 60 ? TimeFormat.ToShortTimeSpan(dateTicks) : TimeFormat.ToLongTimeSpan(dateTicks);
 
                     info += $"***{modName}*** \n" +
-                            $"   **PP:** {Math.Round(t.pp, 0)} " +
-                            $"   **Rank:**{t.rank.LevelEmotes()} " +
-                            $"   **Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
-                            $"   **Combo:** {t.maxcombo}({beatMap[0].max_combo}) \n" +
-                            $"   {OsuUtil.Emote300} {t.count300} | {OsuUtil.Emote100} {t.count100} | {OsuUtil.Emote50} {t.count50} | {OsuUtil.EmoteX} {t.countmiss}\n " +
-                            $"   {date} ago\n" +
-                            $"\n";
+                            $"  **PP:** {Math.Round(t.pp, 0)} " +
+                            $"**Rank:**{t.rank.LevelEmotes()} " +
+                            $"**Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
+                            $"**Combo:** {t.maxcombo}({beatMap[0].max_combo}) \n" +
+                            $"  {OsuUtil.Emote300} {t.count300} | {OsuUtil.Emote100} {t.count100} | {OsuUtil.Emote50} {t.count50} | {OsuUtil.EmoteX} {t.countmiss}\n " +
+                            $"  {date} ago\n\n";
                 }
                 embedCompare.WithDescription(info);
 
