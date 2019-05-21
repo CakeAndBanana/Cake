@@ -11,9 +11,17 @@ namespace CakeBot.Helper.Modules.BF4
         public static Bf4Model GetPlayerInfo(string platform, string player)
         {
             var url = $"https://api.bf4stats.com/api/playerInfo?plat={platform}&name={player}&opt=urls,stats,imagePaths&output=json";
-            url = new WebClient().DownloadString(url);
 
-            return JsonConvert.DeserializeObject<Bf4Model>(url); ;
+            try
+            {
+                url = new WebClient().DownloadString(url);
+            }
+            catch
+            {
+                return null;
+            }
+            
+            return JsonConvert.DeserializeObject<Bf4Model>(url);
         }
     }
 }
