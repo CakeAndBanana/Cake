@@ -13,7 +13,7 @@ Some code can be sloppy and not-well written, feel free to make issues and PRs t
 
 ## Features:
 
-- osu! module with recently played, top and user profiles.
+- osu! module with recently played, top, compare scores and user profiles.
 
 - twitter callback from feed (WIP).
 
