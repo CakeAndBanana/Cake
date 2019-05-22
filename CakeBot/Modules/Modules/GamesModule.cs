@@ -33,7 +33,7 @@ namespace CakeBot.Modules.Modules
         [Remarks("Sends your Battlefield 4 Stats")]
         public async Task BattleFieldStats(string platform, string name)
         {
-            await _service.BattlefieldStats(platform, name, Context.User);
+            await _service.BattlefieldStats(platform, name);
         }
 
         [Command("deaths")]
