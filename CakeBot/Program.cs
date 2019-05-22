@@ -32,7 +32,7 @@ namespace CakeBot
 
     public static class Global
     {
-        internal static int baseXp = 125;
-        internal static List<PurchasingUser> usersToTrack { get; set; } = new List<PurchasingUser>();
+        internal static int BaseXp = 125;
+        internal static List<PurchasingUser> UsersToTrack { get; set; } = new List<PurchasingUser>();
     }
 }

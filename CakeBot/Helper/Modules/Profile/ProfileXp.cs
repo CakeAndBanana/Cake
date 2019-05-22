@@ -33,7 +33,7 @@ namespace CakeBot.Helper.Modules.Profile
             }
             else
             {
-                neededXp = (int)(Global.baseXp * (currentLevel * 1.45));
+                neededXp = (int)(Global.BaseXp * (currentLevel * 1.45));
             }
 
             return neededXp;

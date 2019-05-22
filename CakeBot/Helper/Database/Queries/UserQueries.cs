@@ -62,7 +62,7 @@ namespace CakeBot.Helper.Database.Queries
             {
                 user.UserXp += amount;
                 user.TotalXp += amount;
-                int nextLevelXp = (int) (Global.baseXp * (user.UserLevel * 1.45));
+                int nextLevelXp = (int) (Global.BaseXp * (user.UserLevel * 1.45));
                 if (user.UserXp >= nextLevelXp)
                 {
                     user.UserLevel += 1;
@@ -214,7 +214,7 @@ namespace CakeBot.Helper.Database.Queries
                 correctedusers += $"`{user.UserId}: Level {user.UserLevel} ->";
                 for (int i = 0; i < 99; i++)
                 {
-                    int neededxp = (int)(Global.baseXp * (i * 1.45));
+                    int neededxp = (int)(Global.BaseXp * (i * 1.45));
                     long lastlevelneededxp = xpToCurrentLevel;
                     xpToCurrentLevel += neededxp;
                     if (userxp < xpToCurrentLevel)

@@ -290,7 +290,7 @@ namespace CakeBot
 
         private async Task OnReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
         {
-            foreach (var user in Global.usersToTrack)
+            foreach (var user in Global.UsersToTrack)
             {
                 if (user.Message.Id == reaction.MessageId && user.user.Id == reaction.User.Value.Id)
                 {
@@ -312,34 +312,32 @@ namespace CakeBot
 
         private async Task OnReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
         {
-            foreach(var user in Global.usersToTrack)
+            foreach(var user in Global.UsersToTrack)
             {
-                if (user.Message.Id == reaction.MessageId && user.user.Id == reaction.User.Value.Id)
+                if (user.Message.Id != reaction.MessageId || user.user.Id != reaction.User.Value.Id) continue;
+                if(reaction.Emote.Name == "▶")
                 {
-                    if(reaction.Emote.Name == "▶")
-                    {
-                        if (user.CurrentBgIndex == user.BackgroundStrings.Length-1) return;
-                        user.CurrentBgIndex++;
-                        await user.Message.ModifyAsync(x => x.Content = $"{user.BackgroundStrings[user.CurrentBgIndex]}");
-                    }
-                    else if(reaction.Emote.Name == "✅")
-                    {
-                        user.currentBgId = user.Backgrounds[user.CurrentBgIndex].BackgroundId;
-                        await channel.SendMessageAsync(user.user.Mention + await BackgroundQueries.BuyBackground(user.currentBgId, user.user.Id));
-                        await user.Message.DeleteAsync();
-                        Global.usersToTrack.Remove(user);
-                    }
-                    else if (reaction.Emote.Name == "◀")
-                    {
-                        if (user.CurrentBgIndex == 0) return;
-                        user.CurrentBgIndex--;
-                        await user.Message.ModifyAsync(x => x.Content = $"{user.BackgroundStrings[user.CurrentBgIndex]}");
-                    }
-                    else if(reaction.Emote.Name == "🚫")
-                    {
-                        await user.Message.DeleteAsync();
-                        Global.usersToTrack.Remove(user);
-                    }
+                    if (user.CurrentBgIndex == user.BackgroundStrings.Length-1) return;
+                    user.CurrentBgIndex++;
+                    await user.Message.ModifyAsync(x => x.Content = $"http://cakebot.org/resource/profile/{user.Backgrounds[user.CurrentBgIndex].BackgroundId}.png");
+                }
+                else if(reaction.Emote.Name == "✅")
+                {
+                    user.currentBgId = user.Backgrounds[user.CurrentBgIndex].BackgroundId;
+                    await channel.SendMessageAsync(user.user.Mention + await BackgroundQueries.BuyBackground(user.currentBgId, user.user.Id));
+                    await user.Message.DeleteAsync();
+                    Global.UsersToTrack.Remove(user);
+                }
+                else if (reaction.Emote.Name == "◀")
+                {
+                    if (user.CurrentBgIndex == 0) return;
+                    user.CurrentBgIndex--;
+                    await user.Message.ModifyAsync(x => x.Content = $"{user.BackgroundStrings[user.CurrentBgIndex]}");
+                }
+                else if(reaction.Emote.Name == "🚫")
+                {
+                    await user.Message.DeleteAsync();
+                    Global.UsersToTrack.Remove(user);
                 }
             }
         }

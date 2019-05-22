@@ -79,12 +79,12 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <Key>
             <PropertyRef Name="BackgroundId" />
           </Key>
-          <Property Name="BackgroundId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BackgroundPrice" Type="bigint" Nullable="false" />
-          <Property Name="BackgroundDir" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="BackgroundActive" Type="bit" Nullable="false" />
-          <Property Name="Category" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="BackgroundUrl" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="BackgroundId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="BackgroundPrice" Nullable="false" Type="bigint" />
+          <Property Name="BackgroundDir" Nullable="false" MaxLength="255" Type="varchar" />
+          <Property Name="BackgroundActive" Nullable="false" Type="bit" />
+          <Property Name="Category" Nullable="false" MaxLength="255" Type="varchar" />
+          <Property Name="BackgroundUrl" Nullable="false" MaxLength="255" Type="varchar" />
         </EntityType>
         <EntityType Name="SpamTracks">
           <Key>
@@ -167,8 +167,8 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <Property Name="MoneyAfter" Type="bigint" />
         </EntityType>
         <Association Name="FK__User__Background__7D439ABD">
-          <End Role="ProfileBackground" Type="Self.ProfileBackground" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Type="Self.ProfileBackground" Multiplicity="1" Role="ProfileBackground" />
+          <End Type="Self.User" Multiplicity="*" Role="User" />
           <ReferentialConstraint>
             <Principal Role="ProfileBackground">
               <PropertyRef Name="BackgroundId" />
@@ -275,8 +275,8 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserBackgrounds_ProfileBackground">
-          <End Role="ProfileBackground" Type="Self.ProfileBackground" Multiplicity="1" />
-          <End Role="UserBackgrounds" Type="Self.UserBackgrounds" Multiplicity="*" />
+          <End Type="Self.ProfileBackground" Multiplicity="1" Role="ProfileBackground" />
+          <End Type="Self.UserBackgrounds" Multiplicity="*" Role="UserBackgrounds" />
           <ReferentialConstraint>
             <Principal Role="ProfileBackground">
               <PropertyRef Name="BackgroundId" />
@@ -431,8 +431,8 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
     FROM [dbo].[OsuTrackUser] AS [OsuTrackUser]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__User__Background__7D439ABD" Association="Self.FK__User__Background__7D439ABD">
-            <End Role="ProfileBackground" EntitySet="ProfileBackground" />
-            <End Role="User" EntitySet="User" />
+            <End EntitySet="ProfileBackground" Role="ProfileBackground" />
+            <End EntitySet="User" Role="User" />
           </AssociationSet>
           <AssociationSet Name="FK_DeadChildren_DiscordGuild" Association="Self.FK_DeadChildren_DiscordGuild">
             <End Role="DiscordGuild" EntitySet="DiscordGuild" />
@@ -467,8 +467,8 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
             <End Role="TwitterPost" EntitySet="TwitterPost" />
           </AssociationSet>
           <AssociationSet Name="FK_UserBackgrounds_ProfileBackground" Association="Self.FK_UserBackgrounds_ProfileBackground">
-            <End Role="ProfileBackground" EntitySet="ProfileBackground" />
-            <End Role="UserBackgrounds" EntitySet="UserBackgrounds" />
+            <End EntitySet="ProfileBackground" Role="ProfileBackground" />
+            <End EntitySet="UserBackgrounds" Role="UserBackgrounds" />
           </AssociationSet>
           <AssociationSet Name="FK_UserBackgrounds_User" Association="Self.FK_UserBackgrounds_User">
             <End Role="User" EntitySet="User" />
@@ -560,8 +560,8 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <EntitySet Name="UserBackgrounds" EntityType="CakeBotModel.UserBackground" />
           <EntitySet Name="ProfileBackgrounds" EntityType="CakeBotModel.ProfileBackground" />
           <AssociationSet Name="FK_UserBackgrounds_ProfileBackground" Association="CakeBotModel.FK_UserBackgrounds_ProfileBackground">
-            <End Role="ProfileBackground" EntitySet="ProfileBackgrounds" />
-            <End Role="UserBackground" EntitySet="UserBackgrounds" />
+            <End EntitySet="ProfileBackgrounds" Role="ProfileBackground" />
+            <End EntitySet="UserBackgrounds" Role="UserBackground" />
           </AssociationSet>
           <EntitySet Name="UserFishInventories" EntityType="CakeBotModel.UserFishInventory" />
           <AssociationSet Name="FK_UserFishInventory_FishType" Association="CakeBotModel.FK_UserFishInventory_FishType">
@@ -583,8 +583,8 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
             <End Role="OsuUser" EntitySet="OsuUsers" />
           </AssociationSet>
           <AssociationSet Name="FK__User__Background__7D439ABD" Association="CakeBotModel.FK__User__Background__7D439ABD">
-            <End Role="ProfileBackground" EntitySet="ProfileBackgrounds" />
-            <End Role="User" EntitySet="Users" />
+            <End EntitySet="ProfileBackgrounds" Role="ProfileBackground" />
+            <End EntitySet="Users" Role="User" />
           </AssociationSet>
           <AssociationSet Name="FK_UserBackgrounds_User" Association="CakeBotModel.FK_UserBackgrounds_User">
             <End Role="User" EntitySet="Users" />
@@ -776,18 +776,17 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <Key>
             <PropertyRef Name="BackgroundId" />
           </Key>
-          <Property Name="BackgroundId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BackgroundPrice" Type="Int64" Nullable="false" />
-          <Property Name="BackgroundDir" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="BackgroundActive" Type="Boolean" Nullable="false" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="BackgroundUrl" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BackgroundId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="BackgroundPrice" Nullable="false" Type="Int64" />
+          <Property Name="BackgroundDir" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="BackgroundActive" Nullable="false" Type="Boolean" />
+          <Property Name="Category" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="UserBackgrounds" Relationship="CakeBotModel.FK_UserBackgrounds_ProfileBackground" FromRole="ProfileBackground" ToRole="UserBackground" />
           <NavigationProperty Name="Users" Relationship="CakeBotModel.FK__User__Background__7D439ABD" FromRole="ProfileBackground" ToRole="User" />
         </EntityType>
         <Association Name="FK_UserBackgrounds_ProfileBackground">
-          <End Type="CakeBotModel.ProfileBackground" Role="ProfileBackground" Multiplicity="1" />
-          <End Type="CakeBotModel.UserBackground" Role="UserBackground" Multiplicity="*" />
+          <End Type="CakeBotModel.ProfileBackground" Multiplicity="1" Role="ProfileBackground" />
+          <End Type="CakeBotModel.UserBackground" Multiplicity="*" Role="UserBackground" />
           <ReferentialConstraint>
             <Principal Role="ProfileBackground">
               <PropertyRef Name="BackgroundId" />
@@ -888,8 +887,8 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__User__Background__7D439ABD">
-          <End Type="CakeBotModel.ProfileBackground" Role="ProfileBackground" Multiplicity="1" />
-          <End Type="CakeBotModel.User" Role="User" Multiplicity="*" />
+          <End Type="CakeBotModel.ProfileBackground" Multiplicity="1" Role="ProfileBackground" />
+          <End Type="CakeBotModel.User" Multiplicity="*" Role="User" />
           <ReferentialConstraint>
             <Principal Role="ProfileBackground">
               <PropertyRef Name="BackgroundId" />
@@ -1143,7 +1142,6 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <EntitySetMapping Name="ProfileBackgrounds">
             <EntityTypeMapping TypeName="CakeBotModel.ProfileBackground">
               <MappingFragment StoreEntitySet="ProfileBackground">
-                <ScalarProperty Name="BackgroundUrl" ColumnName="BackgroundUrl" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="BackgroundActive" ColumnName="BackgroundActive" />
                 <ScalarProperty Name="BackgroundDir" ColumnName="BackgroundDir" />

@@ -138,7 +138,7 @@ namespace CakeBot.Modules.Services
                     Backgrounds = allBg,
                     currentBgId = 1
                 };
-                Global.usersToTrack.Add(trackUser);
+                Global.UsersToTrack.Add(trackUser);
             }
             catch (CakeException e)
             {
