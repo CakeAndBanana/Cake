@@ -82,6 +82,7 @@
     <Compile Include="Helper\Modules\BF4\Bf4Helper.cs" />
     <Compile Include="Helper\Modules\BF4\Model\Bf4Model.cs" />
     <Compile Include="Helper\Modules\MAL\MalData.cs" />
+    <Compile Include="Helper\Modules\MAL\MalGenre.cs" />
     <Compile Include="Helper\Modules\MAL\MalHelper.cs" />
     <Compile Include="Helper\Modules\MAL\Model\MALModel.cs" />
     <Compile Include="Helper\Modules\Osu\OsuDlBeatmap.cs" />
