@@ -25,7 +25,7 @@ namespace CakeBot.Helper.Database.Model
                 Provider = "System.Data.SqlClient",
                 ProviderConnectionString = Config.ConnectionString,
                 Metadata =
-                    @"res://*/Helper.Database.Model.DbModel.csdl|res://*/Helper.Database.Model.DbModel.ssdl|res://*/Helper.Database.Model.DbModel.msl"
+                    @"res://*/Helper.Database.Model.CakeModel.csdl|res://*/Helper.Database.Model.CakeModel.ssdl|res://*/Helper.Database.Model.CakeModel.msl"
             }).ToString())
         {
 
