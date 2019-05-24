@@ -17,7 +17,7 @@ namespace CakeBot.Helper.Database.Queries
         {
             _db = new CakeEntities();
 
-            if (message != null || guildid == 0 || userid == 0)
+            if (message == null || guildid == 0 || userid == 0)
             {
                 throw new CakeException("Wrong data, check error");
             }
@@ -25,7 +25,7 @@ namespace CakeBot.Helper.Database.Queries
             var guild = await GuildQueries.FindGuild(guildid);
             var user = await UserQueries.FindUser(userid);
 
-            if (user != null || guild != null)
+            if (user == null || guild == null)
             {
                 throw new CakeException("User or Guild not found, check error");
             }
@@ -48,6 +48,16 @@ namespace CakeBot.Helper.Database.Queries
             return result;
         }
 
+        public static async Task<BugReport> ReturnBugReport(int id)
+        {
+            _db = new CakeEntities();
+            var result =
+                await (from reports in _db.BugReports
+                    where reports.Id == id
+                    select reports).FirstOrDefaultAsync();
+            return result;
+        }
+
         public static async Task<BugReport> ChangeStatusBugReport(int reportId, bool status)
         {
             _db = new CakeEntities();
@@ -56,8 +66,11 @@ namespace CakeBot.Helper.Database.Queries
                     where reports.Id == reportId
                        select reports).FirstOrDefaultAsync();
             if (result == null) throw new CakeException("Bug Report not found!");
-            result.Completed = true;
+
+            result.Completed = status;
             _db.Entry(result).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+
             return result;
         }
     }
