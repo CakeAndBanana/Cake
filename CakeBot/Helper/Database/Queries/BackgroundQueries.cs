@@ -11,14 +11,14 @@ namespace CakeBot.Helper.Database.Queries
 {
     public class BackgroundQueries
     {
-        private static CakeBotEntities Db = new CakeBotEntities();
+        private static CakeEntities Db = new CakeEntities();
         private static string baseAddress = Directory.GetCurrentDirectory();
         public static async Task<List<ProfileBackground>> GetListOfAllBackgrounds()
         {
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var result =
              await (from bgs in Db.ProfileBackgrounds
-                    where bgs.BackgroundActive == true
+                    where bgs.BackgroundActive
                     select bgs).ToListAsync();
             return result;
 
@@ -26,7 +26,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<List<UserBackground>> GetListOfOwnedBackgrounds(ulong userId)
         {
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var result =
              await (from bgs in Db.UserBackgrounds
                     where bgs.UserId == (long) userId
@@ -36,7 +36,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<string> SetUserBackground(int bgId, ulong userId)
         {
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var bgList = await GetListOfOwnedBackgrounds(userId);
             var reqBg = bgList.Where(i => i.BackgroundId == bgId).FirstOrDefault();
 
@@ -56,7 +56,7 @@ namespace CakeBot.Helper.Database.Queries
             var bgToBuy = bgList.Where(bg => bg.BackgroundId == bgId).FirstOrDefault();
             if (bgToBuy == null) return ", Invalid Background Id!";
 
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var result =
              await (from bgs in Db.UserBackgrounds
                     where bgs.UserId == (long)userId
@@ -85,7 +85,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<string> SendFullBackgroundLocation(int index)
         {
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var result = await Db.ProfileBackgrounds.ToListAsync();
             if(result[index] != null) return baseAddress + @"\Images\" + result[index].BackgroundDir + ".png";
             return "0";

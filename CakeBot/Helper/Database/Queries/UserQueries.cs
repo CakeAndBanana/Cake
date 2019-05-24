@@ -9,7 +9,7 @@ namespace CakeBot.Helper.Database.Queries
 {
     public static  class UserQueries
     {
-        private static CakeBotEntities _db = new CakeBotEntities();
+        private static CakeEntities _db = new CakeEntities();
 
         public static async Task<User> FindUser(ulong discordId)
         {
@@ -17,13 +17,13 @@ namespace CakeBot.Helper.Database.Queries
                 await (from u in _db.Users
                 where u.UserId == (long) discordId
                 select u).ToListAsync();
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             return result.FirstOrDefault();
         }
 
         public static async Task<int> GetUserLevel(ulong discordId)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)discordId
@@ -33,7 +33,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<int> GetUserRank(ulong discordId)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var allUsers = await _db.Users.ToListAsync();
             allUsers = allUsers.OrderByDescending(x => x.TotalXp).ToList();
             return allUsers.FindIndex(x => x.UserId == (long)discordId) + 1;
@@ -41,7 +41,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<string> GetUserBackground(ulong discordId)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)discordId
@@ -52,7 +52,7 @@ namespace CakeBot.Helper.Database.Queries
         public static async Task<bool> GrantXp(ulong discordId, int amount)
         {
             
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)discordId
@@ -78,7 +78,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<long> GetTotalXp(ulong discordId)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)discordId
@@ -88,7 +88,7 @@ namespace CakeBot.Helper.Database.Queries
         }
         public static async Task<int> GetUserXp(ulong discordId)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)discordId
@@ -102,7 +102,7 @@ namespace CakeBot.Helper.Database.Queries
                 await (from u in _db.UserEconomies
                        where u.UserId == (long)discordId
                        select u).ToListAsync();
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             return result.FirstOrDefault();
         }
 
@@ -143,7 +143,7 @@ namespace CakeBot.Helper.Database.Queries
             // Create a new record if dont have the user in the DB
             
             await _db.SaveChangesAsync();
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             return false;
         }
 
@@ -177,7 +177,7 @@ namespace CakeBot.Helper.Database.Queries
             await _db.SaveChangesAsync();
         }
 
-        public static async Task<List<DeadChildren>> GetDeadChildren(CakeBotEntities db, ulong guildId)
+        public static async Task<List<DeadChildren>> GetDeadChildren(CakeEntities db, ulong guildId)
         {
             var result =
                 await (from u in _db.DeadChildrens
@@ -193,16 +193,16 @@ namespace CakeBot.Helper.Database.Queries
                 await (from u in _db.Users
                     where u.UserId == (long) discordId && u.UserAdmin
                     select u).FirstOrDefaultAsync();
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             return result != null && result.UserAdmin;
         }
 
-        public static bool CheckMoney(ulong discordId, CakeBotEntities _db)
+        public static bool CheckMoney(ulong discordId, CakeEntities _db)
         {
             return _db.UserEconomies.Find((long)discordId).UserMoney >=  10;
         }
 
-        public static async Task<string> CorrectLevels(CakeBotEntities Db)
+        public static async Task<string> CorrectLevels(CakeEntities Db)
         {
             string correctedusers = "";
             foreach(var user in Db.Users.ToList())
@@ -235,7 +235,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<bool> GetRestrictStatus(ulong userId)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             await CheckUser(userId);
             var result =
                 await (from u in _db.Users
@@ -246,7 +246,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task SetRestrictStatus(ulong userId, bool status)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)userId
@@ -266,7 +266,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<string> SetProfileColor(ulong userId, string Hex)
         {
-            _db = new CakeBotEntities();
+            _db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)userId
@@ -280,7 +280,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<string> GetProfileColor(ulong userId)
         {
-            var Db = new CakeBotEntities();
+            var Db = new CakeEntities();
             var result =
                 await (from u in _db.Users
                        where u.UserId == (long)userId

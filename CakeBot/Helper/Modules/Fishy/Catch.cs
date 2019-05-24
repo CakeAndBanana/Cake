@@ -14,13 +14,13 @@ namespace CakeBot.Helper.Modules.Fishy
         private int exoticAmount = (int)(totalChance / 100 * 10); // Exotic Chance 10%
                                                                 // private int legendaryAmount = (int)(totalChance / 100 * 0.3); // Legendary Chance 0,30%
 
-        private CakeBotEntities _db;
+        private CakeEntities _db;
         public FishType Fish { get; }
         public  DateTime catchDate { get; }
         public long catchReward { get; }
         public long userId { get; }
 
-        public Catch(ulong usr, Random r, CakeBotEntities db)
+        public Catch(ulong usr, Random r, CakeEntities db)
         {
             _db = db;
             userId = (long)usr;

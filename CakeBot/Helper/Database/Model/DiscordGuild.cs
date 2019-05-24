@@ -17,8 +17,9 @@ namespace CakeBot.Helper.Database.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DiscordGuild()
         {
-            this.DiscordChannels = new HashSet<DiscordChannel>();
+            this.BugReports = new HashSet<BugReport>();
             this.DeadChildrens = new HashSet<DeadChildren>();
+            this.DiscordChannels = new HashSet<DiscordChannel>();
         }
     
         public long GuildId { get; set; }
@@ -27,10 +28,12 @@ namespace CakeBot.Helper.Database.Model
         public Nullable<long> GuildLeave { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BugReport> BugReports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeadChildren> DeadChildrens { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiscordChannel> DiscordChannels { get; set; }
         public virtual DiscordChannel DiscordChannel { get; set; }
         public virtual DiscordChannel DiscordChannel1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeadChildren> DeadChildrens { get; set; }
     }
 }

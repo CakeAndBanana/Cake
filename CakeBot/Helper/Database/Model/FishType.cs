@@ -17,8 +17,8 @@ namespace CakeBot.Helper.Database.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FishType()
         {
-            this.UserFishLogs = new HashSet<UserFishLog>();
             this.UserFishInventories = new HashSet<UserFishInventory>();
+            this.UserFishLogs = new HashSet<UserFishLog>();
         }
     
         public int FishId { get; set; }
@@ -30,8 +30,8 @@ namespace CakeBot.Helper.Database.Model
         public int FishRarity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserFishLog> UserFishLogs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserFishInventory> UserFishInventories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserFishLog> UserFishLogs { get; set; }
     }
 }

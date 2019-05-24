@@ -123,7 +123,7 @@ namespace CakeBot.Modules.Services
                 {
                     string owned = "Not Owned";
                     if (ownedBg.Where(x => x.BackgroundId == bg.BackgroundId).FirstOrDefault() != null) owned = "Owned";
-                    description[index] += $"{bg.BackgroundUrl}\n**[{bg.BackgroundId}]** **{bg.BackgroundDir}** - :euro: **{bg.BackgroundPrice}** (**{owned}**)";
+                    description[index] += $"http://cakebot.org/resource/profile/{bg.BackgroundId}.png \n**[{bg.BackgroundId}]** **{bg.BackgroundDir}** - :euro: **{bg.BackgroundPrice}** (**{owned}**)";
                     index++;
                 }
                 #endregion

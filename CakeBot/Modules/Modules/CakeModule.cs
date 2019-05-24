@@ -1,8 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CakeBot.Helper;
 using CakeBot.Modules.Services;
 using Discord;
 using Discord.Commands;
+using Microsoft.Build.Tasks;
+using static CakeBot.Helper.CakeCooldownModel;
 
 namespace CakeBot.Modules.Modules
 {
@@ -112,6 +117,51 @@ namespace CakeBot.Modules.Modules
             await _service.GetInfo();
         }
 
+        [Command("reportbug")]
+        [Summary(">cake reportbug (message)")]
+        [Remarks("Reports a bug to the developers")]
+        public async Task SetBug([Remainder] string message)
+        {
+            var check =  CheckCooldown(Context.User.Id);
+
+            if (check == 0)
+            {
+                await _service.BugReport(message);
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync($"``You have a cooldown of {check} minute(s)``");
+            }
+
+        }
+
+        [Command("buglist")]
+        [Summary(">cake buglist {?int}")]
+        [RequireDeveloper]
+        [Remarks("Returns list or id given error.")]
+        public async Task SetBug(int id = 0)
+        {
+            await _service.BugList(id);
+        }
+
+        [Command("bugstatus")]
+        [Summary(">cake bugstatus {?int}")]
+        [RequireDeveloper]
+        [Remarks("Completes a bug with given id.")]
+        public async Task ChangeStatusBug(int id = 0)
+        {
+            await _service.ChangeStatusBug(id, true);
+        }
+
+        [Command("bugstatus")]
+        [Summary(">cake bugstatus {?int}")]
+        [RequireDeveloper]
+        [Remarks("Completes a bug with given id.")]
+        public async Task ChangeStatusBug(bool status, int id = 0)
+        {
+            await _service.ChangeStatusBug(id, status);
+        }
+
         [Command("list")]
         [Remarks(">cake list")]
         [Summary("List of guilds that have CakeBot.")]
@@ -119,5 +169,23 @@ namespace CakeBot.Modules.Modules
         {
             await _service.ListGuilds();
         }
+
+        private int CheckCooldown(ulong id)
+        {
+            var user = Global.CooldownList.Find(m => m.Id == id);
+
+            if (user != null)
+            {
+                var time = user.CooldownDateTime.TimeOfDay.Subtract(DateTime.UtcNow.TimeOfDay).Minutes;
+                if (time == 0)
+                    Global.CooldownList.Remove(user);
+                else return time;
+            }
+
+            AddCooldown(id);
+            return 0;
+        }
+
+        private void AddCooldown(ulong id) => Global.CooldownList.Add(new CooldownModel { Id = id, CooldownDateTime = DateTime.UtcNow.AddMinutes(60) });
     }
 }

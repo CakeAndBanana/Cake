@@ -17,8 +17,8 @@ namespace CakeBot.Helper.Database.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProfileBackground()
         {
-            this.UserBackgrounds = new HashSet<UserBackground>();
             this.Users = new HashSet<User>();
+            this.UserBackgrounds = new HashSet<UserBackground>();
         }
     
         public int BackgroundId { get; set; }
@@ -26,11 +26,10 @@ namespace CakeBot.Helper.Database.Model
         public string BackgroundDir { get; set; }
         public bool BackgroundActive { get; set; }
         public string Category { get; set; }
-        public string BackgroundUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserBackground> UserBackgrounds { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserBackground> UserBackgrounds { get; set; }
     }
 }

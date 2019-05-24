@@ -9,7 +9,7 @@ namespace CakeBot.Helper.Database.Queries
     {
         public static async Task<SpamTrack> FindUserTrack(ulong userId, ulong guildId)
         {
-            using (var db = new CakeBotEntities())
+            using (var db = new CakeEntities())
             {
                 var result =
                     await (from t in db.SpamTracks
@@ -33,7 +33,7 @@ namespace CakeBot.Helper.Database.Queries
                     Pressure = 0f
                 };
 
-                using (var db = new CakeBotEntities())
+                using (var db = new CakeEntities())
                 {
                     db.SpamTracks.Add(newTrack);
                     await db.SaveChangesAsync();
@@ -47,7 +47,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task UpdateUserTrack(SpamTrack currentTrack)
         {
-            using (var db = new CakeBotEntities())
+            using (var db = new CakeEntities())
             {
                 db.Entry(currentTrack).State = EntityState.Modified;
                 await db.SaveChangesAsync();

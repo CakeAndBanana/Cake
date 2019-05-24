@@ -1,0 +1,1254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CakeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.BotInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BotInfo">
+          <Key>
+            <PropertyRef Name="Guilds" />
+            <PropertyRef Name="Commands" />
+          </Key>
+          <Property Name="Guilds" Type="int" Nullable="false" />
+          <Property Name="Commands" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BugReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="Message" Type="text" Nullable="false" />
+          <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="GuildId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeadChildren">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateOfDeath" Type="datetime" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="GuildId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DiscordChannel">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+          </Key>
+          <Property Name="ChannelId" Type="bigint" Nullable="false" />
+          <Property Name="GuildId" Type="bigint" Nullable="false" />
+          <Property Name="LastMapId" Type="int" />
+        </EntityType>
+        <EntityType Name="DiscordGuild">
+          <Key>
+            <PropertyRef Name="GuildId" />
+          </Key>
+          <Property Name="GuildId" Type="bigint" Nullable="false" />
+          <Property Name="GuildPrefix" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="GuildWelcome" Type="bigint" />
+          <Property Name="GuildLeave" Type="bigint" />
+        </EntityType>
+        <EntityType Name="FishType">
+          <Key>
+            <PropertyRef Name="FishId" />
+          </Key>
+          <Property Name="FishId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FishName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FishMessage" Type="text" Nullable="false" />
+          <Property Name="FIshWorth" Type="bigint" Nullable="false" />
+          <Property Name="FishActive" Type="bit" Nullable="false" />
+          <Property Name="FishEmoji" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FishRarity" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="OsuTrackUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ChannelId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="ChannelId" Type="bigint" Nullable="false" />
+          <Property Name="PpScore" Type="int" />
+          <Property Name="RankScore" Type="int" />
+        </EntityType>
+        <EntityType Name="OsuUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="OsuId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="OsuMode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProfileBackground">
+          <Key>
+            <PropertyRef Name="BackgroundId" />
+          </Key>
+          <Property Name="BackgroundId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BackgroundPrice" Type="bigint" Nullable="false" />
+          <Property Name="BackgroundDir" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="BackgroundActive" Type="bit" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SpamTracks">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="GuildId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="GuildId" Type="bigint" Nullable="false" />
+          <Property Name="Pressure" Type="float" Nullable="false" />
+          <Property Name="LastMessage" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TwitterPost">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TwitterId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="ChannelId" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="UserXp" Type="int" Nullable="false" />
+          <Property Name="TotalXp" Type="bigint" Nullable="false" />
+          <Property Name="UserLevel" Type="int" Nullable="false" />
+          <Property Name="UserAdmin" Type="bit" Nullable="false" />
+          <Property Name="BackgroundId" Type="int" Nullable="false" />
+          <Property Name="ColorHex" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Restricted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserBackgrounds">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="BackgroundId" Type="int" Nullable="false" />
+          <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserEconomy">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="UserMoney" Type="bigint" Nullable="false" />
+          <Property Name="UserDaily" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserFishInventory">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="FishId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="AmountSold" Type="int" Nullable="false" />
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserFishLog">
+          <Key>
+            <PropertyRef Name="FishLogId" />
+          </Key>
+          <Property Name="FishLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="FishId" Type="int" Nullable="false" />
+          <Property Name="DateFished" Type="datetime" Nullable="false" />
+          <Property Name="MoneyBefore" Type="bigint" />
+          <Property Name="MoneyAfter" Type="bigint" />
+        </EntityType>
+        <EntityType Name="UserSlotLog">
+          <Key>
+            <PropertyRef Name="SlotId" />
+          </Key>
+          <Property Name="SlotId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="SlotAward" Type="bigint" Nullable="false" />
+          <Property Name="DateUsed" Type="datetime" Nullable="false" />
+          <Property Name="MoneyBefore" Type="bigint" />
+          <Property Name="MoneyAfter" Type="bigint" />
+        </EntityType>
+        <Association Name="FK__User__Background__7D439ABD">
+          <End Role="ProfileBackground" Type="Self.ProfileBackground" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfileBackground">
+              <PropertyRef Name="BackgroundId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BackgroundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BugReport_DiscordGuild">
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="1" />
+          <End Role="BugReport" Type="Self.BugReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="BugReport">
+              <PropertyRef Name="GuildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BugReport_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BugReport" Type="Self.BugReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BugReport">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeadChildren_DiscordGuild">
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="1" />
+          <End Role="DeadChildren" Type="Self.DeadChildren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="DeadChildren">
+              <PropertyRef Name="GuildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscordChannel_DiscordGuild">
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="1" />
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="DiscordChannel">
+              <PropertyRef Name="GuildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscordGuild_DiscordChannel">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="0..1" />
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="DiscordGuild">
+              <PropertyRef Name="GuildWelcome" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscordGuild_DiscordChannel1">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="0..1" />
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="DiscordGuild">
+              <PropertyRef Name="GuildLeave" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OsuTrackUser_DiscordChannel">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="1" />
+          <End Role="OsuTrackUser" Type="Self.OsuTrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="OsuTrackUser">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OsuTrackUser_OsuUser">
+          <End Role="OsuUser" Type="Self.OsuUser" Multiplicity="1" />
+          <End Role="OsuTrackUser" Type="Self.OsuTrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OsuUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="OsuTrackUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OsuUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="OsuUser" Type="Self.OsuUser" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="OsuUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TwitterPost_DiscordChannel">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="1" />
+          <End Role="TwitterPost" Type="Self.TwitterPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="TwitterPost">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBackgrounds_ProfileBackground">
+          <End Role="ProfileBackground" Type="Self.ProfileBackground" Multiplicity="1" />
+          <End Role="UserBackgrounds" Type="Self.UserBackgrounds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfileBackground">
+              <PropertyRef Name="BackgroundId" />
+            </Principal>
+            <Dependent Role="UserBackgrounds">
+              <PropertyRef Name="BackgroundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBackgrounds_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserBackgrounds" Type="Self.UserBackgrounds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserBackgrounds">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEconomy_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishInventory_FishType">
+          <End Role="FishType" Type="Self.FishType" Multiplicity="1" />
+          <End Role="UserFishInventory" Type="Self.UserFishInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FishType">
+              <PropertyRef Name="FishId" />
+            </Principal>
+            <Dependent Role="UserFishInventory">
+              <PropertyRef Name="FishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishInventory_UserEconomy">
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="1" />
+          <End Role="UserFishInventory" Type="Self.UserFishInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserFishInventory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishLog_FishType">
+          <End Role="FishType" Type="Self.FishType" Multiplicity="1" />
+          <End Role="UserFishLog" Type="Self.UserFishLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FishType">
+              <PropertyRef Name="FishId" />
+            </Principal>
+            <Dependent Role="UserFishLog">
+              <PropertyRef Name="FishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishLog_UserEconomy">
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="1" />
+          <End Role="UserFishLog" Type="Self.UserFishLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserFishLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSlotLog_UserEconomy">
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="1" />
+          <End Role="UserSlotLog" Type="Self.UserSlotLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSlotLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CakeModelStoreContainer">
+          <EntitySet Name="BugReport" EntityType="Self.BugReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeadChildren" EntityType="Self.DeadChildren" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscordChannel" EntityType="Self.DiscordChannel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscordGuild" EntityType="Self.DiscordGuild" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FishType" EntityType="Self.FishType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OsuUser" EntityType="Self.OsuUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProfileBackground" EntityType="Self.ProfileBackground" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpamTracks" EntityType="Self.SpamTracks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TwitterPost" EntityType="Self.TwitterPost" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserBackgrounds" EntityType="Self.UserBackgrounds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserEconomy" EntityType="Self.UserEconomy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFishInventory" EntityType="Self.UserFishInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFishLog" EntityType="Self.UserFishLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSlotLog" EntityType="Self.UserSlotLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BotInfo" EntityType="Self.BotInfo" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BotInfo].[Guilds] AS [Guilds], 
+    [BotInfo].[Commands] AS [Commands]
+    FROM [dbo].[BotInfo] AS [BotInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OsuTrackUser" EntityType="Self.OsuTrackUser" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [OsuTrackUser].[UserId] AS [UserId], 
+    [OsuTrackUser].[ChannelId] AS [ChannelId], 
+    [OsuTrackUser].[PpScore] AS [PpScore], 
+    [OsuTrackUser].[RankScore] AS [RankScore]
+    FROM [dbo].[OsuTrackUser] AS [OsuTrackUser]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__User__Background__7D439ABD" Association="Self.FK__User__Background__7D439ABD">
+            <End Role="ProfileBackground" EntitySet="ProfileBackground" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BugReport_DiscordGuild" Association="Self.FK_BugReport_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuild" />
+            <End Role="BugReport" EntitySet="BugReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BugReport_User" Association="Self.FK_BugReport_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="BugReport" EntitySet="BugReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeadChildren_DiscordGuild" Association="Self.FK_DeadChildren_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuild" />
+            <End Role="DeadChildren" EntitySet="DeadChildren" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscordChannel_DiscordGuild" Association="Self.FK_DiscordChannel_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuild" />
+            <End Role="DiscordChannel" EntitySet="DiscordChannel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscordGuild_DiscordChannel" Association="Self.FK_DiscordGuild_DiscordChannel">
+            <End Role="DiscordChannel" EntitySet="DiscordChannel" />
+            <End Role="DiscordGuild" EntitySet="DiscordGuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscordGuild_DiscordChannel1" Association="Self.FK_DiscordGuild_DiscordChannel1">
+            <End Role="DiscordChannel" EntitySet="DiscordChannel" />
+            <End Role="DiscordGuild" EntitySet="DiscordGuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OsuTrackUser_DiscordChannel" Association="Self.FK_OsuTrackUser_DiscordChannel">
+            <End Role="DiscordChannel" EntitySet="DiscordChannel" />
+            <End Role="OsuTrackUser" EntitySet="OsuTrackUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OsuTrackUser_OsuUser" Association="Self.FK_OsuTrackUser_OsuUser">
+            <End Role="OsuUser" EntitySet="OsuUser" />
+            <End Role="OsuTrackUser" EntitySet="OsuTrackUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OsuUser_User" Association="Self.FK_OsuUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="OsuUser" EntitySet="OsuUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TwitterPost_DiscordChannel" Association="Self.FK_TwitterPost_DiscordChannel">
+            <End Role="DiscordChannel" EntitySet="DiscordChannel" />
+            <End Role="TwitterPost" EntitySet="TwitterPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBackgrounds_ProfileBackground" Association="Self.FK_UserBackgrounds_ProfileBackground">
+            <End Role="ProfileBackground" EntitySet="ProfileBackground" />
+            <End Role="UserBackgrounds" EntitySet="UserBackgrounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBackgrounds_User" Association="Self.FK_UserBackgrounds_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserBackgrounds" EntitySet="UserBackgrounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEconomy_User" Association="Self.FK_UserEconomy_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserEconomy" EntitySet="UserEconomy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishInventory_FishType" Association="Self.FK_UserFishInventory_FishType">
+            <End Role="FishType" EntitySet="FishType" />
+            <End Role="UserFishInventory" EntitySet="UserFishInventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishInventory_UserEconomy" Association="Self.FK_UserFishInventory_UserEconomy">
+            <End Role="UserEconomy" EntitySet="UserEconomy" />
+            <End Role="UserFishInventory" EntitySet="UserFishInventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishLog_FishType" Association="Self.FK_UserFishLog_FishType">
+            <End Role="FishType" EntitySet="FishType" />
+            <End Role="UserFishLog" EntitySet="UserFishLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishLog_UserEconomy" Association="Self.FK_UserFishLog_UserEconomy">
+            <End Role="UserEconomy" EntitySet="UserEconomy" />
+            <End Role="UserFishLog" EntitySet="UserFishLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSlotLog_UserEconomy" Association="Self.FK_UserSlotLog_UserEconomy">
+            <End Role="UserEconomy" EntitySet="UserEconomy" />
+            <End Role="UserSlotLog" EntitySet="UserSlotLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CakeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BugReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="GuildId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DiscordGuild" Relationship="Self.FK_BugReport_DiscordGuild" FromRole="BugReport" ToRole="DiscordGuild" />
+          <NavigationProperty Name="User" Relationship="Self.FK_BugReport_User" FromRole="BugReport" ToRole="User" />
+        </EntityType>
+        <EntityType Name="DeadChildren">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateOfDeath" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="GuildId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DiscordGuild" Relationship="Self.FK_DeadChildren_DiscordGuild" FromRole="DeadChildren" ToRole="DiscordGuild" />
+        </EntityType>
+        <EntityType Name="DiscordChannel">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+          </Key>
+          <Property Name="ChannelId" Type="Int64" Nullable="false" />
+          <Property Name="GuildId" Type="Int64" Nullable="false" />
+          <Property Name="LastMapId" Type="Int32" />
+          <NavigationProperty Name="DiscordGuild" Relationship="Self.FK_DiscordChannel_DiscordGuild" FromRole="DiscordChannel" ToRole="DiscordGuild" />
+          <NavigationProperty Name="DiscordGuilds" Relationship="Self.FK_DiscordGuild_DiscordChannel" FromRole="DiscordChannel" ToRole="DiscordGuild" />
+          <NavigationProperty Name="DiscordGuilds1" Relationship="Self.FK_DiscordGuild_DiscordChannel1" FromRole="DiscordChannel" ToRole="DiscordGuild" />
+          <NavigationProperty Name="OsuTrackUsers" Relationship="Self.FK_OsuTrackUser_DiscordChannel" FromRole="DiscordChannel" ToRole="OsuTrackUser" />
+          <NavigationProperty Name="TwitterPosts" Relationship="Self.FK_TwitterPost_DiscordChannel" FromRole="DiscordChannel" ToRole="TwitterPost" />
+        </EntityType>
+        <EntityType Name="DiscordGuild">
+          <Key>
+            <PropertyRef Name="GuildId" />
+          </Key>
+          <Property Name="GuildId" Type="Int64" Nullable="false" />
+          <Property Name="GuildPrefix" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GuildWelcome" Type="Int64" />
+          <Property Name="GuildLeave" Type="Int64" />
+          <NavigationProperty Name="BugReports" Relationship="Self.FK_BugReport_DiscordGuild" FromRole="DiscordGuild" ToRole="BugReport" />
+          <NavigationProperty Name="DeadChildrens" Relationship="Self.FK_DeadChildren_DiscordGuild" FromRole="DiscordGuild" ToRole="DeadChildren" />
+          <NavigationProperty Name="DiscordChannels" Relationship="Self.FK_DiscordChannel_DiscordGuild" FromRole="DiscordGuild" ToRole="DiscordChannel" />
+          <NavigationProperty Name="DiscordChannel" Relationship="Self.FK_DiscordGuild_DiscordChannel" FromRole="DiscordGuild" ToRole="DiscordChannel" />
+          <NavigationProperty Name="DiscordChannel1" Relationship="Self.FK_DiscordGuild_DiscordChannel1" FromRole="DiscordGuild" ToRole="DiscordChannel" />
+        </EntityType>
+        <EntityType Name="FishType">
+          <Key>
+            <PropertyRef Name="FishId" />
+          </Key>
+          <Property Name="FishId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FishName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FishMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FIshWorth" Type="Int64" Nullable="false" />
+          <Property Name="FishActive" Type="Boolean" Nullable="false" />
+          <Property Name="FishEmoji" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FishRarity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserFishInventories" Relationship="Self.FK_UserFishInventory_FishType" FromRole="FishType" ToRole="UserFishInventory" />
+          <NavigationProperty Name="UserFishLogs" Relationship="Self.FK_UserFishLog_FishType" FromRole="FishType" ToRole="UserFishLog" />
+        </EntityType>
+        <EntityType Name="OsuUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="OsuId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OsuMode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OsuTrackUsers" Relationship="Self.FK_OsuTrackUser_OsuUser" FromRole="OsuUser" ToRole="OsuTrackUser" />
+          <NavigationProperty Name="User" Relationship="Self.FK_OsuUser_User" FromRole="OsuUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ProfileBackground">
+          <Key>
+            <PropertyRef Name="BackgroundId" />
+          </Key>
+          <Property Name="BackgroundId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BackgroundPrice" Type="Int64" Nullable="false" />
+          <Property Name="BackgroundDir" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BackgroundActive" Type="Boolean" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__Background__7D439ABD" FromRole="ProfileBackground" ToRole="User" />
+          <NavigationProperty Name="UserBackgrounds" Relationship="Self.FK_UserBackgrounds_ProfileBackground" FromRole="ProfileBackground" ToRole="UserBackgrounds" />
+        </EntityType>
+        <EntityType Name="SpamTrack">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="GuildId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="GuildId" Type="Int64" Nullable="false" />
+          <Property Name="Pressure" Type="Double" Nullable="false" />
+          <Property Name="LastMessage" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TwitterPost">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TwitterId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="ChannelId" Type="Int64" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DiscordChannel" Relationship="Self.FK_TwitterPost_DiscordChannel" FromRole="TwitterPost" ToRole="DiscordChannel" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="UserXp" Type="Int32" Nullable="false" />
+          <Property Name="TotalXp" Type="Int64" Nullable="false" />
+          <Property Name="UserLevel" Type="Int32" Nullable="false" />
+          <Property Name="UserAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="BackgroundId" Type="Int32" Nullable="false" />
+          <Property Name="ColorHex" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Restricted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BugReports" Relationship="Self.FK_BugReport_User" FromRole="User" ToRole="BugReport" />
+          <NavigationProperty Name="OsuUser" Relationship="Self.FK_OsuUser_User" FromRole="User" ToRole="OsuUser" />
+          <NavigationProperty Name="ProfileBackground" Relationship="Self.FK__User__Background__7D439ABD" FromRole="User" ToRole="ProfileBackground" />
+          <NavigationProperty Name="UserBackgrounds" Relationship="Self.FK_UserBackgrounds_User" FromRole="User" ToRole="UserBackgrounds" />
+          <NavigationProperty Name="UserEconomy" Relationship="Self.FK_UserEconomy_User" FromRole="User" ToRole="UserEconomy" />
+        </EntityType>
+        <EntityType Name="UserBackground">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="BackgroundId" Type="Int32" Nullable="false" />
+          <Property Name="RowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ProfileBackground" Relationship="Self.FK_UserBackgrounds_ProfileBackground" FromRole="UserBackgrounds" ToRole="ProfileBackground" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserBackgrounds_User" FromRole="UserBackgrounds" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserEconomy">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="UserMoney" Type="Int64" Nullable="false" />
+          <Property Name="UserDaily" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserEconomy_User" FromRole="UserEconomy" ToRole="User" />
+          <NavigationProperty Name="UserFishInventories" Relationship="Self.FK_UserFishInventory_UserEconomy" FromRole="UserEconomy" ToRole="UserFishInventory" />
+          <NavigationProperty Name="UserFishLogs" Relationship="Self.FK_UserFishLog_UserEconomy" FromRole="UserEconomy" ToRole="UserFishLog" />
+          <NavigationProperty Name="UserSlotLogs" Relationship="Self.FK_UserSlotLog_UserEconomy" FromRole="UserEconomy" ToRole="UserSlotLog" />
+        </EntityType>
+        <EntityType Name="UserFishInventory">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="FishId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="AmountSold" Type="Int32" Nullable="false" />
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="FishType" Relationship="Self.FK_UserFishInventory_FishType" FromRole="UserFishInventory" ToRole="FishType" />
+          <NavigationProperty Name="UserEconomy" Relationship="Self.FK_UserFishInventory_UserEconomy" FromRole="UserFishInventory" ToRole="UserEconomy" />
+        </EntityType>
+        <EntityType Name="UserFishLog">
+          <Key>
+            <PropertyRef Name="FishLogId" />
+          </Key>
+          <Property Name="FishLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="FishId" Type="Int32" Nullable="false" />
+          <Property Name="DateFished" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MoneyBefore" Type="Int64" />
+          <Property Name="MoneyAfter" Type="Int64" />
+          <NavigationProperty Name="FishType" Relationship="Self.FK_UserFishLog_FishType" FromRole="UserFishLog" ToRole="FishType" />
+          <NavigationProperty Name="UserEconomy" Relationship="Self.FK_UserFishLog_UserEconomy" FromRole="UserFishLog" ToRole="UserEconomy" />
+        </EntityType>
+        <EntityType Name="UserSlotLog">
+          <Key>
+            <PropertyRef Name="SlotId" />
+          </Key>
+          <Property Name="SlotId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="SlotAward" Type="Int64" Nullable="false" />
+          <Property Name="DateUsed" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MoneyBefore" Type="Int64" />
+          <Property Name="MoneyAfter" Type="Int64" />
+          <NavigationProperty Name="UserEconomy" Relationship="Self.FK_UserSlotLog_UserEconomy" FromRole="UserSlotLog" ToRole="UserEconomy" />
+        </EntityType>
+        <EntityType Name="BotInfo">
+          <Key>
+            <PropertyRef Name="Guilds" />
+            <PropertyRef Name="Commands" />
+          </Key>
+          <Property Name="Guilds" Type="Int32" Nullable="false" />
+          <Property Name="Commands" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OsuTrackUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ChannelId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="ChannelId" Type="Int64" Nullable="false" />
+          <Property Name="PpScore" Type="Int32" />
+          <Property Name="RankScore" Type="Int32" />
+          <NavigationProperty Name="DiscordChannel" Relationship="Self.FK_OsuTrackUser_DiscordChannel" FromRole="OsuTrackUser" ToRole="DiscordChannel" />
+          <NavigationProperty Name="OsuUser" Relationship="Self.FK_OsuTrackUser_OsuUser" FromRole="OsuTrackUser" ToRole="OsuUser" />
+        </EntityType>
+        <Association Name="FK_BugReport_DiscordGuild">
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="1" />
+          <End Role="BugReport" Type="Self.BugReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="BugReport">
+              <PropertyRef Name="GuildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BugReport_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BugReport" Type="Self.BugReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BugReport">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeadChildren_DiscordGuild">
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="1" />
+          <End Role="DeadChildren" Type="Self.DeadChildren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="DeadChildren">
+              <PropertyRef Name="GuildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscordChannel_DiscordGuild">
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="1" />
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="DiscordChannel">
+              <PropertyRef Name="GuildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscordGuild_DiscordChannel">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="0..1" />
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="DiscordGuild">
+              <PropertyRef Name="GuildWelcome" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscordGuild_DiscordChannel1">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="0..1" />
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="DiscordGuild">
+              <PropertyRef Name="GuildLeave" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OsuTrackUser_DiscordChannel">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="1" />
+          <End Role="OsuTrackUser" Type="Self.OsuTrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="OsuTrackUser">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TwitterPost_DiscordChannel">
+          <End Role="DiscordChannel" Type="Self.DiscordChannel" Multiplicity="1" />
+          <End Role="TwitterPost" Type="Self.TwitterPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordChannel">
+              <PropertyRef Name="ChannelId" />
+            </Principal>
+            <Dependent Role="TwitterPost">
+              <PropertyRef Name="ChannelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishInventory_FishType">
+          <End Role="FishType" Type="Self.FishType" Multiplicity="1" />
+          <End Role="UserFishInventory" Type="Self.UserFishInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FishType">
+              <PropertyRef Name="FishId" />
+            </Principal>
+            <Dependent Role="UserFishInventory">
+              <PropertyRef Name="FishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishLog_FishType">
+          <End Role="FishType" Type="Self.FishType" Multiplicity="1" />
+          <End Role="UserFishLog" Type="Self.UserFishLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FishType">
+              <PropertyRef Name="FishId" />
+            </Principal>
+            <Dependent Role="UserFishLog">
+              <PropertyRef Name="FishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OsuTrackUser_OsuUser">
+          <End Role="OsuUser" Type="Self.OsuUser" Multiplicity="1" />
+          <End Role="OsuTrackUser" Type="Self.OsuTrackUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OsuUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="OsuTrackUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OsuUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="OsuUser" Type="Self.OsuUser" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="OsuUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__Background__7D439ABD">
+          <End Role="ProfileBackground" Type="Self.ProfileBackground" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfileBackground">
+              <PropertyRef Name="BackgroundId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BackgroundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBackgrounds_ProfileBackground">
+          <End Role="ProfileBackground" Type="Self.ProfileBackground" Multiplicity="1" />
+          <End Role="UserBackgrounds" Type="Self.UserBackground" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfileBackground">
+              <PropertyRef Name="BackgroundId" />
+            </Principal>
+            <Dependent Role="UserBackgrounds">
+              <PropertyRef Name="BackgroundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBackgrounds_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserBackgrounds" Type="Self.UserBackground" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserBackgrounds">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEconomy_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishInventory_UserEconomy">
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="1" />
+          <End Role="UserFishInventory" Type="Self.UserFishInventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserFishInventory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserFishLog_UserEconomy">
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="1" />
+          <End Role="UserFishLog" Type="Self.UserFishLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserFishLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSlotLog_UserEconomy">
+          <End Role="UserEconomy" Type="Self.UserEconomy" Multiplicity="1" />
+          <End Role="UserSlotLog" Type="Self.UserSlotLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEconomy">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSlotLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CakeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BugReports" EntityType="Self.BugReport" />
+          <EntitySet Name="DeadChildrens" EntityType="Self.DeadChildren" />
+          <EntitySet Name="DiscordChannels" EntityType="Self.DiscordChannel" />
+          <EntitySet Name="DiscordGuilds" EntityType="Self.DiscordGuild" />
+          <EntitySet Name="FishTypes" EntityType="Self.FishType" />
+          <EntitySet Name="OsuUsers" EntityType="Self.OsuUser" />
+          <EntitySet Name="ProfileBackgrounds" EntityType="Self.ProfileBackground" />
+          <EntitySet Name="SpamTracks" EntityType="Self.SpamTrack" />
+          <EntitySet Name="TwitterPosts" EntityType="Self.TwitterPost" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserBackgrounds" EntityType="Self.UserBackground" />
+          <EntitySet Name="UserEconomies" EntityType="Self.UserEconomy" />
+          <EntitySet Name="UserFishInventories" EntityType="Self.UserFishInventory" />
+          <EntitySet Name="UserFishLogs" EntityType="Self.UserFishLog" />
+          <EntitySet Name="UserSlotLogs" EntityType="Self.UserSlotLog" />
+          <EntitySet Name="BotInfoes" EntityType="Self.BotInfo" />
+          <EntitySet Name="OsuTrackUsers" EntityType="Self.OsuTrackUser" />
+          <AssociationSet Name="FK_BugReport_DiscordGuild" Association="Self.FK_BugReport_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuilds" />
+            <End Role="BugReport" EntitySet="BugReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BugReport_User" Association="Self.FK_BugReport_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BugReport" EntitySet="BugReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeadChildren_DiscordGuild" Association="Self.FK_DeadChildren_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuilds" />
+            <End Role="DeadChildren" EntitySet="DeadChildrens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscordChannel_DiscordGuild" Association="Self.FK_DiscordChannel_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuilds" />
+            <End Role="DiscordChannel" EntitySet="DiscordChannels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscordGuild_DiscordChannel" Association="Self.FK_DiscordGuild_DiscordChannel">
+            <End Role="DiscordChannel" EntitySet="DiscordChannels" />
+            <End Role="DiscordGuild" EntitySet="DiscordGuilds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscordGuild_DiscordChannel1" Association="Self.FK_DiscordGuild_DiscordChannel1">
+            <End Role="DiscordChannel" EntitySet="DiscordChannels" />
+            <End Role="DiscordGuild" EntitySet="DiscordGuilds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OsuTrackUser_DiscordChannel" Association="Self.FK_OsuTrackUser_DiscordChannel">
+            <End Role="DiscordChannel" EntitySet="DiscordChannels" />
+            <End Role="OsuTrackUser" EntitySet="OsuTrackUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TwitterPost_DiscordChannel" Association="Self.FK_TwitterPost_DiscordChannel">
+            <End Role="DiscordChannel" EntitySet="DiscordChannels" />
+            <End Role="TwitterPost" EntitySet="TwitterPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishInventory_FishType" Association="Self.FK_UserFishInventory_FishType">
+            <End Role="FishType" EntitySet="FishTypes" />
+            <End Role="UserFishInventory" EntitySet="UserFishInventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishLog_FishType" Association="Self.FK_UserFishLog_FishType">
+            <End Role="FishType" EntitySet="FishTypes" />
+            <End Role="UserFishLog" EntitySet="UserFishLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OsuTrackUser_OsuUser" Association="Self.FK_OsuTrackUser_OsuUser">
+            <End Role="OsuUser" EntitySet="OsuUsers" />
+            <End Role="OsuTrackUser" EntitySet="OsuTrackUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OsuUser_User" Association="Self.FK_OsuUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="OsuUser" EntitySet="OsuUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__Background__7D439ABD" Association="Self.FK__User__Background__7D439ABD">
+            <End Role="ProfileBackground" EntitySet="ProfileBackgrounds" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBackgrounds_ProfileBackground" Association="Self.FK_UserBackgrounds_ProfileBackground">
+            <End Role="ProfileBackground" EntitySet="ProfileBackgrounds" />
+            <End Role="UserBackgrounds" EntitySet="UserBackgrounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBackgrounds_User" Association="Self.FK_UserBackgrounds_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserBackgrounds" EntitySet="UserBackgrounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEconomy_User" Association="Self.FK_UserEconomy_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserEconomy" EntitySet="UserEconomies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishInventory_UserEconomy" Association="Self.FK_UserFishInventory_UserEconomy">
+            <End Role="UserEconomy" EntitySet="UserEconomies" />
+            <End Role="UserFishInventory" EntitySet="UserFishInventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFishLog_UserEconomy" Association="Self.FK_UserFishLog_UserEconomy">
+            <End Role="UserEconomy" EntitySet="UserEconomies" />
+            <End Role="UserFishLog" EntitySet="UserFishLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSlotLog_UserEconomy" Association="Self.FK_UserSlotLog_UserEconomy">
+            <End Role="UserEconomy" EntitySet="UserEconomies" />
+            <End Role="UserSlotLog" EntitySet="UserSlotLogs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CakeModelStoreContainer" CdmEntityContainer="CakeEntities">
+          <EntitySetMapping Name="BugReports">
+            <EntityTypeMapping TypeName="CakeModel.BugReport">
+              <MappingFragment StoreEntitySet="BugReport">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="GuildId" ColumnName="GuildId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeadChildrens">
+            <EntityTypeMapping TypeName="CakeModel.DeadChildren">
+              <MappingFragment StoreEntitySet="DeadChildren">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOfDeath" ColumnName="DateOfDeath" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="GuildId" ColumnName="GuildId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscordChannels">
+            <EntityTypeMapping TypeName="CakeModel.DiscordChannel">
+              <MappingFragment StoreEntitySet="DiscordChannel">
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="GuildId" ColumnName="GuildId" />
+                <ScalarProperty Name="LastMapId" ColumnName="LastMapId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscordGuilds">
+            <EntityTypeMapping TypeName="CakeModel.DiscordGuild">
+              <MappingFragment StoreEntitySet="DiscordGuild">
+                <ScalarProperty Name="GuildId" ColumnName="GuildId" />
+                <ScalarProperty Name="GuildPrefix" ColumnName="GuildPrefix" />
+                <ScalarProperty Name="GuildWelcome" ColumnName="GuildWelcome" />
+                <ScalarProperty Name="GuildLeave" ColumnName="GuildLeave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FishTypes">
+            <EntityTypeMapping TypeName="CakeModel.FishType">
+              <MappingFragment StoreEntitySet="FishType">
+                <ScalarProperty Name="FishId" ColumnName="FishId" />
+                <ScalarProperty Name="FishName" ColumnName="FishName" />
+                <ScalarProperty Name="FishMessage" ColumnName="FishMessage" />
+                <ScalarProperty Name="FIshWorth" ColumnName="FIshWorth" />
+                <ScalarProperty Name="FishActive" ColumnName="FishActive" />
+                <ScalarProperty Name="FishEmoji" ColumnName="FishEmoji" />
+                <ScalarProperty Name="FishRarity" ColumnName="FishRarity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OsuUsers">
+            <EntityTypeMapping TypeName="CakeModel.OsuUser">
+              <MappingFragment StoreEntitySet="OsuUser">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OsuId" ColumnName="OsuId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="OsuMode" ColumnName="OsuMode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProfileBackgrounds">
+            <EntityTypeMapping TypeName="CakeModel.ProfileBackground">
+              <MappingFragment StoreEntitySet="ProfileBackground">
+                <ScalarProperty Name="BackgroundId" ColumnName="BackgroundId" />
+                <ScalarProperty Name="BackgroundPrice" ColumnName="BackgroundPrice" />
+                <ScalarProperty Name="BackgroundDir" ColumnName="BackgroundDir" />
+                <ScalarProperty Name="BackgroundActive" ColumnName="BackgroundActive" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpamTracks">
+            <EntityTypeMapping TypeName="CakeModel.SpamTrack">
+              <MappingFragment StoreEntitySet="SpamTracks">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="GuildId" ColumnName="GuildId" />
+                <ScalarProperty Name="Pressure" ColumnName="Pressure" />
+                <ScalarProperty Name="LastMessage" ColumnName="LastMessage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TwitterPosts">
+            <EntityTypeMapping TypeName="CakeModel.TwitterPost">
+              <MappingFragment StoreEntitySet="TwitterPost">
+                <ScalarProperty Name="TwitterId" ColumnName="TwitterId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CakeModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserXp" ColumnName="UserXp" />
+                <ScalarProperty Name="TotalXp" ColumnName="TotalXp" />
+                <ScalarProperty Name="UserLevel" ColumnName="UserLevel" />
+                <ScalarProperty Name="UserAdmin" ColumnName="UserAdmin" />
+                <ScalarProperty Name="BackgroundId" ColumnName="BackgroundId" />
+                <ScalarProperty Name="ColorHex" ColumnName="ColorHex" />
+                <ScalarProperty Name="Restricted" ColumnName="Restricted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserBackgrounds">
+            <EntityTypeMapping TypeName="CakeModel.UserBackground">
+              <MappingFragment StoreEntitySet="UserBackgrounds">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BackgroundId" ColumnName="BackgroundId" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserEconomies">
+            <EntityTypeMapping TypeName="CakeModel.UserEconomy">
+              <MappingFragment StoreEntitySet="UserEconomy">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserMoney" ColumnName="UserMoney" />
+                <ScalarProperty Name="UserDaily" ColumnName="UserDaily" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFishInventories">
+            <EntityTypeMapping TypeName="CakeModel.UserFishInventory">
+              <MappingFragment StoreEntitySet="UserFishInventory">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FishId" ColumnName="FishId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AmountSold" ColumnName="AmountSold" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFishLogs">
+            <EntityTypeMapping TypeName="CakeModel.UserFishLog">
+              <MappingFragment StoreEntitySet="UserFishLog">
+                <ScalarProperty Name="FishLogId" ColumnName="FishLogId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FishId" ColumnName="FishId" />
+                <ScalarProperty Name="DateFished" ColumnName="DateFished" />
+                <ScalarProperty Name="MoneyBefore" ColumnName="MoneyBefore" />
+                <ScalarProperty Name="MoneyAfter" ColumnName="MoneyAfter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSlotLogs">
+            <EntityTypeMapping TypeName="CakeModel.UserSlotLog">
+              <MappingFragment StoreEntitySet="UserSlotLog">
+                <ScalarProperty Name="SlotId" ColumnName="SlotId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SlotAward" ColumnName="SlotAward" />
+                <ScalarProperty Name="DateUsed" ColumnName="DateUsed" />
+                <ScalarProperty Name="MoneyBefore" ColumnName="MoneyBefore" />
+                <ScalarProperty Name="MoneyAfter" ColumnName="MoneyAfter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BotInfoes">
+            <EntityTypeMapping TypeName="CakeModel.BotInfo">
+              <MappingFragment StoreEntitySet="BotInfo">
+                <ScalarProperty Name="Guilds" ColumnName="Guilds" />
+                <ScalarProperty Name="Commands" ColumnName="Commands" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OsuTrackUsers">
+            <EntityTypeMapping TypeName="CakeModel.OsuTrackUser">
+              <MappingFragment StoreEntitySet="OsuTrackUser">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="PpScore" ColumnName="PpScore" />
+                <ScalarProperty Name="RankScore" ColumnName="RankScore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

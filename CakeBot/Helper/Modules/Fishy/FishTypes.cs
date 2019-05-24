@@ -13,7 +13,7 @@ namespace CakeBot.Helper.Modules.Fishy
     }
     public static class FishLists
     {
-        private static CakeBotEntities _db = new CakeBotEntities();
+        private static CakeEntities _db = new CakeEntities();
 
         // List of Every Rarity with Emoji's
         public static List<FishType> TrashList = new List<FishType>();
