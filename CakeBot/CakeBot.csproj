@@ -341,6 +341,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.Config" />
     <None Include="Resources\FigletFonts\colossal.flf" />
     <None Include="Helper\Database\Model\DbModel.edmx.diagram">
       <DependentUpon>DbModel.edmx</DependentUpon>
