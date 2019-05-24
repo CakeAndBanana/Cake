@@ -23,6 +23,7 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.BotInfo' does not have a pri
           <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="Message" Type="text" Nullable="false" />
           <Property Name="Completed" Type="bit" Nullable="false" />
+          <Property Name="GuildId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="DeadChildren">
           <Key>
@@ -183,6 +184,18 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="BackgroundId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BugReport_DiscordGuild">
+          <End Role="DiscordGuild" Type="Self.DiscordGuild" Multiplicity="1" />
+          <End Role="BugReport" Type="Self.BugReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="BugReport">
+              <PropertyRef Name="GuildId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -455,6 +468,10 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
             <End Role="ProfileBackground" EntitySet="ProfileBackground" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
+          <AssociationSet Name="FK_BugReport_DiscordGuild" Association="Self.FK_BugReport_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuild" />
+            <End Role="BugReport" EntitySet="BugReport" />
+          </AssociationSet>
           <AssociationSet Name="FK_BugReport_User" Association="Self.FK_BugReport_User">
             <End Role="User" EntitySet="User" />
             <End Role="BugReport" EntitySet="BugReport" />
@@ -644,6 +661,10 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
             <End Role="DeadChildren" EntitySet="DeadChildrens" />
           </AssociationSet>
           <EntitySet Name="BugReports" EntityType="CakeBotModel.BugReport" />
+          <AssociationSet Name="FK_BugReport_DiscordGuild" Association="CakeBotModel.FK_BugReport_DiscordGuild">
+            <End Role="DiscordGuild" EntitySet="DiscordGuilds" />
+            <End Role="BugReport" EntitySet="BugReports" />
+          </AssociationSet>
           <AssociationSet Name="FK_BugReport_User" Association="CakeBotModel.FK_BugReport_User">
             <End Role="User" EntitySet="Users" />
             <End Role="BugReport" EntitySet="BugReports" />
@@ -995,6 +1016,7 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <NavigationProperty Name="DiscordChannel" Relationship="CakeBotModel.FK_DiscordGuild_DiscordChannel" FromRole="DiscordGuild" ToRole="DiscordChannel" />
           <NavigationProperty Name="DiscordChannel1" Relationship="CakeBotModel.FK_DiscordGuild_DiscordChannel1" FromRole="DiscordGuild" ToRole="DiscordChannel" />
           <NavigationProperty Name="DeadChildrens" Relationship="CakeBotModel.FK_DeadChildren_DiscordGuild" FromRole="DiscordGuild" ToRole="DeadChildren" />
+          <NavigationProperty Name="BugReports" Relationship="CakeBotModel.FK_BugReport_DiscordGuild" FromRole="DiscordGuild" ToRole="BugReport" />
         </EntityType>
         <Association Name="FK_DiscordChannel_DiscordGuild">
           <End Type="CakeBotModel.DiscordGuild" Role="DiscordGuild" Multiplicity="1" />
@@ -1063,8 +1085,22 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <Property Name="UserId" Type="Int64" Nullable="false" />
           <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Completed" Type="Boolean" Nullable="false" />
+          <Property Name="GuildId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DiscordGuild" Relationship="CakeBotModel.FK_BugReport_DiscordGuild" FromRole="BugReport" ToRole="DiscordGuild" />
           <NavigationProperty Name="User" Relationship="CakeBotModel.FK_BugReport_User" FromRole="BugReport" ToRole="User" />
         </EntityType>
+        <Association Name="FK_BugReport_DiscordGuild">
+          <End Type="CakeBotModel.DiscordGuild" Role="DiscordGuild" Multiplicity="1" />
+          <End Type="CakeBotModel.BugReport" Role="BugReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscordGuild">
+              <PropertyRef Name="GuildId" />
+            </Principal>
+            <Dependent Role="BugReport">
+              <PropertyRef Name="GuildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BugReport_User">
           <End Type="CakeBotModel.User" Role="User" Multiplicity="1" />
           <End Type="CakeBotModel.BugReport" Role="BugReport" Multiplicity="*" />
@@ -1279,6 +1315,7 @@ warning 6002: The table/view 'DB_A3D6D6_NextBot.dbo.OsuTrackUser' does not have 
           <EntitySetMapping Name="BugReports">
             <EntityTypeMapping TypeName="CakeBotModel.BugReport">
               <MappingFragment StoreEntitySet="BugReport">
+                <ScalarProperty Name="GuildId" ColumnName="GuildId" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

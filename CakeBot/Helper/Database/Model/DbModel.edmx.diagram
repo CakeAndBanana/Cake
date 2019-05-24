@@ -38,7 +38,8 @@
         <AssociationConnector Association="CakeBotModel.FK_DiscordGuild_DiscordChannel1" />
         <EntityTypeShape EntityType="CakeBotModel.DeadChildren" Width="1.5" PointX="5.25" PointY="9.125" />
         <AssociationConnector Association="CakeBotModel.FK_DeadChildren_DiscordGuild" />
-        <EntityTypeShape EntityType="CakeBotModel.BugReport" Width="1.5" PointX="3.75" PointY="24.625" />
+        <EntityTypeShape EntityType="CakeBotModel.BugReport" Width="1.5" PointX="8.25" PointY="9.5" />
+        <AssociationConnector Association="CakeBotModel.FK_BugReport_DiscordGuild" />
         <AssociationConnector Association="CakeBotModel.FK_BugReport_User" />
         </Diagram>
     </edmx:Diagrams>
