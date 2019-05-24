@@ -73,6 +73,7 @@
     <Compile Include="Core\Services\SetupServices.cs" />
     <Compile Include="Helper\AntiSpam\Filter.cs" />
     <Compile Include="Helper\AntiSpam\SpamConfig.cs" />
+    <Compile Include="Helper\CakeCooldownModel.cs" />
     <Compile Include="Helper\Database\Model\BotInfo.cs">
       <DependentUpon>CakeModel.tt</DependentUpon>
     </Compile>
