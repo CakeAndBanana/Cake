@@ -223,7 +223,8 @@ namespace CakeBot.Modules.Services
                     .WithDescription($"Message: {report.Message}\n")
                     .WithFooter(
                     $"Send by {Module.Context.User}({Module.Context.User.Id}) in {Module.Context.Guild}({Module.Context.Guild.Id})") as CakeEmbedBuilder;
-                await SendEmbedAsync(embed);
+                var channel = BotUtil.GetGuild(221413016913051648).GetTextChannel(581385348421124107);
+                await channel.SendMessageAsync("", false, embed.Build());
             }
             catch (CakeException e)
             {

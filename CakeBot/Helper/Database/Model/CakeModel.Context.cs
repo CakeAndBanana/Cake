@@ -11,15 +11,26 @@ namespace CakeBot.Helper.Database.Model
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Core.EntityClient;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
+    using CakeBot.Core;
+
     public partial class CakeEntities : DbContext
     {
         public CakeEntities()
-            : base("name=CakeEntities")
+            : base(((EntityConnectionStringBuilder)new EntityConnectionStringBuilder()
+            {
+                Provider = "System.Data.SqlClient",
+                ProviderConnectionString = Config.ConnectionString,
+                Metadata =
+                    @"res://*/Helper.Database.Model.DbModel.csdl|res://*/Helper.Database.Model.DbModel.ssdl|res://*/Helper.Database.Model.DbModel.msl"
+            }).ToString())
         {
+
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
