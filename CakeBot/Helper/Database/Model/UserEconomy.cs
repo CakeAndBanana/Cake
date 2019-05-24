@@ -17,21 +17,21 @@ namespace CakeBot.Helper.Database.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserEconomy()
         {
+            this.UserFishInventories = new HashSet<UserFishInventory>();
             this.UserFishLogs = new HashSet<UserFishLog>();
             this.UserSlotLogs = new HashSet<UserSlotLog>();
-            this.UserFishInventories = new HashSet<UserFishInventory>();
         }
     
         public long UserId { get; set; }
         public long UserMoney { get; set; }
         public System.DateTime UserDaily { get; set; }
     
+        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserFishInventory> UserFishInventories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserFishLog> UserFishLogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSlotLog> UserSlotLogs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserFishInventory> UserFishInventories { get; set; }
-        public virtual User User { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace CakeBot.Helper.Database.Queries
 {
     public class TwitterQueries
     {
-        private static readonly CakeBotEntities Db = new CakeBotEntities();
+        private static readonly CakeEntities Db = new CakeEntities();
 
         public static async Task<List<TwitterPost>> ListTwitterPost(ulong channelId)
         {

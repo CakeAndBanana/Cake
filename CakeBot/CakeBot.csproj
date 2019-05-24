@@ -73,6 +73,73 @@
     <Compile Include="Core\Services\SetupServices.cs" />
     <Compile Include="Helper\AntiSpam\Filter.cs" />
     <Compile Include="Helper\AntiSpam\SpamConfig.cs" />
+    <Compile Include="Helper\Database\Model\BotInfo.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\BugReport.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\CakeModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CakeModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\CakeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\CakeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CakeModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\DeadChildren.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\DiscordChannel.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\DiscordGuild.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\FishType.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\OsuTrackUser.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\OsuUser.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\ProfileBackground.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\SpamTrack.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\TwitterPost.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\User.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\UserBackground.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\UserEconomy.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\UserFishInventory.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\UserFishLog.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Model\UserSlotLog.cs">
+      <DependentUpon>CakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Database\Queries\BugQueries.cs" />
     <Compile Include="Helper\JsonStorage\JsonConfig.cs" />
     <Compile Include="Helper\JsonStorage\Model\ConfigModel.cs" />
     <Compile Include="Helper\LongExt.cs" />
@@ -83,60 +150,6 @@
     <Compile Include="Helper\Modules\BF4\Model\Bf4Model.cs" />
     <Compile Include="Helper\Modules\Osu\OsuDlBeatmap.cs" />
     <Compile Include="Helper\ThreadSafeRandom.cs" />
-    <Compile Include="Helper\Database\Model\BotInfo.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\DeadChildren.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\DiscordChannel.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\DiscordGuild.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\FishType.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\OsuTrackUser.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\OsuUser.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\ProfileBackground.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\SpamTrack.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\sp_helpdiagrams_Result.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\TwitterPost.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\User.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\UserBackground.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\UserEconomy.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\UserFishInventory.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\UserFishLog.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\UserSlotLog.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Helper\Database\Queries\BackgroundQueries.cs" />
     <Compile Include="Helper\Database\Queries\BotQueries.cs" />
     <Compile Include="Helper\Database\Queries\EconomyQueries.cs" />
@@ -153,21 +166,6 @@
     <Compile Include="Helper\Logging\LoggingMessage.cs" />
     <Compile Include="Helper\Modules\Osu\Builder\OsuBestBuilder.cs" />
     <Compile Include="Helper\Modules\Osu\Builder\OsuMatchBuilder.cs" />
-    <Compile Include="Helper\Database\Model\DbModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\DbModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Helper\Database\Model\DbModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Helper\Database\Queries\ChannelQueries.cs" />
     <Compile Include="Helper\Database\Queries\FishQueries.cs" />
     <Compile Include="Helper\Database\Queries\OsuQueries.cs" />
@@ -322,30 +320,30 @@
     <Content Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Helper\Database\Model\DbModel.Context.tt">
+    <Content Include="Helper\Database\Model\CakeModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbModel.edmx</DependentUpon>
-      <LastGenOutput>DbModel.Context.cs</LastGenOutput>
+      <DependentUpon>CakeModel.edmx</DependentUpon>
+      <LastGenOutput>CakeModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Helper\Database\Model\DbModel.tt">
+    <Content Include="Helper\Database\Model\CakeModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbModel.edmx</DependentUpon>
-      <LastGenOutput>DbModel.cs</LastGenOutput>
+      <DependentUpon>CakeModel.edmx</DependentUpon>
+      <LastGenOutput>CakeModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Helper\Database\Model\DbModel.edmx">
+    <EntityDeploy Include="Helper\Database\Model\CakeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DbModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>CakeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.Config" />
-    <None Include="Resources\FigletFonts\colossal.flf" />
-    <None Include="Helper\Database\Model\DbModel.edmx.diagram">
-      <DependentUpon>DbModel.edmx</DependentUpon>
+    <None Include="Helper\Database\Model\CakeModel.edmx.diagram">
+      <DependentUpon>CakeModel.edmx</DependentUpon>
     </None>
+    <None Include="Resources\FigletFonts\colossal.flf" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

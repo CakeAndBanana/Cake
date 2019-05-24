@@ -10,7 +10,7 @@ namespace CakeBot.Helper.Database.Queries
 {
     public static class FishQueries
     {
-        private static CakeBotEntities Db = new CakeBotEntities();
+        private static CakeEntities Db = new CakeEntities();
         private const long catchPrice = 10;
         public static async Task<bool> AddFish(FishType fish)
         {
@@ -18,7 +18,7 @@ namespace CakeBot.Helper.Database.Queries
             {
                 Db.FishTypes.Add(fish);
                 await Db.SaveChangesAsync();
-                Db = new CakeBotEntities();
+                Db = new CakeEntities();
                 switch (fish.FishRarity)
                 {
                     case 0:
@@ -90,7 +90,7 @@ namespace CakeBot.Helper.Database.Queries
                 }
 
                 await Db.SaveChangesAsync();
-                Db = new CakeBotEntities();
+                Db = new CakeEntities();
             }
             catch(Exception e)
             {
@@ -99,7 +99,7 @@ namespace CakeBot.Helper.Database.Queries
         }
         public static async Task<bool> CheckEligibility(ulong userId)
         {
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var result =
                 await (from ufi in Db.UserFishLogs
                        where ufi.UserId == (long)userId
@@ -110,7 +110,7 @@ namespace CakeBot.Helper.Database.Queries
         }
         public static async Task<string> GetTimeRemaining(ulong userId)
         {
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var result =
                 await (from ufi in Db.UserFishLogs
                        where ufi.UserId == (long)userId
@@ -119,7 +119,7 @@ namespace CakeBot.Helper.Database.Queries
             return timeRemaining.Seconds.ToString();
         }
 
-        public static async Task<string> SellFish(ulong userId,int fishId, CakeBotEntities db)
+        public static async Task<string> SellFish(ulong userId,int fishId, CakeEntities db)
         {
             // Sells the fish and adds the reward to the User's money
             var result =
@@ -144,7 +144,7 @@ namespace CakeBot.Helper.Database.Queries
 
         }
 
-        public static async Task<string> SellFishByGroup(ulong userId, string groupName ,CakeBotEntities db)
+        public static async Task<string> SellFishByGroup(ulong userId, string groupName , CakeEntities db)
         {
             int totalSold = 0;
             long totalReward = 0;
@@ -202,7 +202,7 @@ namespace CakeBot.Helper.Database.Queries
 
         public static async Task<long> GetTotalCasts(ulong userId)
         {
-            Db = new CakeBotEntities();
+            Db = new CakeEntities();
             var result =
                 await (from ufi in Db.UserFishLogs
                        where ufi.UserId == (long)userId

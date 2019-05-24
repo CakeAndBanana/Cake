@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using CakeBot.Core;
 using CakeBot.Helper;
 using CakeBot.Helper.Database.Queries;
+using CakeBot.Helper.Exceptions;
+using CakeBot.Helper.Logging;
 using Discord;
 using Discord.Commands;
 using EmbedType = CakeBot.Helper.EmbedType;
@@ -208,6 +210,25 @@ namespace CakeBot.Modules.Services
                 await user.AddRoleAsync(role);
                 await SendMessageAsync($"Added to {role.Name} role");
                 break;
+            }
+        }
+
+        public async Task BugReport(string message)
+        {
+            try
+            {
+                var report = await BugQueries.CreateNewBugReport(message, Module.Context.User.Id, Module.Context.Guild.Id);
+                var embed = new CakeEmbedBuilder()
+                    .WithTitle($"Bug report | id {report.Id}")
+                    .WithDescription($"Message: {report.Message}\n")
+                    .WithFooter(
+                    $"Send by {Module.Context.User}({Module.Context.User.Id}) in {Module.Context.Guild}({Module.Context.Guild.Id})") as CakeEmbedBuilder;
+                await SendEmbedAsync(embed);
+            }
+            catch (CakeException e)
+            {
+                var embedError = e.GetEmbededError();
+                await SendEmbedAsync(embedError);
             }
         }
 

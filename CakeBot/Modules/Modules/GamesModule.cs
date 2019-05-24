@@ -11,7 +11,7 @@ namespace CakeBot.Modules.Modules
     {
         private readonly GamesService _service;
 
-        private CakeBotEntities _db = new CakeBotEntities();
+        private CakeEntities _db = new CakeEntities();
 
         public FunModule(GamesService service)
         {

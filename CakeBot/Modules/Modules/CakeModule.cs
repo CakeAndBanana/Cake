@@ -112,6 +112,14 @@ namespace CakeBot.Modules.Modules
             await _service.GetInfo();
         }
 
+        [Command("bug")]
+        [Summary(">cake bug (message)")]
+        [Remarks("Reports bug to developers")]
+        public async Task SetBug([Remainder] string message)
+        {
+            await _service.BugReport(message);
+        }
+
         [Command("list")]
         [Remarks(">cake list")]
         [Summary("List of guilds that have CakeBot.")]
