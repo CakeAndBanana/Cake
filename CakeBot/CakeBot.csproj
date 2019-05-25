@@ -74,18 +74,13 @@
     <Compile Include="Helper\AntiSpam\Filter.cs" />
     <Compile Include="Helper\AntiSpam\SpamConfig.cs" />
     <Compile Include="Helper\JsonStorage\JsonConfig.cs" />
-    <Compile Include="Helper\JsonStorage\Model\ConfigModel.cs" />
     <Compile Include="Helper\LongExt.cs" />
     <Compile Include="Helper\Modules\Background\PurchasingUser.cs" />
-    <Compile Include="Helper\Modules\BF4\Bf4Data.cs" />
     <Compile Include="Helper\BotUtil.cs" />
-    <Compile Include="Helper\Modules\BF4\Bf4Helper.cs" />
-    <Compile Include="Helper\Modules\BF4\Model\Bf4Model.cs" />
     <Compile Include="Helper\Modules\Mal\MalData.cs" />
     <Compile Include="Helper\Modules\Mal\MalGenre.cs" />
     <Compile Include="Helper\Modules\Mal\MalHelper.cs" />
     <Compile Include="Helper\Modules\Mal\Model\MalModel.cs" />
-    <Compile Include="Helper\Modules\Osu\OsuDlBeatmap.cs" />
     <Compile Include="Helper\ThreadSafeRandom.cs" />
     <Compile Include="Helper\CakeCooldownModel.cs" />
     <Compile Include="Helper\Database\Model\BotInfo.cs">
@@ -155,16 +150,11 @@
       <DependentUpon>CakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Helper\Database\Queries\BugQueries.cs" />
-    <Compile Include="Helper\JsonStorage\JsonConfig.cs" />
     <Compile Include="Helper\JsonStorage\Model\ConfigModel.cs" />
-    <Compile Include="Helper\LongExt.cs" />
-    <Compile Include="Helper\Modules\Background\PurchasingUser.cs" />
     <Compile Include="Helper\Modules\BF4\Bf4Data.cs" />
-    <Compile Include="Helper\BotUtil.cs" />
     <Compile Include="Helper\Modules\BF4\Bf4Helper.cs" />
     <Compile Include="Helper\Modules\BF4\Model\Bf4Model.cs" />
     <Compile Include="Helper\Modules\Osu\OsuDlBeatmap.cs" />
-    <Compile Include="Helper\ThreadSafeRandom.cs" />
     <Compile Include="Helper\Database\Queries\BackgroundQueries.cs" />
     <Compile Include="Helper\Database\Queries\BotQueries.cs" />
     <Compile Include="Helper\Database\Queries\EconomyQueries.cs" />
@@ -356,7 +346,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CakeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
     <None Include="Helper\Database\Model\CakeModel.edmx.diagram">
       <DependentUpon>CakeModel.edmx</DependentUpon>
     </None>
