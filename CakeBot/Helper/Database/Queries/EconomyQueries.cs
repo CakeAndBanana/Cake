@@ -10,7 +10,7 @@ namespace CakeBot.Helper.Database.Queries
 {
     public class EconomyQueries
     {
-        public static async Task<long> FindMoney(ulong discordId, CakeBotEntities db)
+        public static async Task<long> FindMoney(ulong discordId, CakeEntities db)
         {
             var result =
                 await (from u in db.UserEconomies
@@ -19,7 +19,7 @@ namespace CakeBot.Helper.Database.Queries
             return result.FirstOrDefault().UserMoney;
         }
 
-        public static async Task<bool> AddMoney(ulong discordId, long amount ,CakeBotEntities db)
+        public static async Task<bool> AddMoney(ulong discordId, long amount , CakeEntities db)
         {
             var result =
                 await (from u in db.UserEconomies
@@ -30,7 +30,7 @@ namespace CakeBot.Helper.Database.Queries
             return true;
         }
 
-        public static async Task<bool> RemoveMoney(ulong discordId, long amount, CakeBotEntities db)
+        public static async Task<bool> RemoveMoney(ulong discordId, long amount, CakeEntities db)
         {
             var result =
                 await (from u in db.UserEconomies
@@ -41,7 +41,7 @@ namespace CakeBot.Helper.Database.Queries
             db.SaveChanges();
             return true;
         }
-        public static async Task<string> CheckDaily(ulong discordId, CakeBotEntities db)
+        public static async Task<string> CheckDaily(ulong discordId, CakeEntities db)
         {
             var result =
                 await (from u in db.UserEconomies

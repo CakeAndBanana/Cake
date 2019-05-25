@@ -16,7 +16,7 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var db = new CakeBotEntities();
+                var db = new CakeEntities();
                 var money = EconomyQueries.FindMoney(Module.Context.User.Id, db);
                 var builder = new CakeEmbedBuilder
                 {
@@ -41,7 +41,7 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var db = new CakeBotEntities();
+                var db = new CakeEntities();
                     await SendMessageAsync(
                         $"**{Module.Context.User.Username}**, " + await EconomyQueries.CheckDaily(Module.Context.User.Id, db));
             }
@@ -60,7 +60,7 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var db = new CakeBotEntities();
+                var db = new CakeEntities();
                 if (await EconomyQueries.AddMoney(user.Id, amount, db))
                 {
                     await SendMessageAsync(
@@ -83,7 +83,7 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var db = new CakeBotEntities();
+                var db = new CakeEntities();
                 if (await EconomyQueries.RemoveMoney(user.Id, amount, db))
                 {
                     await SendMessageAsync(
@@ -134,7 +134,7 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var db = new CakeBotEntities();
+                var db = new CakeEntities();
                 await SendMessageAsync(await UserQueries.CorrectLevels(db));
             }
             catch (CakeException e)

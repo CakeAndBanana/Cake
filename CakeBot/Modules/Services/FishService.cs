@@ -14,7 +14,7 @@ namespace CakeBot.Modules.Services
 {
     public class FishService : CustomBaseService
     {
-        public async Task Fish(Random r, CakeBotEntities db)
+        public async Task Fish(Random r, CakeEntities db)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace CakeBot.Modules.Services
             else await Module.Context.Channel.SendMessageAsync("Something went haywire");
         }
 
-        public async Task getFishInv(CakeBotEntities db)
+        public async Task getFishInv(CakeEntities db)
         {
             var fishes = db.UserFishInventories.Where(u => u.UserId == (long)Module.Context.User.Id);
 
@@ -126,7 +126,7 @@ namespace CakeBot.Modules.Services
             await Module.Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
 
-        public async Task SellFishes(string input, CakeBotEntities db)
+        public async Task SellFishes(string input, CakeEntities db)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace CakeBot.Modules.Services
             }
         }
 
-        public async Task GetFishStats(CakeBotEntities db)
+        public async Task GetFishStats(CakeEntities db)
         {
             var fishes = db.UserFishInventories.Where(u => u.UserId == (long)Module.Context.User.Id);
 
@@ -217,7 +217,7 @@ namespace CakeBot.Modules.Services
             await Module.Context.Channel.SendMessageAsync("", embed: embed.Build());
         }
 
-        public async Task GetFishes(CakeBotEntities db)
+        public async Task GetFishes(CakeEntities db)
         {
             var embed = new CakeEmbedBuilder(EmbedType.Success);
             var fishes = db.FishTypes.ToList();

@@ -8,7 +8,7 @@ namespace CakeBot.Helper.Database.Queries
 {
     public class ChannelQueries
     {
-        private static readonly CakeBotEntities Db = new CakeBotEntities();
+        private static readonly CakeEntities Db = new CakeEntities();
 
         public static async Task<DiscordChannel> FindChannel(ulong channelId)
         {

@@ -45,7 +45,7 @@ namespace CakeBot.Modules.Services
             }
         }
 
-        public async Task SendDeaths(CakeBotEntities db)
+        public async Task SendDeaths(CakeEntities db)
         {
             try
             {

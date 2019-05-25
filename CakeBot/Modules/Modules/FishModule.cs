@@ -19,7 +19,7 @@ namespace CakeBot.Modules.Modules
             _service.SetBaseModule(this);
         }
 
-        private CakeBotEntities _db = new CakeBotEntities();
+        private CakeEntities _db = new CakeEntities();
 
 
         [Command]

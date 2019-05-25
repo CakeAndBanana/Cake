@@ -22,7 +22,7 @@ namespace CakeBot.Helper.Modules.Profile
             if (Rank < 10) IsHighRank = true;
             RankString = $"#{Rank.GetShortRank()}";
             if (Rank < 10000) RankString = $"# {Rank.GetShortRank()}";
-            Balance = "€" + (await EconomyQueries.FindMoney(userId, new CakeBotEntities())).ToShortAmount();
+            Balance = "€" + (await EconomyQueries.FindMoney(userId, new CakeEntities())).ToShortAmount();
             Casts = (await FishQueries.GetTotalCasts(userId)).ToShortAmount();
             TotalXp = (await UserQueries.GetTotalXp(userId)).ToShortAmount();
             ColorHex = Rgba32.FromHex("#" + await UserQueries.GetProfileColor(userId));

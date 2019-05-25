@@ -19,7 +19,7 @@ namespace CakeBot.Modules.Services
 {
     public class TwitterRealtime
     {
-        private static readonly CakeBotEntities Db = new CakeBotEntities();
+        private static readonly CakeEntities Db = new CakeEntities();
         private static List<TwitterPost> _users = new List<TwitterPost>();
         private static readonly IFilteredStream Stream = Tweetinvi.Stream.CreateFilteredStream();
 
