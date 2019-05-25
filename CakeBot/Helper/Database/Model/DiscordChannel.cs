@@ -17,24 +17,24 @@ namespace CakeBot.Helper.Database.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DiscordChannel()
         {
-            this.OsuTrackUsers = new HashSet<OsuTrackUser>();
-            this.TwitterPosts = new HashSet<TwitterPost>();
             this.DiscordGuilds = new HashSet<DiscordGuild>();
             this.DiscordGuilds1 = new HashSet<DiscordGuild>();
+            this.OsuTrackUsers = new HashSet<OsuTrackUser>();
+            this.TwitterPosts = new HashSet<TwitterPost>();
         }
     
         public long ChannelId { get; set; }
         public long GuildId { get; set; }
         public Nullable<int> LastMapId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OsuTrackUser> OsuTrackUsers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TwitterPost> TwitterPosts { get; set; }
         public virtual DiscordGuild DiscordGuild { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiscordGuild> DiscordGuilds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiscordGuild> DiscordGuilds1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OsuTrackUser> OsuTrackUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TwitterPost> TwitterPosts { get; set; }
     }
 }

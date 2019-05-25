@@ -17,6 +17,7 @@ namespace CakeBot.Helper.Database.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.BugReports = new HashSet<BugReport>();
             this.UserBackgrounds = new HashSet<UserBackground>();
         }
     
@@ -29,6 +30,8 @@ namespace CakeBot.Helper.Database.Model
         public string ColorHex { get; set; }
         public bool Restricted { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BugReport> BugReports { get; set; }
         public virtual OsuUser OsuUser { get; set; }
         public virtual ProfileBackground ProfileBackground { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

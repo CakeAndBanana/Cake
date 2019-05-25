@@ -10,10 +10,17 @@
 namespace CakeBot.Helper.Database.Model
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class BugReport
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int Id { get; set; }
+        public long UserId { get; set; }
+        public string Message { get; set; }
+        public bool Completed { get; set; }
+        public long GuildId { get; set; }
+    
+        public virtual DiscordGuild DiscordGuild { get; set; }
+        public virtual User User { get; set; }
     }
 }

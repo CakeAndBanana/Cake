@@ -19,7 +19,7 @@ namespace CakeBot.Helper.Database.Model
         public Nullable<int> PpScore { get; set; }
         public Nullable<int> RankScore { get; set; }
     
-        public virtual OsuUser OsuUser { get; set; }
         public virtual DiscordChannel DiscordChannel { get; set; }
+        public virtual OsuUser OsuUser { get; set; }
     }
 }

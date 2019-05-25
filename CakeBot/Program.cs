@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using CakeBot.Helper.Modules.Background;
+using static CakeBot.Helper.CakeCooldownModel;
 
 namespace CakeBot
 {
@@ -32,7 +33,9 @@ namespace CakeBot
 
     public static class Global
     {
-        internal static int baseXp = 125;
-        internal static List<PurchasingUser> usersToTrack { get; set; } = new List<PurchasingUser>();
+        internal static int BaseXp = 125;
+        internal static List<PurchasingUser> UsersToTrack { get; set; } = new List<PurchasingUser>();
+
+        internal static List<CooldownModel> CooldownList { get; set; } = new List<CooldownModel>();
     }
 }

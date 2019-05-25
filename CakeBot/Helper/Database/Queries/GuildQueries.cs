@@ -8,7 +8,7 @@ namespace CakeBot.Helper.Database.Queries
 {
     public class GuildQueries
     {
-        private static readonly CakeBotEntities Db = new CakeBotEntities();
+        private static readonly CakeEntities Db = new CakeEntities();
 
         public static async Task<DiscordGuild> FindGuild(ulong guildid)
         {

@@ -9,7 +9,7 @@ namespace CakeBot.Helper.Database.Queries
 {
     public class OsuQueries
     {
-        private static readonly CakeBotEntities Db = new CakeBotEntities();
+        private static readonly CakeEntities Db = new CakeEntities();
 
         public static async Task<OsuUser> FindUser(ulong discordId)
         {

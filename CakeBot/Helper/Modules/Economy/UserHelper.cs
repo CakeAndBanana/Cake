@@ -4,7 +4,7 @@ namespace CakeBot.Helper.Modules.Economy
 {
     public static class UserHelper
     {
-        private static CakeBotEntities _db = new CakeBotEntities();
+        private static CakeEntities _db = new CakeEntities();
 
     }
 }

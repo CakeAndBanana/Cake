@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b58a13d3810b4d8b948932a7fa254275" Name="Diagram1">
+        <EntityTypeShape EntityType="CakeModel.BugReport" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.DeadChildren" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.DiscordChannel" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.DiscordGuild" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.FishType" Width="1.5" PointX="5.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.OsuUser" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.ProfileBackground" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.SpamTrack" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.TwitterPost" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.User" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.UserBackground" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.UserEconomy" Width="1.5" PointX="5.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.UserFishInventory" Width="1.5" PointX="7.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.UserFishLog" Width="1.5" PointX="10.5" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.UserSlotLog" Width="1.5" PointX="7.5" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.BotInfo" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeModel.OsuTrackUser" Width="1.5" PointX="7.5" PointY="11" IsExpanded="true" />
+        <AssociationConnector Association="CakeModel.FK_BugReport_DiscordGuild" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_BugReport_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_DeadChildren_DiscordGuild" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_DiscordChannel_DiscordGuild" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_DiscordGuild_DiscordChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_DiscordGuild_DiscordChannel1" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_OsuTrackUser_DiscordChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_TwitterPost_DiscordChannel" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserFishInventory_FishType" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserFishLog_FishType" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_OsuTrackUser_OsuUser" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_OsuUser_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK__User__Background__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserBackgrounds_ProfileBackground" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserBackgrounds_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserEconomy_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserFishInventory_UserEconomy" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserFishLog_UserEconomy" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeModel.FK_UserSlotLog_UserEconomy" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

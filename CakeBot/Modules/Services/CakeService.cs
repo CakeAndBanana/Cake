@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using CakeBot.Core;
 using CakeBot.Helper;
 using CakeBot.Helper.Database.Queries;
+using CakeBot.Helper.Exceptions;
+using CakeBot.Helper.Logging;
 using Discord;
 using Discord.Commands;
 using EmbedType = CakeBot.Helper.EmbedType;
@@ -208,6 +210,92 @@ namespace CakeBot.Modules.Services
                 await user.AddRoleAsync(role);
                 await SendMessageAsync($"Added to {role.Name} role");
                 break;
+            }
+        }
+
+        public async Task BugReport(string message)
+        {
+            try
+            {
+                var report = await BugQueries.CreateNewBugReport(message, Module.Context.User.Id, Module.Context.Guild.Id);
+                var embed = new CakeEmbedBuilder()
+                    .WithAuthor(author =>
+                    {
+                        author
+                            .WithName($"{Module.Context.User}({Module.Context.User.Id})")
+                            .WithIconUrl($"{Module.Context.User.GetAvatarUrl()}");
+                    })
+                    .WithTitle($"**Report Id**: {report.Id}")
+                    .WithDescription($"**Report Message**: {report.Message}\n")
+                    .WithCurrentTimestamp()
+                    .WithFooter(
+                    $"Guild: {Module.Context.Guild}({Module.Context.Guild.Id})") as CakeEmbedBuilder;
+                var channel = BotUtil.GetGuild(221413016913051648).GetTextChannel(581385348421124107);
+                await channel.SendMessageAsync("", false, embed.Build());
+            }
+            catch (CakeException e)
+            {
+                var embedError = e.GetEmbededError();
+                await SendEmbedAsync(embedError);
+            }
+        }
+
+        public async Task BugList(int id = 0)
+        {
+            try
+            {
+                var embed = new CakeEmbedBuilder();
+                if (id == 0)
+                {
+                    var reports = await BugQueries.ListBugReports();
+
+                    embed.WithTitle($"**Reports list**");
+                    var info = "";
+                    foreach (var report in reports)
+                    {
+                        info += $"**ID**: {report.Id} / **Short message**: {new string(report.Message.Take(20).ToArray())}\n";
+                    }
+
+                    embed.WithDescription(info);
+                }
+                else
+                {
+                    var report = await BugQueries.ReturnBugReport(id);
+                    embed = new CakeEmbedBuilder()
+                        .WithAuthor(author =>
+                        {
+                            author
+                                .WithName($"{Module.Context.User}({Module.Context.User.Id})")
+                                .WithIconUrl($"{Module.Context.User.GetAvatarUrl()}");
+                        })
+                        .WithTitle($"**Report Id**: {report.Id}")
+                        .WithDescription($"**Report Message**: {report.Message}\n" +
+                                         $"**Completed**: {report.Completed}")
+                        .WithCurrentTimestamp()
+                        .WithFooter(
+                            $"Guild: {Module.Context.Guild}({Module.Context.Guild.Id})") as CakeEmbedBuilder;
+
+                }
+                await SendEmbedAsync(embed);
+            }
+            catch (CakeException e)
+            {
+                var embedError = e.GetEmbededError();
+                await SendEmbedAsync(embedError);
+            }
+        }
+
+        public async Task ChangeStatusBug(int id, bool status)
+        {
+            try
+            {
+                var result = await BugQueries.ChangeStatusBugReport(id, status);
+                await SendMessageAsync($"``Changed report {result.Id} to {result.Completed}``");
+            }
+            catch (CakeException e)
+            {
+                var embedError = e.GetEmbededError();
+                await SendEmbedAsync(embedError);
             }
         }
 
