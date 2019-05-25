@@ -213,7 +213,7 @@ namespace CakeBot.Modules.Services
                 var bestBuilder = new OsuUserBestBuilder
                 {
                     Mode = mode.ToString(),
-                    Limit = (recent ? 100 : 5).ToString(),
+                    Limit = (recent || play != null ? 100 : 5).ToString(),
                     UserId = user.user_id,
                     Recent = recent,
                     PlayNumber = play
@@ -241,24 +241,19 @@ namespace CakeBot.Modules.Services
 
                     var date = dateTicks.TotalDays > 30 ? TimeFormat.ToShortTimeSpan(dateTicks) : TimeFormat.ToLongTimeSpan(dateTicks);
 
-                    double star_rating;
-
-                    if (item.starrating == 0)
-                        star_rating = result[0].difficultyrating;
-                    else
-                        star_rating = item.starrating;
+                    var starRating = Math.Abs(item.starrating) <= 0 ? result[0].difficultyrating : item.starrating;
 
                     embedTop.AddField(x =>
                     {
-                        x.Name = $"#{item.play_number}: {result[0].complete_title} {OsuMods.Modnames(Convert.ToInt32(item.enabled_mods))} {Math.Round(star_rating, 2)}★";
+                        x.Name = $"#{item.play_number}: {result[0].complete_title} {OsuMods.Modnames(Convert.ToInt32(item.enabled_mods))} {Math.Round(starRating, 2)}★";
                         x.Value = $"**PP:** {Math.Round(item.pp, 0)} " +
                                   $"**Rank:** {item.rank.LevelEmotes()} " +
-                                  $"**Accuracy:** {Math.Round(item.calculated_accuracy, 2)}% " +
                                   $"**Combo:** {item.maxcombo}({result[0].max_combo}) \n" +
-                                  $"{date} ago\n" +
+                                  $"{OsuUtil.Emote300} **{item.count300}** ♢ {OsuUtil.Emote100} **{item.count100}** ♢ {OsuUtil.Emote50} **{item.count50}** ♢ {OsuUtil.EmoteX} **{item.countmiss}** ♢ **{Math.Round(item.calculated_accuracy, 2)}%**\n" +
                                   $"**Downloads:** [Beatmap]({result[0].beatmap_url})" +
                                   $"([no vid]({result[0].beatmap_url + "n"})) " +
-                                  $"[Bloodcat]({result[0].bloodcat})\n";
+                                  $"[Bloodcat]({result[0].bloodcat})\n" +
+                                  $"{date} ago\n";
                     });
                 }
 
@@ -389,11 +384,11 @@ namespace CakeBot.Modules.Services
                         {
                             if (fc)
                             {
-                                info += $"{Math.Round(t.pp, 2)} PP\n\n";
+                                info += $"**{Math.Round(t.pp, 2)} PP**\n\n";
                             }
                             else
                             {
-                                info += $"{Math.Round(t.pp, 2)} PP ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
+                                info += $"**{Math.Round(t.pp, 2)} PP** ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
                             }
                         }
                         mapId = Convert.ToInt32(beatmap[0].beatmap_id);
@@ -488,12 +483,12 @@ namespace CakeBot.Modules.Services
                     var date = dateTicks.TotalDays > 60 ? TimeFormat.ToShortTimeSpan(dateTicks) : TimeFormat.ToLongTimeSpan(dateTicks);
 
                     info += $"***{modName}*** \n" +
-                            $"  **PP:** {Math.Round(t.pp, 0)} " +
+                            $" **PP:** {Math.Round(t.pp, 0)} " +
                             $"**Rank:**{t.rank.LevelEmotes()} " +
                             $"**Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
                             $"**Combo:** {t.maxcombo}({beatMap[0].max_combo}) \n" +
-                            $"  {OsuUtil.Emote300} {t.count300} | {OsuUtil.Emote100} {t.count100} | {OsuUtil.Emote50} {t.count50} | {OsuUtil.EmoteX} {t.countmiss}\n " +
-                            $"  {date} ago\n\n";
+                            $" {OsuUtil.Emote300} {t.count300} | {OsuUtil.Emote100} {t.count100} | {OsuUtil.Emote50} {t.count50} | {OsuUtil.EmoteX} {t.countmiss}\n " +
+                            $" {date} ago\n\n";
                 }
                 embedCompare.WithDescription(info);
 
