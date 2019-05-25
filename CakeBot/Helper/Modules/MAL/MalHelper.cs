@@ -53,7 +53,7 @@ namespace CakeBot.Helper.Modules.MAL
             if (anime.genres != null) embedBuilder.Description += $"\n**Genres: **{ string.Join(",", GenresToArray(anime.genres)) }";
             return embedBuilder;
         }
-        public static bool IsGoodScore(AnimeData anime) => anime.score < (decimal)5.5 ? true : false;
+        public static bool IsGoodScore(AnimeData anime) => anime.score < (decimal)5.5;
 
     }
 }
