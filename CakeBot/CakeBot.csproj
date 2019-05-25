@@ -213,14 +213,14 @@
     <Compile Include="Core\IBotTasks.cs" />
     <Compile Include="Helper\Logging\Logger.cs" />
     <Compile Include="Modules\Modules\AdminModule.cs" />
-    <Compile Include="Modules\Modules\MALModule.cs" />
+    <Compile Include="Modules\Modules\MalModule.cs" />
     <Compile Include="Modules\Modules\ProfileModule.cs" />
     <Compile Include="Modules\Modules\CakeModule.cs" />
     <Compile Include="Modules\Modules\CustomBaseModule.cs" />
     <Compile Include="Helper\Exceptions\DisabledCommandException.cs" />
     <Compile Include="Helper\Exceptions\NoPermissionException.cs" />
     <Compile Include="Helper\Exceptions\NoSelfCommandException.cs" />
-    <Compile Include="Modules\Services\MALService.cs" />
+    <Compile Include="Modules\Services\MalService.cs" />
     <Compile Include="Modules\Services\ProfileService.cs" />
     <Compile Include="Modules\Services\EconomyService.cs" />
     <Compile Include="Modules\Services\FishService.cs" />

@@ -4,14 +4,12 @@ using CakeBot.Helper.Logging;
 using CakeBot.Helper.Modules.MAL;
 using Discord.WebSocket;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CakeBot.Modules.Services
 {
-    public class MALService : CustomBaseService
+    public class MalService : CustomBaseService
     {
         public async Task GetRandomAnime(MalAnimeGenreEnum genre)
         {
@@ -19,12 +17,15 @@ namespace CakeBot.Modules.Services
             {
                 var channel = (SocketTextChannel)Module.Context.Channel;
                 var animes = MalData.GetRandomAnimeByCat((int)genre);
+
                 if (animes == null)
                 {
-                    throw new CakeException("No Animes found.");
+                    throw new CakeException("No Anime(s) found.");
                 }
-                Random r = new Random();
+
+                var r = new Random();
                 var anime = animes.anime[r.Next(animes.anime.Count())];
+
                 if (anime.r18 && !channel.IsNsfw) throw new CakeException("Not a NSFW Channel");
                 await SendEmbedAsync(MalHelper.AnimeToEmbed(anime, false));
             }
@@ -41,14 +42,15 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var channel = (SocketTextChannel)Module.Context.Channel;
-                var mangas = MalData.GetRandomMangaByCat((int)genre);
-                if (mangas == null)
+                var mangaList = MalData.GetRandomMangaByCat((int)genre);
+                if (mangaList == null)
                 {
-                    throw new CakeException("No Mangas found.");
+                    throw new CakeException("No Manga(s) found.");
                 }
-                Random r = new Random();
-                var manga = mangas.manga[r.Next(mangas.manga.Count())];
+
+                var r = new Random();
+                var manga = mangaList.manga[r.Next(mangaList.manga.Count())];
+
                 await SendEmbedAsync(MalHelper.MangaToEmbed(manga));
             }
             catch (CakeException e)
@@ -66,12 +68,15 @@ namespace CakeBot.Modules.Services
             {
                 var channel = (SocketTextChannel)Module.Context.Channel;
                 var animes = MalData.SearchAnime(animeName);
+
                 if (animes == null)
                 {
                     throw new CakeException("No Animes found.");
                 }
+
                 var anime = animes.results[0];
                 if (anime.r18 && !channel.IsNsfw) throw new CakeException("Not a NSFW Channel");
+
                 await SendEmbedAsync(MalHelper.AnimeToEmbed(anime, true));
             }
             catch (CakeException e)
@@ -87,13 +92,13 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                var channel = (SocketTextChannel)Module.Context.Channel;
-                var mangas = MalData.SearchManga(mangaName);
-                if (mangas == null)
+                var mangaList = MalData.SearchManga(mangaName);
+                if (mangaList == null)
                 {
-                    throw new CakeException("No Mangas found.");
+                    throw new CakeException("No Manga(s) found.");
                 }
-                var manga = mangas.results[0];
+
+                var manga = mangaList.results[0];
                 await SendEmbedAsync(MalHelper.MangaToEmbed(manga));
             }
             catch (CakeException e)
@@ -109,16 +114,12 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                string description = null;
                 var values = (MalAnimeGenreEnum[])Enum.GetValues(typeof(MalAnimeGenreEnum));
 
-                foreach (var value in values)
-                {
-                    description += $"{value} | {(int) value}\n";
-                }
+                var description = values.Aggregate<MalAnimeGenreEnum, string>(null, (current, value) => current + $"{value} | {(int) value}\n");
 
                 var embedList = new CakeEmbedBuilder()
-                    .WithTitle("List of Genres")
+                    .WithTitle("List of Manga Genres")
                     .WithDescription(description) as CakeEmbedBuilder;
                 await SendEmbedAsync(embedList);
             }
@@ -135,16 +136,12 @@ namespace CakeBot.Modules.Services
         {
             try
             {
-                string description = null;
                 var values = (MalMangaGenreEnum[])Enum.GetValues(typeof(MalMangaGenreEnum));
 
-                foreach (var value in values)
-                {
-                    description += $"{value} | {(int)value}\n";
-                }
+                var description = values.Aggregate<MalMangaGenreEnum, string>(null, (current, value) => current + $"{value} | {(int)value}\n");
 
                 var embedList = new CakeEmbedBuilder()
-                    .WithTitle("List of Genres")
+                    .WithTitle("List of Anime Genres")
                     .WithDescription(description) as CakeEmbedBuilder;
                 await SendEmbedAsync(embedList);
             }
