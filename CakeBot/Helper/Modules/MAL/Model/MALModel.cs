@@ -13,12 +13,15 @@ namespace CakeBot.Helper.Modules.MAL.Model
         [DataMember]
         public int item_count { get; set; }
         [DataMember]
-        public AnimeData[] anime { get; set; }
+        public List<MalData> anime { get; set; }
         [DataMember]
-        public AnimeData[] results { get; set; }
+        public List<MalData> manga { get; set; }
+        [DataMember]
+        public List<MalData> results { get; set; }
     }
 
-    public class AnimeData {
+    public class MalData
+    {
         [DataMember]
         public string url { get; set; }
         [DataMember]
@@ -49,8 +52,9 @@ namespace CakeBot.Helper.Modules.MAL.Model
         public int? members { get; set; }
         [DataMember]
         public string source { get; set; }
+        [DataMember]
+        public int? volumes { get; set; }
     }
-
     public class Genres
     {
         [DataMember]

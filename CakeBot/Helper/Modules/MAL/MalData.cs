@@ -1,4 +1,5 @@
-﻿using CakeBot.Helper.Modules.MAL.Model;
+﻿using CakeBot.Helper.Exceptions;
+using CakeBot.Helper.Modules.MAL.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,22 @@ namespace CakeBot.Helper.Modules.MAL
 {
     public class MalData
     {
+        public static MALModel GetDesObject(string url)
+        {
+            return JsonConvert.DeserializeObject<MALModel>(url);
+        }
         static string baseUrl = "https://api.jikan.moe/v3";
         public static MALModel GetRandomAnimeByCat(int genre_id)
         {
             var url = $"{baseUrl}/genre/anime/{genre_id}";
-
             try
             {
                 url = new WebClient().DownloadString(url);
+                url = MalHelper.RandomPage(genre_id, GetDesObject(url).item_count, "anime");
             }
-            catch
+            catch(Exception e)
             {
-                return null;
+                throw new CakeException(e.Message);
             }
 
             return JsonConvert.DeserializeObject<MALModel>(url);
@@ -34,6 +39,7 @@ namespace CakeBot.Helper.Modules.MAL
             try
             {
                 url = new WebClient().DownloadString(url);
+                url = MalHelper.RandomPage(genre_id, GetDesObject(url).item_count, "manga");
             }
             catch
             {

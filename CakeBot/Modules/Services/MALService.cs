@@ -25,9 +25,31 @@ namespace CakeBot.Modules.Services
                 }
                 Random r = new Random();
                 var anime = animes.anime[r.Next(animes.anime.Count())];
-                if(!MalHelper.IsGoodScore(anime)) anime = animes.anime[r.Next(animes.anime.Count())];
                 if (anime.r18 && !channel.IsNsfw) throw new CakeException("Not a NSFW Channel");
                 await SendEmbedAsync(MalHelper.AnimeToEmbed(anime, false));
+            }
+            catch (CakeException e)
+            {
+                await SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.ToString());
+            }
+        }
+        public async Task GetRandomManga(MalMangaGenreEnum genre)
+        {
+            try
+            {
+                var channel = (SocketTextChannel)Module.Context.Channel;
+                var mangas = MalData.GetRandomMangaByCat((int)genre);
+                if (mangas == null)
+                {
+                    throw new CakeException("No Mangas found.");
+                }
+                Random r = new Random();
+                var manga = mangas.manga[r.Next(mangas.manga.Count())];
+                await SendEmbedAsync(MalHelper.MangaToEmbed(manga));
             }
             catch (CakeException e)
             {
@@ -61,7 +83,28 @@ namespace CakeBot.Modules.Services
                 Logger.LogError(e.ToString());
             }
         }
-
+        public async Task SearchForManga(string mangaName)
+        {
+            try
+            {
+                var channel = (SocketTextChannel)Module.Context.Channel;
+                var mangas = MalData.SearchManga(mangaName);
+                if (mangas == null)
+                {
+                    throw new CakeException("No Mangas found.");
+                }
+                var manga = mangas.results[0];
+                await SendEmbedAsync(MalHelper.MangaToEmbed(manga));
+            }
+            catch (CakeException e)
+            {
+                await SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.ToString());
+            }
+        }
         public async Task SendAnimeGenres()
         {
             try
@@ -72,6 +115,32 @@ namespace CakeBot.Modules.Services
                 foreach (var value in values)
                 {
                     description += $"{value} | {(int) value}\n";
+                }
+
+                var embedList = new CakeEmbedBuilder()
+                    .WithTitle("List of Genres")
+                    .WithDescription(description) as CakeEmbedBuilder;
+                await SendEmbedAsync(embedList);
+            }
+            catch (CakeException e)
+            {
+                await SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.ToString());
+            }
+        }
+        public async Task SendMangaGenres()
+        {
+            try
+            {
+                string description = null;
+                var values = (MalMangaGenreEnum[])Enum.GetValues(typeof(MalMangaGenreEnum));
+
+                foreach (var value in values)
+                {
+                    description += $"{value} | {(int)value}\n";
                 }
 
                 var embedList = new CakeEmbedBuilder()

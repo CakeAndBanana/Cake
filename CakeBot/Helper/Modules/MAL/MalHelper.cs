@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,17 +10,25 @@ namespace CakeBot.Helper.Modules.MAL
 {
     public class MalHelper
     {
+        static string baseUrl = "https://api.jikan.moe/v3";
         public static List<string> GenresToArray(Model.Genres[] genres)
         {
             List<string> genresList = new List<string>();
-            foreach(var genre in genres)
+            foreach (var genre in genres)
             {
                 genresList.Add(genre.name);
             }
             return genresList;
         }
-
-        public static CakeEmbedBuilder AnimeToEmbed(Model.AnimeData anime, bool isSearch)
+        public static string RandomPage(int genre_id, int count,string type)
+        {
+            Random r = new Random();
+            int pagecount = type == "anime" ? 103 : 100;
+            int pages = count > pagecount ? count / pagecount : 0;
+            string url = new WebClient().DownloadString($"{baseUrl}/genre/{type}/{genre_id}/{r.Next(pages)}");
+            return url;
+        }
+        public static CakeEmbedBuilder AnimeToEmbed(Model.MalData anime, bool isSearch)
         {
             var embedBuilder = new CakeEmbedBuilder()
                     .WithAuthor(author =>
@@ -53,7 +62,25 @@ namespace CakeBot.Helper.Modules.MAL
             if (anime.genres != null) embedBuilder.Description += $"\n**Genres: **{ string.Join(",", GenresToArray(anime.genres)) }";
             return embedBuilder;
         }
-        public static bool IsGoodScore(AnimeData anime) => anime.score < (decimal)5.5;
-
+        public static CakeEmbedBuilder MangaToEmbed(Model.MalData manga)
+        {
+            var embedBuilder = new CakeEmbedBuilder()
+                    .WithAuthor(author =>
+                    {
+                        author
+                            .WithName(manga.title)
+                            .WithUrl(manga.url);
+                    })
+                    .WithThumbnailUrl(manga.image_url)
+                    .WithDescription(
+                    $"**Synopsis: **{ manga.synopsis }\n\n" +
+                    $"**Score: **{ manga.score }\n" +
+                    $"**Volumes: **{ manga.volumes }\n" +
+                    $"**Type: **{ manga.type }\n" +
+                    $"**Members: **{ manga.members }"
+                    ) as CakeEmbedBuilder;
+            if (manga.genres != null) embedBuilder.Description += $"\n**Genres: **{ string.Join(",", GenresToArray(manga.genres)) }";
+            return embedBuilder;
+        }
     }
 }
