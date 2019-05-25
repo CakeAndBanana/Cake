@@ -84,7 +84,7 @@
     <Compile Include="Helper\Modules\Mal\MalData.cs" />
     <Compile Include="Helper\Modules\Mal\MalGenre.cs" />
     <Compile Include="Helper\Modules\Mal\MalHelper.cs" />
-    <Compile Include="Helper\Modules\Mal\Model\MALModel.cs" />
+    <Compile Include="Helper\Modules\Mal\Model\MalModel.cs" />
     <Compile Include="Helper\Modules\Osu\OsuDlBeatmap.cs" />
     <Compile Include="Helper\ThreadSafeRandom.cs" />
     <Compile Include="Helper\Database\Model\BotInfo.cs">

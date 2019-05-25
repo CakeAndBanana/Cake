@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CakeBot.Helper.Modules.MAL.Model
 {
     [DataContract]
-    public class MALModel
+    public class MalModel
     {
         [DataMember]
         public int item_count { get; set; }
