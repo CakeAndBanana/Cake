@@ -25,6 +25,7 @@ namespace CakeBot.Modules.Services
                 }
                 Random r = new Random();
                 var anime = animes.anime[r.Next(animes.anime.Count())];
+                if(!MalHelper.IsGoodScore(anime)) anime = animes.anime[r.Next(animes.anime.Count())];
                 if (anime.r18 && !channel.IsNsfw) throw new CakeException("Not a NSFW Channel");
                 await SendEmbedAsync(MalHelper.AnimeToEmbed(anime, false));
             }
