@@ -18,6 +18,7 @@ namespace CakeBot.Core.Services
             services.AddSingleton<FishService>();
             services.AddSingleton<EconomyService>();
             services.AddSingleton<ProfileService>();
+            services.AddSingleton<MalService>();
 
             return services.BuildServiceProvider();
         }
