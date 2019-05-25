@@ -13,12 +13,12 @@ namespace CakeBot.Modules.Services
 {
     public class MALService : CustomBaseService
     {
-        public async Task GetRandomAnime(int genre_id)
+        public async Task GetRandomAnime(MalAnimeGenreEnum genre)
         {
             try
             {
                 var channel = (SocketTextChannel)Module.Context.Channel;
-                var animes = MalData.GetRandomAnimeByCat(genre_id);
+                var animes = MalData.GetRandomAnimeByCat((int)genre);
                 if (animes == null)
                 {
                     throw new CakeException("No Animes found.");
@@ -44,13 +44,40 @@ namespace CakeBot.Modules.Services
             {
                 var channel = (SocketTextChannel)Module.Context.Channel;
                 var animes = MalData.SearchAnime(animeName);
-                if (animes.results.Count() == 0)
+                if (animes == null)
                 {
                     throw new CakeException("No Animes found.");
                 }
                 var anime = animes.results[0];
                 if (anime.r18 && !channel.IsNsfw) throw new CakeException("Not a NSFW Channel");
                 await SendEmbedAsync(MalHelper.AnimeToEmbed(anime, true));
+            }
+            catch (CakeException e)
+            {
+                await SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.ToString());
+            }
+        }
+
+        public async Task SendAnimeGenres()
+        {
+            try
+            {
+                string description = null;
+                var values = (MalAnimeGenreEnum[])Enum.GetValues(typeof(MalAnimeGenreEnum));
+
+                foreach (var value in values)
+                {
+                    description += $"{value} | {(int) value}\n";
+                }
+
+                var embedList = new CakeEmbedBuilder()
+                    .WithTitle("List of Genres")
+                    .WithDescription(description) as CakeEmbedBuilder;
+                await SendEmbedAsync(embedList);
             }
             catch (CakeException e)
             {

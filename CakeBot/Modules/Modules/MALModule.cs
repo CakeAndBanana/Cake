@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CakeBot.Modules.Modules
 {
+    [Group("anime")]
     public class MALModule : CustomBaseModule
     {
         private readonly MALService _service;
@@ -19,15 +20,28 @@ namespace CakeBot.Modules.Modules
             _service.SetBaseModule(this);
         }
 
-        [Command("anime -r")]
+        [Command("r")]
         public async Task GetRandomAnime(int genre)
         {
-            await _service.GetRandomAnime(genre);
+            await _service.GetRandomAnime((MalAnimeGenreEnum)genre);
         }
-        [Command("anime -s")]
-        public async Task GetRandomAnime([Remainder]string anime)
+
+        [Command("r")]
+        public async Task GetRandomAnime([Remainder]string genre)
+        {
+            await _service.GetRandomAnime(MalEnumHelper.ParseEnum<MalAnimeGenreEnum>(genre));
+        }
+
+        [Command("s")]
+        public async Task SearchForAnime([Remainder]string anime)
         {
             await _service.SearchForAnime(anime);
+        }
+
+        [Command("genres")]
+        public async Task ListAnimeGenres()
+        {
+            await _service.SendAnimeGenres();
         }
     }
 }
