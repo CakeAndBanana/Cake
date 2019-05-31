@@ -38,6 +38,7 @@ namespace Cake.Core.Discord.Handlers
             return Task.CompletedTask;
         }
 
+
         private async Task HandleCommandAsync(SocketUserMessage msg)
         {
             try

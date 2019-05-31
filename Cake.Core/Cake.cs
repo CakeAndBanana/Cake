@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cake.Core.Discord.Configuration;
 using Cake.Core.Discord.Handlers;
+using Cake.Storage;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -23,7 +24,7 @@ namespace Cake.Core
             while (true)
             {
                 SetupBot();
-                _cakeConfiguration.BotKey = Console.ReadLine();
+                _cakeConfiguration.BotKey = CakeJson.GetConfig().BotKey;
 
                 try
                 {
