@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Old.Cake", "CakeBot\Old.Cake.csproj", "{CE3163A0-74A6-4A40-885D-72D99710B4F7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Console", "Cake.Console\Cake.Console.csproj", "{A49C3852-EE6D-4967-B461-76CFD1DF6351}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Core", "Cake.Core\Cake.Core.csproj", "{0C3748D1-3BED-4528-B532-E06D56DFFA6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Core", "Cake.Core\Cake.Core.csproj", "{0C3748D1-3BED-4528-B532-E06D56DFFA6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Storage", "Cake.Storage\Cake.Storage.csproj", "{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Storage", "Cake.Storage\Cake.Storage.csproj", "{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Logger", "Cake.Logger\Cake.Logger.csproj", "{9C0D5502-AD0D-40B1-B3BE-D87728EA6238}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Logger", "Cake.Logger\Cake.Logger.csproj", "{9C0D5502-AD0D-40B1-B3BE-D87728EA6238}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CE3163A0-74A6-4A40-885D-72D99710B4F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE3163A0-74A6-4A40-885D-72D99710B4F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE3163A0-74A6-4A40-885D-72D99710B4F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE3163A0-74A6-4A40-885D-72D99710B4F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A49C3852-EE6D-4967-B461-76CFD1DF6351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A49C3852-EE6D-4967-B461-76CFD1DF6351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A49C3852-EE6D-4967-B461-76CFD1DF6351}.Release|Any CPU.ActiveCfg = Release|Any CPU

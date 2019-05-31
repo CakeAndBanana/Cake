@@ -53,11 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Discord.Net">
-      <Version>2.1.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Cake.Core\Cake.Core.csproj">
       <Project>{0C3748D1-3BED-4528-B532-E06D56DFFA6D}</Project>
       <Name>Cake.Core</Name>

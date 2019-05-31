@@ -6,7 +6,6 @@ using CakeBot.Helper;
 using CakeBot.Modules.Services;
 using Discord;
 using Discord.Commands;
-using Microsoft.Build.Tasks;
 using static CakeBot.Helper.CakeCooldownModel;
 
 namespace CakeBot.Modules.Modules
