@@ -24,6 +24,7 @@ namespace Cake.Core
             while (true)
             {
                 SetupBot();
+                _cakeConfiguration.BotKey = CakeJson.GetConfig().BotKey;
 
                 try
                 {
