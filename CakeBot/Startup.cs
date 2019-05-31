@@ -174,8 +174,7 @@ namespace CakeBot
                     Logger.LogInfo($"Added {message.Author.Id} to the database");
                 var restrictStatus = await UserQueries.GetRestrictStatus(message.Author.Id);
 
-                if (!restrictStatus)
-                {
+                if (restrictStatus) return false;
 #if DEBUG
                 if (message.HasCharPrefix(Convert.ToChar(Config.BotPrefix), ref argPos) ||
                     message.HasMentionPrefix(_client.CurrentUser, ref argPos))
@@ -191,8 +190,7 @@ namespace CakeBot
                         return true;
                     }
 #endif
-                    await GiveXp(message, 2);
-                }
+                await GiveXp(message, 2);
             }
 
             return false;

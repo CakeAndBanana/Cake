@@ -1,17 +1,15 @@
-﻿using Cake.Discord;
-
-namespace Cake
+﻿namespace Cake
 {
     public class Program
     {
 
-        private static readonly Cake Constant = GetInstance().Cake;
+        private static readonly Core.Cake Constant = GetInstance().Cake;
 
         private static void Main() => Constant.StartAsync().GetAwaiter().GetResult();
 
         private static Program _instance; // Singleton instance
 
-        public Cake Cake;
+        public Core.Cake Cake;
 
         public static Program GetInstance() // Singleton pattern
         {
@@ -24,7 +22,7 @@ namespace Cake
 
         public void Initialize()
         {
-            Cake = new Cake();
+            Cake = new Core.Cake();
         }
     }
 }

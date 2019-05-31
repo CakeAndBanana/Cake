@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cake.Discord.Configuration;
-using Cake.Discord.Handlers;
+using Cake.Core.Discord.Configuration;
+using Cake.Core.Discord.Handlers;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 
-namespace Cake
+namespace Cake.Core
 {
     public class Cake : ICake
     {
