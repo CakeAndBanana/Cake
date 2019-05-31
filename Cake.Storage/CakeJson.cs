@@ -20,6 +20,7 @@ namespace Cake.Storage
             var model = new ConfigModel
             {
                 BotKey = "Bot Key here", 
+                LogEnabled = true,
             };
 
             File.WriteAllText(Path, JsonConvert.SerializeObject(model));
