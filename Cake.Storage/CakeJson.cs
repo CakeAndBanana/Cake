@@ -19,8 +19,7 @@ namespace Cake.Storage
         {
             var model = new ConfigModel
             {
-                BotKey = "Bot Key here",
-
+                BotKey = "Bot Key here", 
             };
 
             File.WriteAllText(Path, JsonConvert.SerializeObject(model));

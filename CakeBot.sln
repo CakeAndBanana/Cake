@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Old.Cake", "CakeBot\Old.Cake.csproj", "{CE3163A0-74A6-4A40-885D-72D99710B4F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Console", "Cake\Cake.Console.csproj", "{A49C3852-EE6D-4967-B461-76CFD1DF6351}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Console", "Cake.Console\Cake.Console.csproj", "{A49C3852-EE6D-4967-B461-76CFD1DF6351}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Core", "Cake.Core\Cake.Core.csproj", "{0C3748D1-3BED-4528-B532-E06D56DFFA6D}"
 EndProject
