@@ -1,8 +1,7 @@
-﻿namespace Cake
+﻿namespace Cake.Console
 {
     public class Program
     {
-
         private static readonly Core.Cake Constant = GetInstance().Cake;
 
         private static void Main() => Constant.StartAsync().GetAwaiter().GetResult();
