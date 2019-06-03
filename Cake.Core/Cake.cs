@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cake.Core.Discord.Configuration;
 using Cake.Core.Discord.Handlers;
+using Cake.Core.Discord.Services;
 using Cake.Logger;
 using Cake.Storage;
 using Discord;
@@ -17,6 +18,7 @@ namespace Cake.Core
         private ICommandHandler _commandHandler;
         private CommandService _commandService;
         private CakeConfiguration _cakeConfiguration;
+        private IServiceProvider _services;
         private ILogger _logger = Logger.Logger.Get();
 
         private const int RunningInterval = 1000;
@@ -61,6 +63,7 @@ namespace Cake.Core
             _client = new DiscordShardedClient();
             _commandService = new CommandService();
             _commandHandler = new CommandHandler(_client, _commandService);
+            _services = new SetupServices().ReturnProvider();
             _cakeConfiguration = new CakeConfiguration();
             _running = false;
         }
