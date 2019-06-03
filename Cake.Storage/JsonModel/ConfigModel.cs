@@ -7,5 +7,8 @@ namespace Cake.Storage.JsonModel
     {
         [DataMember]
         public string BotKey { get; set; }
+
+        [DataMember]
+        public bool LogEnabled { get; set; }
     }
 }
