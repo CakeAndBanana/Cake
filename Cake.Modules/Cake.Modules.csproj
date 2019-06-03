@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="2.1.0" />
+    <Compile Remove="Helper\**" />
+    <EmbeddedResource Remove="Helper\**" />
+    <None Remove="Helper\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helper\" />
+    <PackageReference Include="Discord.Net" Version="2.1.0" />
   </ItemGroup>
 
 </Project>
