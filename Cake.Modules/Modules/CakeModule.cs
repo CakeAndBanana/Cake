@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cake.Storage
+namespace Cake.Modules.Modules
 {
-    class DbStorage
+    class CakeModule : CustomBaseModule
     {
-        //wip
     }
 }

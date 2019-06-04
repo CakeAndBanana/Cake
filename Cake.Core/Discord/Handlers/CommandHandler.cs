@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Cake.Storage;
+using Cake.Storage.DbQueries;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,24 +33,24 @@ namespace Cake.Core.Discord.Handlers
             _client.MessageReceived += HandleCommandEvent;
         }
 
-        private Task HandleCommandEvent(SocketMessage message)
+        private async Task HandleCommandEvent(SocketMessage message)
         {
-            if (!(message is SocketUserMessage msg)) return Task.CompletedTask;
-            Task.Run(async () => HandleCommandAsync(msg).ConfigureAwait(false));
-            return Task.CompletedTask;
+            if (!(message is SocketUserMessage msg)) return;
+            await PrefixCommandAsync(msg);
         }
 
 
-        private async Task HandleCommandAsync(SocketUserMessage msg)
+        private async Task PrefixCommandAsync(SocketUserMessage msg)
         {
             try
             {
                 if (msg.Author.IsBot) return;
 
                 var context = new ShardedCommandContext(_client, msg);
-                int argPos = 0;
 
-                if (context.Message.HasCharPrefix(Convert.ToChar("="), ref argPos))
+                var argPos = 0;
+
+                if (context.Message.HasCharPrefix(Convert.ToChar(new GuildQueries(CakeJson.GetConfig().ConnectionString).GetPrefixGuild(context.Guild.Id)), ref argPos))
                 {
                     await context.Channel.SendMessageAsync($"`Shard : {_client.GetShardIdFor(context.Guild)}`");
                 }
