@@ -6,8 +6,12 @@ namespace Cake.Storage.DbQueries
     {
         public string ConString { get; }
 
-        public DbConnection(string conString)
+        public DbConnection(string conString = null)
         {
+            if (conString == null)
+            {
+                ConString = CakeJson.GetConfig().ConnectionString;
+            }
             ConString = conString;
         }
 

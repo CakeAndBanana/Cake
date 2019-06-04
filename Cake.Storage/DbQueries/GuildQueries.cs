@@ -7,10 +7,10 @@ namespace Cake.Storage.DbQueries
     {
         private static SqlConnection Conn { get; set; }
 
-        public GuildQueries(string conString)
+        public GuildQueries(string conString = null)
         {
             Conn = new DbConnection(conString).ReturnConnection();
-        }
+        }   
 
         public string GetPrefixGuild(ulong guildId)
         {

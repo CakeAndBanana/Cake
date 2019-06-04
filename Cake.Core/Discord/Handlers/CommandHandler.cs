@@ -48,9 +48,9 @@ namespace Cake.Core.Discord.Handlers
 
                 var context = new ShardedCommandContext(_client, msg);
 
-                var argPos = 0;
+                var argPos = 0; 
 
-                if (context.Message.HasCharPrefix(Convert.ToChar(new GuildQueries(CakeJson.GetConfig().ConnectionString).GetPrefixGuild(context.Guild.Id)), ref argPos))
+                if (context.Message.HasCharPrefix(Convert.ToChar(new GuildQueries().GetPrefixGuild(context.Guild.Id)), ref argPos))
                 {
                     await context.Channel.SendMessageAsync($"`Shard : {_client.GetShardIdFor(context.Guild)}`");
                 }
