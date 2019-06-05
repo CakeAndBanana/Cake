@@ -12,7 +12,7 @@ namespace Cake.Core.Logging
         private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
         private static Logger _instance;
         private static bool _isDebugging;
-        private const string FinalMessageFormat = "{0} {1} | {2}";
+        private const string FinalMessageFormat = "{0} {1} {3}:{4} | {2}";
         private static readonly Color DefaultColor = Color.DarkGray;
 
         public static ILogger Get()
@@ -57,26 +57,46 @@ namespace Cake.Core.Logging
             Console.WriteAsciiStyled("~ Cake! ~", font, styleSheet);
         }
 
-        public void Log(Type info, 
+        public void Log(Type type, 
             string message, 
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath]
+            string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber]
+            int lineNumber = 0)
         {
-            string[] messageArray = { message };
-            Log(info, messageArray, memberName, sourceLineNumber);
+            Message[] messageArray = { new Message(message, type, memberName, sourceFilePath, lineNumber) };
+            Log(messageArray);
         }
 
         public void Log(Type type,
             string[] messages,
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath]
+            string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber]
+            int lineNumber = 0)
         {
             var preparedMessages = new Message[messages.Length];
             for (var i = 0; i < messages.Length; i++)
             {
-                preparedMessages[i] = new Message(messages[i], type);
+                preparedMessages[i] = new Message(messages[i], type, memberName, sourceFilePath, lineNumber);
             }
             Log(preparedMessages);
+        }
+
+        public void LogError(Exception exception,
+            [System.Runtime.CompilerServices.CallerMemberName]
+            string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath]
+            string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber]
+            int lineNumber = 0)
+        {
+            Message[] messages = { new ExceptionMessage(exception) };
+            Log(messages);
         }
 
         private void Log(params Message[] messages)
@@ -99,7 +119,7 @@ namespace Cake.Core.Logging
                             Console.WriteLineFormatted(FinalMessageFormat, 
                                 DefaultColor, 
                                 message.GetDefaultFormatter(now));
-                            tw.WriteLine($"[{typeName}] {now} | {message.Text}");
+                            tw.WriteLine($"{typeName} {now} {message.SourceFilePath}:{message.SourceLine} | {message.Text}");
                         }
                     }
                     catch (Exception exception) when (

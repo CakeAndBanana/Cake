@@ -12,7 +12,7 @@ using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core
 {
-    public class Cake : ICake
+    public class Main : ICake
     {
         private DiscordShardedClient _client;
         private ICommandHandler _commandHandler;

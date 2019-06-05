@@ -2,13 +2,13 @@
 {
     public class Program
     {
-        private static readonly Core.Cake Constant = GetInstance().Cake;
+        private static readonly Core.Main Constant = GetInstance().Cake;
 
         private static void Main() => Constant.StartAsync().GetAwaiter().GetResult();
 
         private static Program _instance; // Singleton instance
 
-        public Core.Cake Cake;
+        public Core.Main Cake;
 
         public static Program GetInstance() // Singleton pattern
         {
@@ -21,7 +21,7 @@
 
         public void Initialize()
         {
-            Cake = new Core.Cake();
+            Cake = new Core.Main();
         }
     }
 }
