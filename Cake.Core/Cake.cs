@@ -19,7 +19,7 @@ namespace Cake.Core
         private CommandService _commandService;
         private CakeConfiguration _cakeConfiguration;
         private IServiceProvider _services;
-        private readonly ILogger _logger = Logger.Get();
+        private readonly Logger _logger = Logger.Get() as Logger;
 
         private const int RunningInterval = 1000;
         private bool _running;

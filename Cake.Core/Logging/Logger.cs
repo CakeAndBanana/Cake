@@ -12,7 +12,7 @@ namespace Cake.Core.Logging
         private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
         private static Logger _instance;
         private static bool _isDebugging;
-        private const string FinalMessageFormat = "{0} {1} {3} | {2}";
+        private const string FinalMessageFormat = "{0} {1} | {2}";
         private static readonly Color DefaultColor = Color.DarkGray;
 
         public static ILogger Get()
@@ -55,6 +55,15 @@ namespace Cake.Core.Logging
             styleSheet.AddStyle("!", Color.DeepSkyBlue);
             var font = FigletFont.Load(Properties.Resources.colossal);
             Console.WriteAsciiStyled("~ Cake! ~", font, styleSheet);
+        }
+
+        public void Log(Type info, 
+            string message, 
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            string[] messageArray = { message };
+            Log(info, messageArray, memberName, sourceLineNumber);
         }
 
         public void Log(Type type,
