@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cake.Core.Discord.Services
 {
-    public class SetupServices : ISetupServices
+    internal class SetupServices : ISetupServices
     {
         public IServiceProvider ReturnProvider()
         {

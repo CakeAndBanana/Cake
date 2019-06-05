@@ -2,7 +2,7 @@
 
 namespace Cake.Core.Discord.Handlers
 {
-    interface ICommandHandler
+    internal interface ICommandHandler
     {
         Task InitializeAsync();
     }

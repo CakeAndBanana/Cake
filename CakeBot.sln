@@ -9,12 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Core", "Cake.Core\Cake
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Storage", "Cake.Storage\Cake.Storage.csproj", "{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Logger", "Cake.Logger\Cake.Logger.csproj", "{9C0D5502-AD0D-40B1-B3BE-D87728EA6238}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D25CBFFE-4BCB-498C-83CF-0E5B84C05018} = {D25CBFFE-4BCB-498C-83CF-0E5B84C05018}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Modules", "Cake.Modules\Cake.Modules.csproj", "{DE37EFFB-3618-49A4-A977-3F93D6977EA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Modules", "Cake.Modules\Cake.Modules.csproj", "{DE37EFFB-3618-49A4-A977-3F93D6977EA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +29,6 @@ Global
 		{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C0D5502-AD0D-40B1-B3BE-D87728EA6238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C0D5502-AD0D-40B1-B3BE-D87728EA6238}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C0D5502-AD0D-40B1-B3BE-D87728EA6238}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C0D5502-AD0D-40B1-B3BE-D87728EA6238}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE37EFFB-3618-49A4-A977-3F93D6977EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE37EFFB-3618-49A4-A977-3F93D6977EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE37EFFB-3618-49A4-A977-3F93D6977EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU

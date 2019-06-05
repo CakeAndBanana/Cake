@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using Cake.Core.Discord.Configuration;
 using Cake.Core.Discord.Handlers;
 using Cake.Core.Discord.Services;
-using Cake.Logger;
+using Cake.Core.Logging;
 using Cake.Storage;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Type = Cake.Logger.Type;
+using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core
 {
@@ -19,7 +19,7 @@ namespace Cake.Core
         private CommandService _commandService;
         private CakeConfiguration _cakeConfiguration;
         private IServiceProvider _services;
-        private ILogger _logger = Logger.Logger.Get();
+        private readonly ILogger _logger = Logger.Get();
 
         private const int RunningInterval = 1000;
         private bool _running;
@@ -41,7 +41,7 @@ namespace Cake.Core
                     await _commandHandler.InitializeAsync().ConfigureAwait(false);
 
                     _running = true;
-                    _logger.Log(Type.Success, "Connected");
+                    _logger.Log(Type.Info, "Connected");
 
                     break;
                 }

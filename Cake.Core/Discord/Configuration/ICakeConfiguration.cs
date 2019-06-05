@@ -1,6 +1,6 @@
 ﻿namespace Cake.Core.Discord.Configuration
 {
-    interface ICakeConfiguration
+    internal interface ICakeConfiguration
     {
         string BotKey { get; }
     }

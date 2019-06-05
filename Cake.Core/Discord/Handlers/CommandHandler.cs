@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cake.Core.Discord.Handlers
 {
-    class CommandHandler : ICommandHandler
+    internal class CommandHandler : ICommandHandler
     {
         private readonly DiscordShardedClient _client;
         private readonly CommandService _commandService;

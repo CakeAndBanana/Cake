@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Reflection;
 using Cake.Storage;
 using Colorful;
 using Console = Colorful.Console;
 
-namespace Cake.Logger
+namespace Cake.Core.Logging
 {
     public class Logger : ILogger
     {
         private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
         private static Logger _instance;
         private static bool _isDebugging;
+        private const string FinalMessageFormat = "{0} {1} {3} | {2}";
+        private static readonly Color DefaultColor = Color.DarkGray;
 
         public static ILogger Get()
         {
@@ -57,7 +57,10 @@ namespace Cake.Logger
             Console.WriteAsciiStyled("~ Cake! ~", font, styleSheet);
         }
 
-        public void Log(Type type, params string[] messages)
+        public void Log(Type type,
+            string[] messages,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
             var preparedMessages = new Message[messages.Length];
             for (var i = 0; i < messages.Length; i++)
@@ -67,34 +70,41 @@ namespace Cake.Logger
             Log(preparedMessages);
         }
 
-        public void Log(params Message[] messages)
+        private void Log(params Message[] messages)
         {
             var now = DateTime.UtcNow;
             try
             {
-                if (CakeJson.GetConfig().LogEnabled)
+                if (!CakeJson.GetConfig().LogEnabled) return;
+                using (var tw = new StreamWriter(Path, true))
                 {
-                    using (var tw = new StreamWriter(Path, true))
+                    try
                     {
                         foreach (var message in messages)
                         {
-                            if ((!_isDebugging) && message.Type == Type.Debug)
+                            if (!_isDebugging && message.Type == Type.Debug)
                             {
                                 return;
                             }
-
-                            const string finalMessage = "[{0}]\t{1} | {2}";
-                            var messageColor = TypeHelper.GetColor(message.Type);
-                            var timestampColor = Color.LightGray;
-
-                            Formatter[] formatter = {
-                                new Formatter(TypeHelper.GetName(message.Type), messageColor),
-                                new Formatter(now.ToString(CultureInfo.InvariantCulture), timestampColor),
-                                new Formatter(message.Text, messageColor)
-                            };
-                            Console.WriteLineFormatted(finalMessage, Color.DarkGray, formatter);
-                            tw.WriteLine($"[{message.Type.ToString()}] {now} | {message.Text}");
+                            var typeName = TypeHelper.GetName(message.Type);
+                            Console.WriteLineFormatted(FinalMessageFormat, 
+                                DefaultColor, 
+                                message.GetDefaultFormatter(now));
+                            tw.WriteLine($"[{typeName}] {now} | {message.Text}");
                         }
+                    }
+                    catch (Exception exception) when (
+                        exception is IOException 
+                        || exception is ObjectDisposedException)
+                    {
+                        var exceptionMessage = new ExceptionMessage(exception);
+
+                        Console.WriteLineFormatted(FinalMessageFormat, 
+                            DefaultColor, 
+                            exceptionMessage.GetDefaultFormatter(now));
+                    }
+                    finally
+                    {
                         tw.Close();
                     }
                 }
