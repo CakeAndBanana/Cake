@@ -60,9 +60,8 @@ namespace Cake.Core.Discord.Handlers
                         _logger.Log(Type.Info, $"\nCommand executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
                     }
                 }
-
             }
-            catch (Exception e)
+            catch
             {
                 // ignored
             }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Cake.Storage.JsonModel;
+using Cake.Storage.JsonModels;
 using Newtonsoft.Json;
 
 namespace Cake.Storage
