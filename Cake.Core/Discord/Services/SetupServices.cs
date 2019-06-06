@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Cake.Modules.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cake.Core.Discord.Services
 {
     internal class SetupServices : ISetupServices
     {
-        public IServiceProvider ReturnProvider()
+        public ServiceProvider ReturnProvider()
         {
             var services = new ServiceCollection();
-            // Add Modules here
+            services.AddSingleton<CakeService>();
             return services.BuildServiceProvider();
         }
     }

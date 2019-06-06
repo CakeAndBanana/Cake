@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Cake.Core.Discord.Configuration;
 using Cake.Core.Discord.Handlers;
-using Cake.Core.Discord.Services;
 using Cake.Core.Logging;
 using Cake.Storage;
 using Discord;
@@ -12,13 +11,12 @@ using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core
 {
+
     public class Main : ICake
     {
-        private DiscordShardedClient _client;
+        private static DiscordShardedClient _client;
         private ICommandHandler _commandHandler;
-        private CommandService _commandService;
         private CakeConfiguration _cakeConfiguration;
-        private IServiceProvider _services;
         private readonly Logger _logger = Logger.Get() as Logger;
 
         private const int RunningInterval = 1000;
@@ -38,7 +36,7 @@ namespace Cake.Core
                     await _client.LoginAsync(TokenType.Bot, _cakeConfiguration.BotKey).ConfigureAwait(false);
                     await _client.StartAsync().ConfigureAwait(false);
                     await _client.SetStatusAsync(UserStatus.Online);
-                    await _commandHandler.InitializeAsync().ConfigureAwait(false);
+                    await _commandHandler.InitializeAsync();
 
                     _running = true;
                     _logger.Log(Type.Info, "Connected");
@@ -57,13 +55,17 @@ namespace Cake.Core
                 await Task.Delay(RunningInterval);
             }
         }
+
+        public static DiscordShardedClient GetClient()
+        {
+            return _client;
+        }
+
         private void SetupBot()
         {
             _logger.Log(Type.Info, "Setup Bot");
             _client = new DiscordShardedClient();
-            _commandService = new CommandService();
-            _commandHandler = new CommandHandler(_client, _commandService);
-            _services = new SetupServices().ReturnProvider();
+            _commandHandler = new CommandHandler(_client);
             _cakeConfiguration = new CakeConfiguration();
             _running = false;
         }

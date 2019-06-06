@@ -10,7 +10,7 @@ namespace Cake.Storage.DbQueries
         {
             if (conString == null)
             {
-                ConString = CakeJson.GetConfig().ConnectionString;
+                conString = CakeJson.GetConfig().ConnectionString;
             }
             ConString = conString;
         }

@@ -18,7 +18,7 @@ namespace Cake.Storage.DbQueries
             string prefix = null;
             using (var command = new SqlCommand($"SELECT GuildPrefix FROM Dbo.DiscordGuild WHERE GuildId={guildId}", Conn))
             {
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {

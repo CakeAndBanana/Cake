@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
-using Cake.Storage;
+using Cake.Core.Discord.Services;
+using Cake.Core.Logging;
 using Cake.Storage.DbQueries;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core.Discord.Handlers
 {
@@ -13,46 +16,49 @@ namespace Cake.Core.Discord.Handlers
     {
         private readonly DiscordShardedClient _client;
         private readonly CommandService _commandService;
-        private IServiceProvider _services;
+        private readonly ServiceProvider _services;
+        private readonly Logger _logger = Logger.Get() as Logger;
 
-        public CommandHandler(DiscordShardedClient client, CommandService commandService)
+        public CommandHandler(DiscordShardedClient client)
         {
             _client = client;
-            _commandService = commandService;
+            _services = new SetupServices().ReturnProvider();
+            _commandService = new CommandService();
         }
 
         public async Task InitializeAsync()
         {
-            _services = new ServiceCollection()
-                .AddSingleton(_client)
-                .AddSingleton(_commandService)
-                .BuildServiceProvider();
-
-            await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _services).ConfigureAwait(false);
-
             _client.MessageReceived += HandleCommandEvent;
+
+            await _commandService.AddModulesAsync(Assembly.GetCallingAssembly(), _services);
         }
 
-        private async Task HandleCommandEvent(SocketMessage message)
+        public async Task HandleCommandEvent(SocketMessage message)
         {
-            if (!(message is SocketUserMessage msg)) return;
-            await PrefixCommandAsync(msg);
+            if (!(message is SocketUserMessage msg) || msg.Author.IsBot) return;
+            await PrefixCommandAsync(new ShardedCommandContext(_client, msg));
         }
 
 
-        private async Task PrefixCommandAsync(SocketUserMessage msg)
+        private async Task PrefixCommandAsync(ShardedCommandContext context, int argPos = 0)
         {
+            if (context == null) throw new ArgumentNullException(nameof(context));
             try
             {
-                if (msg.Author.IsBot) return;
-
-                var context = new ShardedCommandContext(_client, msg);
-
-                var argPos = 0; 
-
                 if (context.Message.HasCharPrefix(Convert.ToChar(new GuildQueries().GetPrefixGuild(context.Guild.Id)), ref argPos))
                 {
-                    await context.Channel.SendMessageAsync($"`Shard : {_client.GetShardIdFor(context.Guild)}`");
+                    var stopwatch = Stopwatch.StartNew();
+                    var result = await _commandService.ExecuteAsync(context, 1, _services);
+                    stopwatch.Stop();
+
+                    if (!result.IsSuccess)
+                    {
+                        // Error handler
+                    }
+                    else
+                    {
+                        _logger.Log(Type.Info, $"\nCommand executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
+                    }
                 }
 
             }

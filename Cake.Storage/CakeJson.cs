@@ -21,6 +21,7 @@ namespace Cake.Storage
             {
                 BotKey = "Bot Key here", 
                 LogEnabled = true,
+                ConnectionString = null
             };
 
             File.WriteAllText(Path, JsonConvert.SerializeObject(model));
