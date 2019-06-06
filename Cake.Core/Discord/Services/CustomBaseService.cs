@@ -1,4 +1,4 @@
-﻿using CustomBaseModule = Cake.Core.Discord.Modules.CustomBaseModule;
+﻿using Cake.Core.Discord.Modules;
 
 namespace Cake.Core.Discord.Services
 {
@@ -10,6 +10,5 @@ namespace Cake.Core.Discord.Services
         {
             Module = module;
         }
-
     }
 }

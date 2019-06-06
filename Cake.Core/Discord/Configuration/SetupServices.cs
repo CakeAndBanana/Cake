@@ -5,11 +5,11 @@ namespace Cake.Core.Discord.Configuration
 {
     public static class SetupServices
     {
-        public static ServiceProvider ReturnProvider()
+        public static ServiceCollection ReturnProvider()
         {
-            var services = new ServiceCollection()
-                .AddSingleton<CakeService>();
-            return services.BuildServiceProvider();
+            var services = new ServiceCollection();
+            services.AddSingleton<CakeService>();
+            return services;
         }
     }
 }

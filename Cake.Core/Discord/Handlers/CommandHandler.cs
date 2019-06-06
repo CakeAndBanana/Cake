@@ -6,6 +6,7 @@ using Cake.Core.Logging;
 using Cake.Storage.DbQueries;
 using Discord.Commands;
 using Discord.WebSocket;
+using Microsoft.Extensions.DependencyInjection;
 using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core.Discord.Handlers
@@ -17,10 +18,10 @@ namespace Cake.Core.Discord.Handlers
         private readonly IServiceProvider _services;
         private readonly Logger _logger = Logger.Get() as Logger;
 
-        public CommandHandler(DiscordShardedClient client, IServiceProvider serviceProvider)
+        public CommandHandler(DiscordShardedClient client, ServiceCollection serviceCollection)
         {
             _client = client;
-            _services = serviceProvider;
+            _services = serviceCollection.BuildServiceProvider();
             _commandService = new CommandService();
         }
 

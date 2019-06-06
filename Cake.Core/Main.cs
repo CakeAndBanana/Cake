@@ -6,6 +6,7 @@ using Cake.Core.Logging;
 using Cake.Storage;
 using Discord;
 using Discord.WebSocket;
+using Microsoft.Extensions.DependencyInjection;
 using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core
@@ -13,7 +14,7 @@ namespace Cake.Core
     public class Main : ICake
     {
         private static DiscordShardedClient _client;
-        private IServiceProvider _services;
+        private ServiceCollection _services;
         private ICommandHandler _commandHandler;
         private CakeConfiguration _cakeConfiguration;
         private readonly Logger _logger = Logger.Get() as Logger;
@@ -32,7 +33,7 @@ namespace Cake.Core
                 try
                 {
                     _logger.Log(Type.Info, "Connecting");
-                    await _client.LoginAsync(TokenType.Bot, _cakeConfiguration.BotKey).ConfigureAwait(false);
+                    await _client.LoginAsync(TokenType.Bot, _cakeConfiguration.BotKey);
                     await _client.StartAsync().ConfigureAwait(false);
                     await _client.SetStatusAsync(UserStatus.Online);
                     await _commandHandler.InitializeAsync();
