@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cake.Modules.Modules;
+﻿using CustomBaseModule = Cake.Core.Discord.Modules.CustomBaseModule;
 
-namespace Cake.Modules.Services
+namespace Cake.Core.Discord.Services
 {
     public class CustomBaseService
     {

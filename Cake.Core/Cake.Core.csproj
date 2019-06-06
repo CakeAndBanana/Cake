@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cake.Modules\Cake.Modules.csproj" />
     <ProjectReference Include="..\Cake.Storage\Cake.Storage.csproj" />
   </ItemGroup>
 

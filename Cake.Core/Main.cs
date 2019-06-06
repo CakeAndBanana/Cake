@@ -5,16 +5,15 @@ using Cake.Core.Discord.Handlers;
 using Cake.Core.Logging;
 using Cake.Storage;
 using Discord;
-using Discord.Commands;
 using Discord.WebSocket;
 using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core
 {
-
     public class Main : ICake
     {
         private static DiscordShardedClient _client;
+        private IServiceProvider _services;
         private ICommandHandler _commandHandler;
         private CakeConfiguration _cakeConfiguration;
         private readonly Logger _logger = Logger.Get() as Logger;
@@ -65,7 +64,8 @@ namespace Cake.Core
         {
             _logger.Log(Type.Info, "Setup Bot");
             _client = new DiscordShardedClient();
-            _commandHandler = new CommandHandler(_client);
+            _services = SetupServices.ReturnProvider();
+            _commandHandler = new CommandHandler(_client, _services);
             _cakeConfiguration = new CakeConfiguration();
             _running = false;
         }

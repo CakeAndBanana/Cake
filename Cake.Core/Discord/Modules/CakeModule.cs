@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Cake.Modules.Services;
-using Discord;
+﻿using System.Threading.Tasks;
+using Cake.Core.Discord.Services;
 using Discord.Commands;
 
-namespace Cake.Modules.Modules
+namespace Cake.Core.Discord.Modules
 {
     [Group("cake")]
     public class CakeModule : CustomBaseModule

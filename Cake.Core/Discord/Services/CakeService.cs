@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Discord;
-using Discord.WebSocket;
 
-namespace Cake.Modules.Services
+namespace Cake.Core.Discord.Services
 {
     public class CakeService : CustomBaseService
     {

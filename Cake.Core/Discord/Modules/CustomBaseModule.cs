@@ -1,6 +1,6 @@
 ﻿using Discord.Commands;
 
-namespace Cake.Modules.Modules
+namespace Cake.Core.Discord.Modules
 {
     public class CustomBaseModule : ModuleBase
     {
