@@ -31,9 +31,7 @@ namespace Cake.Core.Discord.Handlers
         {
             _client.MessageReceived += HandleCommandEvent;
 
-            var test = _services.GetService<CakeService>();
-
-            await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
+            await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
         }
 
         public async Task HandleCommandEvent(SocketMessage message)

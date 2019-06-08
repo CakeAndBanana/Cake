@@ -4,15 +4,8 @@ using Discord;
 
 namespace Cake.Core.Discord.Services
 {
-    public class CakeService
+    public class CakeService : CustomBaseService
     {
-        protected CakeModule Module;
-
-        public void SetBaseModule(CakeModule module)
-        {
-            Module = module;
-        }
-
         public async Task GetStatus()
         {
             var embed = new EmbedBuilder {Title = "Status of Cake", Description = $"Test"};
