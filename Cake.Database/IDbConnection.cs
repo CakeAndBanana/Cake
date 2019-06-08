@@ -1,7 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-
-namespace Cake.Storage.DbQueries
+namespace Cake.Database
 {
     interface IDbConnection
     {

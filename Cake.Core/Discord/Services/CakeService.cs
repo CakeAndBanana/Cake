@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Cake.Core.Discord.Embed;
 using Cake.Core.Discord.Embed.Builder;
 
 namespace Cake.Core.Discord.Services

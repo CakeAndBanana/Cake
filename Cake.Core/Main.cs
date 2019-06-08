@@ -61,7 +61,7 @@ namespace Cake.Core
             return _client;
         }
 
-        private void SetupBot()
+        public void SetupBot()
         {
             _logger.Log(Type.Info, "Setup Bot");
             _client = new DiscordShardedClient();

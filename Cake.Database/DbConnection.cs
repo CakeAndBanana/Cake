@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
+using Cake.Storage;
 
-namespace Cake.Storage.DbQueries
+namespace Cake.Database
 {
     public class DbConnection : IDbConnection
     {
