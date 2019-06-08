@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
-using Cake.Core.Discord.Modules;
-using Cake.Core.Discord.Services;
 using Cake.Core.Logging;
 using Cake.Storage.DbQueries;
 using Discord.Commands;
