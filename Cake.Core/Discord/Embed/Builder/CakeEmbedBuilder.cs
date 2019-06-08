@@ -1,6 +1,6 @@
 ﻿using Discord;
 
-namespace Cake.Core.Discord.Embed
+namespace Cake.Core.Discord.Embed.Builder
 {
     public class CakeEmbedBuilder : EmbedBuilder
     {

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Cake.Core.Discord.Embed;
+using Cake.Core.Discord.Embed.Builder;
 using Cake.Core.Discord.Modules;
 using Cake.Core.Logging;
 using Discord;

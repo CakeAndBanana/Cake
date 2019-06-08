@@ -1,4 +1,4 @@
-﻿namespace Cake.Core.Discord.Embed
+﻿namespace Cake.Core.Discord.Embed.Builder
 {
     interface ICakeEmbedBuilder
     {
