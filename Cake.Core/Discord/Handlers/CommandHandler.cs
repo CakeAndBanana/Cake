@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
+using Cake.Core.Discord.Modules;
+using Cake.Core.Discord.Services;
 using Cake.Core.Logging;
 using Cake.Storage.DbQueries;
 using Discord.Commands;
@@ -28,6 +30,8 @@ namespace Cake.Core.Discord.Handlers
         public async Task InitializeAsync()
         {
             _client.MessageReceived += HandleCommandEvent;
+
+            var test = _services.GetService<CakeService>();
 
             await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }

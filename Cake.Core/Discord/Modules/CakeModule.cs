@@ -5,6 +5,7 @@ using Discord.Commands;
 namespace Cake.Core.Discord.Modules
 {
     [Group("cake")]
+    [Name("Cake")]
     public class CakeModule : CustomBaseModule
     {
         private readonly CakeService _service;
@@ -17,7 +18,6 @@ namespace Cake.Core.Discord.Modules
 
         [Command("status")]
         [Summary("cake status")]
-        [RequireContext(ContextType.Guild)]
         [Alias("s")]
         [Remarks("Returns status of Cake.")]
         public async Task ReturnStatus()
