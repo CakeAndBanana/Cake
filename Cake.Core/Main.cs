@@ -63,11 +63,13 @@ namespace Cake.Core
 
         public void SetupBot()
         {
-            _logger.Log(Type.Info, "Setup Bot");
+            _logger.Log(Type.Info, "Setting up Cake");
+
             _client = new DiscordShardedClient();
             _services = new SetupServices().ReturnProvider();
             _commandHandler = new CommandHandler(_client, _services);
             _cakeConfiguration = new CakeConfiguration();
+
             _running = false;
         }
     }

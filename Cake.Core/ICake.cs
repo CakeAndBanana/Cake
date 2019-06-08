@@ -8,6 +8,5 @@ namespace Cake.Core
         Task StartAsync();
 
         void SetupBot();
-        DiscordShardedClient GetClient();
     }
 }
