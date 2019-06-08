@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Cake.Core.Discord.Modules;
-using Discord;
+using Cake.Core.Discord.Embed;
 
 namespace Cake.Core.Discord.Services
 {
@@ -8,8 +7,8 @@ namespace Cake.Core.Discord.Services
     {
         public async Task GetStatus()
         {
-            var embed = new EmbedBuilder {Title = "Status of Cake", Description = $"Test"};
-            await Module.Context.Channel.SendMessageAsync("", false, embed.Build());
+            var embed = new CakeEmbedBuilder {Title = "Status of Cake", Description = $"Test"};
+            await SendEmbedAsync(embed);
         }
     }
 }
