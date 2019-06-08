@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cake.Core.Discord.Configuration;
+using Cake.Core.Configuration;
 using Cake.Core.Discord.Handlers;
 using Cake.Core.Logging;
 using Cake.Storage;
@@ -65,7 +65,7 @@ namespace Cake.Core
         {
             _logger.Log(Type.Info, "Setup Bot");
             _client = new DiscordShardedClient();
-            _services = SetupServices.ReturnProvider();
+            _services = new SetupServices().ReturnProvider();
             _commandHandler = new CommandHandler(_client, _services);
             _cakeConfiguration = new CakeConfiguration();
             _running = false;

@@ -1,4 +1,4 @@
-﻿namespace Cake.Core.Discord.Configuration
+﻿namespace Cake.Core.Configuration
 {
     internal class CakeConfiguration : ICakeConfiguration
     {

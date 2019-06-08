@@ -1,11 +1,11 @@
 ﻿using Cake.Core.Discord.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cake.Core.Discord.Configuration
+namespace Cake.Core.Configuration
 {
-    public static class SetupServices
+    public class SetupServices : ISetupServices
     {
-        public static ServiceCollection ReturnProvider()
+        public ServiceCollection ReturnProvider()
         {
             var services = new ServiceCollection();
             services.AddSingleton<CakeService>();
