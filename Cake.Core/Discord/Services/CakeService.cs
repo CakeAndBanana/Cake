@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using System.Threading.Tasks;
-using Cake.Core.Discord.Embed.Builder;
+﻿using System.Threading.Tasks;
 
 namespace Cake.Core.Discord.Services
 {
@@ -8,14 +6,7 @@ namespace Cake.Core.Discord.Services
     {
         public async Task GetStatus()
         {
-            var embed = new CakeEmbedBuilder
-            {
-                Title = "Status of Cake",
-                Description = $"Version: ``{Assembly.GetExecutingAssembly().GetName().Version}``\n" +
-                              $"Discord Latency: ``{Main.GetClient().Latency}ms``\n" +
-                              $"Shards: ``{Main.GetClient().Shards.Count} / {Main.GetClient().GetShardIdFor(Module.Context.Guild) + 1}``"
-            };
-            await SendEmbedAsync(embed);
+            await SendEmbedAsync(Embed.CakeModuleEmbeds.ReturnStatusEmbed(Module.Context.Guild));
         }
     }
 }

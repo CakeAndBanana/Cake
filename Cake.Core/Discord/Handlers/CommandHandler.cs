@@ -43,7 +43,8 @@ namespace Cake.Core.Discord.Handlers
             if (context == null) throw new ArgumentNullException(nameof(context));
             try
             {
-                if (context.Message.HasCharPrefix(Convert.ToChar(new GuildQueries().GetPrefixGuild(context.Guild.Id)), ref argPos))
+                var cakeGuild = await new GuildQueries().FindCreateGuild(context.Guild.Id);
+                if (context.Message.HasCharPrefix(Convert.ToChar(cakeGuild.Prefix), ref argPos))
                 {
                     var stopwatch = Stopwatch.StartNew();
                     var result = await _commandService.ExecuteAsync(context, 1, _services);
