@@ -54,14 +54,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeGuild> FindOrCreateGuild(ulong guildId)
-        {
-            var guild = await GetGuild(guildId);
-            if (guild == null)
-            {
-                guild = await CreateGuild(guildId);
-            }
-            return guild;
-        }
+        public static async Task<CakeGuild> FindOrCreateGuild(ulong guildId) => await GetGuild(guildId) ?? await CreateGuild(guildId);
     }
 }

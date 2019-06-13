@@ -48,14 +48,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeUser> FindOrCreateUser(ulong userId)
-        {
-            var user = await GetUser(userId);
-            if (user == null)
-            {
-                user = await CreateUser(userId);
-            }
-            return user;
-        }
+        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => await GetUser(userId) ?? await CreateUser(userId);
     }
 }
