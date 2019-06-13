@@ -8,7 +8,7 @@ namespace Cake.Database.Queries
 {
     public class UserGueries
     {
-        public async static Task<List<CakeUser>> GetAllUsers()
+        public async static Task<List<CakeUser>> GetAdallUsers()
         {
             using (var db = new CakeDb())
             {
