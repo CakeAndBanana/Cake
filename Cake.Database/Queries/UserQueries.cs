@@ -8,7 +8,7 @@ namespace Cake.Database.Queries
 {
     public class UserGueries
     {
-        public async static Task<List<CakeUser>> GetAdallUsers()
+        public static async Task<List<CakeUser>> GetAdallUsers()
         {
             using (var db = new CakeDb())
             {
@@ -16,7 +16,7 @@ namespace Cake.Database.Queries
             }
         }
 
-        private async static Task<CakeUser> GetUser(ulong userId)
+        private static async Task<CakeUser> GetUser(ulong userId)
         {
             using (var db = new CakeDb())
             {
@@ -27,7 +27,7 @@ namespace Cake.Database.Queries
             }
         }
 
-        private async static Task<CakeUser> CreateUser(ulong userId)
+        private static async Task<CakeUser> CreateUser(ulong userId)
         {
             using (var db = new CakeDb())
             {
@@ -48,7 +48,7 @@ namespace Cake.Database.Queries
             }
         }
 
-        public async static Task<CakeUser> FindOrCreateUser(ulong userId)
+        public static async Task<CakeUser> FindOrCreateUser(ulong userId)
         {
             var user = await GetUser(userId);
             if (user == null)
