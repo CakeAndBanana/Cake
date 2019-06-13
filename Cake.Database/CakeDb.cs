@@ -7,5 +7,6 @@ namespace Cake.Database
     {
         public CakeDb() : base("CakeContext") { }
         public ITable<CakeGuild> CakeGuilds => GetTable<CakeGuild>();
+        public ITable<CakeUser> CakeUsers => GetTable<CakeUser>();
     }
 }
