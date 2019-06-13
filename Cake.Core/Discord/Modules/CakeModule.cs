@@ -24,5 +24,21 @@ namespace Cake.Core.Discord.Modules
         {
             await _service.GetStatus();
         }
+
+        [Command("prefix")]
+        [Summary("cake prefix (newprefix?)")]
+        [Alias("p")]
+        [Remarks("Returns or set the prefix of Cake.")]
+        public async Task ReturnPrefix(string newprefix = null)
+        {
+            if (newprefix == null)
+            {
+                await _service.GetPrefix();
+            }
+            else
+            {
+;               await _service.SetPrefix(newprefix);
+            }
+        }
     }
 }
