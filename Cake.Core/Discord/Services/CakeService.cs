@@ -32,7 +32,7 @@ namespace Cake.Core.Discord.Services
             }
             catch
             {
-                //
+                // WIP
             }
         }
 
@@ -52,6 +52,44 @@ namespace Cake.Core.Discord.Services
             await Database.Queries.GuildQueries.UpdateGuild(guild);
 
             await SendMessageAsync("`Set this channel as leave message channel!`");
+        }
+
+        public async Task RestrictGuild(ulong guildId)
+        {
+            string message;
+            var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(guildId);
+            if (guild.Restrict)
+            {
+                guild.Restrict = false;
+                message = $"`Unrestricted guild {guildId} from using Cake!`";
+            }
+            else
+            {
+                guild.Restrict = true;
+                message = $"`Restricted guild {guildId} from using Cake!`";
+            }
+            await Database.Queries.GuildQueries.UpdateGuild(guild);
+
+            await SendMessageAsync(message);
+        }
+
+        public async Task RestrictUser(ulong userId)
+        {
+            string message;
+            var user = await Database.Queries.UserGueries.FindOrCreateUser(userId);
+            if (user.Restrict)
+            {
+                user.Restrict = false;
+                message = $"`Unrestricted user {userId} from using Cake!`";
+            }
+            else
+            {
+                user.Restrict = true;
+                message = $"`Restricted user {userId} from using Cake!`";
+            }
+            await Database.Queries.UserGueries.UpdateUser(user);
+
+            await SendMessageAsync(message);
         }
     }
 }

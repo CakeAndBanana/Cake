@@ -8,7 +8,7 @@ namespace Cake.Database.Queries
 {
     public class UserGueries
     {
-        public static async Task<List<CakeUser>> GetAdallUsers()
+        public static async Task<List<CakeUser>> GetAllUsers()
         {
             using (var db = new CakeDb())
             {
@@ -24,6 +24,14 @@ namespace Cake.Database.Queries
                                     where cu.Id == userId
                                     select cu).ToListAsync();
                 return result.FirstOrDefault();
+            }
+        }
+
+        public static async Task UpdateUser(CakeUser user)
+        {
+            using (var db = new CakeDb())
+            {
+                await db.UpdateAsync(user);
             }
         }
 

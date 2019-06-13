@@ -47,6 +47,8 @@ namespace Cake.Core.Discord.Handlers
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
+                    if (Database.Queries.UserGueries.FindOrCreateUser(context.User.Id).Result.Restrict || guild.Restrict) throw new Exception("User");
+
                     var stopwatch = Stopwatch.StartNew();
                     var result = await _commandService.ExecuteAsync(context, 1, _services);
                     stopwatch.Stop();

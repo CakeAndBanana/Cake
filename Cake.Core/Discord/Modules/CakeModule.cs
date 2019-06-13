@@ -5,6 +5,7 @@ using Discord.Commands;
 namespace Cake.Core.Discord.Modules
 {
     [Group("cake")]
+    [Alias("c")]
     [Name("Cake")]
     public class CakeModule : CustomBaseModule
     {
@@ -57,6 +58,26 @@ namespace Cake.Core.Discord.Modules
         public async Task SetLeave()
         {
             await _service.SetLeave(Context.Channel.Id);
+        }
+
+        [Command("restrict")]
+        [Summary("cake restrict (user/guild) (id)")]
+        [Alias("r")]
+        [Remarks("Restricts user or guild from using Cake.")]
+        public async Task SetRestrict(string result, ulong id)
+        {
+            switch (result)
+            {
+                case "user":
+                    await _service.RestrictUser(id);
+                    break;
+                case "guild":
+                    await _service.RestrictGuild(id);
+                    break;
+                default:
+                    await Context.Channel.SendMessageAsync("``Use guild or user as param``");
+                    break;
+            }
         }
     }
 }
