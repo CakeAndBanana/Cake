@@ -8,7 +8,7 @@ namespace Cake.Database.Queries
 {
     public class GuildQueries
     {
-        public async static Task<List<CakeGuild>> GetGuilds()
+        public async static Task<List<CakeGuild>> GetAllGuilds()
         {
             using (var db = new CakeDb())
             {
