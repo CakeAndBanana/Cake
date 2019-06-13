@@ -38,9 +38,10 @@ namespace Cake.Core
                     await _client.SetStatusAsync(UserStatus.Online);
                     await _commandHandler.InitializeAsync();
 
+                    var Guilds = await Database.Query.GuildQueries.GetGuilds();
+
                     _running = true;
                     _logger.Log(Type.Info, "Connected");
-
                     break;
                 }
                 catch (Exception e)
@@ -69,6 +70,7 @@ namespace Cake.Core
             _services = new SetupServices().ReturnProvider();
             _commandHandler = new CommandHandler(_client, _services);
             _cakeConfiguration = new CakeConfiguration();
+            Database.Init.Startup();
 
             _running = false;
         }
