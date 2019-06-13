@@ -11,7 +11,7 @@ namespace Cake.Core.Discord.Handlers
             var embed = JoinHandlerEmbeds.ReturnJoinedEmbed(joinedUser, Main.GetClient().CurrentUser.Username, Main.GetClient().CurrentUser.GetAvatarUrl());
 
             var guild = joinedUser.Guild;
-            var cakeGuild = await Database.Query.GuildQueries.FindOrCreateGuild(guild.Id);
+            var cakeGuild = await Database.Queries.GuildQueries.FindOrCreateGuild(guild.Id);
             SocketTextChannel channel = cakeGuild.WelcomeId == null ? guild.DefaultChannel : guild.GetTextChannel(cakeGuild.WelcomeId.Value);
             await channel.SendMessageAsync("", false, embed.Build());
         }
@@ -21,7 +21,7 @@ namespace Cake.Core.Discord.Handlers
             var embed = JoinHandlerEmbeds.ReturnLeaveEmbed(leftUser, Main.GetClient().CurrentUser.Username, Main.GetClient().CurrentUser.GetAvatarUrl());
 
             var guild = leftUser.Guild;
-            var cakeGuild = await Database.Query.GuildQueries.FindOrCreateGuild(guild.Id);
+            var cakeGuild = await Database.Queries.GuildQueries.FindOrCreateGuild(guild.Id);
             SocketTextChannel channel = cakeGuild.LeaveId == null ? guild.DefaultChannel : guild.GetTextChannel(cakeGuild.LeaveId.Value);
             await channel.SendMessageAsync("", false, embed.Build());
         }

@@ -44,7 +44,7 @@ namespace Cake.Core.Discord.Handlers
             if (context == null) throw new ArgumentNullException(nameof(context));
             try
             {
-                var guild = await Database.Query.GuildQueries.FindOrCreateGuild(context.Guild.Id);
+                var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
                     var stopwatch = Stopwatch.StartNew();

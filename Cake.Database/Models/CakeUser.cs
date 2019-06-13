@@ -1,6 +1,6 @@
 ﻿using LinqToDB.Mapping;
 
-namespace Cake.Database.Model
+namespace Cake.Database.Models
 {
     [Table(Name = "CakeUser")]
     public class CakeUser

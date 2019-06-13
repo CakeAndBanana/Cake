@@ -1,10 +1,10 @@
-﻿using Cake.Database.Model;
+﻿using Cake.Database.Models;
 using LinqToDB;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cake.Database.Query
+namespace Cake.Database.Queries
 {
     public class GuildQueries
     {
@@ -21,8 +21,8 @@ namespace Cake.Database.Query
             using (var db = new CakeDb())
             {
                 var result = await (from cg in db.CakeGuilds
-                                       where cg.Id == guildId
-                                       select cg).ToListAsync();
+                                    where cg.Id == guildId
+                                    select cg).ToListAsync();
                 return result.FirstOrDefault();
             }
         }

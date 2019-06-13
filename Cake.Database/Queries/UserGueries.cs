@@ -1,10 +1,10 @@
-﻿using Cake.Database.Model;
+﻿using Cake.Database.Models;
 using LinqToDB;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cake.Database.Query
+namespace Cake.Database.Queries
 {
     public class UserGueries
     {

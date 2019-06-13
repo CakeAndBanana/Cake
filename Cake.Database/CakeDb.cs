@@ -1,4 +1,4 @@
-﻿using Cake.Database.Model;
+﻿using Cake.Database.Models;
 using LinqToDB;
 
 namespace Cake.Database
