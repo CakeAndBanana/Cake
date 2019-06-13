@@ -16,7 +16,7 @@ namespace Cake.Database.Query
             }
         }
 
-        public async static Task<CakeGuild> GetGuild(ulong guildId)
+        private async static Task<CakeGuild> GetGuild(ulong guildId)
         {
             using (var db = new CakeDb())
             {
@@ -27,7 +27,7 @@ namespace Cake.Database.Query
             }
         }
 
-        public async static Task<CakeGuild> CreateGuild(ulong guildId)
+        private async static Task<CakeGuild> CreateGuild(ulong guildId)
         {
             using (var db = new CakeDb())
             {

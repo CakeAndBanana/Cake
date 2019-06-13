@@ -27,6 +27,8 @@ namespace Cake.Core.Discord.Handlers
         public async Task InitializeAsync()
         {
             _client.MessageReceived += HandleCommandEvent;
+            _client.UserJoined += JoinHandler.UserJoined;
+            _client.UserLeft += JoinHandler.UserLeft;
 
             await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
         }
