@@ -26,19 +26,37 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Command("prefix")]
-        [Summary("cake prefix (newprefix?)")]
+        [Summary("cake prefix (new prefix?)")]
         [Alias("p")]
         [Remarks("Returns or set the prefix of Cake.")]
-        public async Task ReturnPrefix(string newprefix = null)
+        public async Task ReturnPrefix(string newPrefix = null)
         {
-            if (newprefix == null)
+            if (newPrefix == null)
             {
                 await _service.GetPrefix();
             }
             else
             {
-;               await _service.SetPrefix(newprefix);
+;               await _service.SetPrefix(newPrefix);
             }
+        }
+
+        [Command("welcome")]
+        [Summary("cake welcome")]
+        [Alias("p")]
+        [Remarks("Sets current channel as welcome message channel for Cake.")]
+        public async Task SetWelcome()
+        {
+            await _service.SetWelcome(Context.Channel.Id);
+        }
+
+        [Command("leave")]
+        [Summary("cake leave")]
+        [Alias("p")]
+        [Remarks("Sets current channel as leave message channel for Cake.")]
+        public async Task SetLeave()
+        {
+            await _service.SetLeave(Context.Channel.Id);
         }
     }
 }

@@ -14,27 +14,44 @@ namespace Cake.Core.Discord.Services
             await SendMessageAsync($"``Current prefix in this server is {Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id).Result.Prefix}.``");
         }
 
-        public async Task SetPrefix(string newprefix)
+        public async Task SetPrefix(string newPrefix)
         {
             try
             {
-                if (newprefix.Length > 4)
+                if (newPrefix.Length > 4)
                 {
                     throw new System.Exception("New prefix is too long for database.");
                 }
 
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
-                var oldprefix = guild.Prefix;
-                guild.Prefix = newprefix;
+                var oldPrefix = guild.Prefix;
+                guild.Prefix = newPrefix;
                 await Database.Queries.GuildQueries.UpdateGuild(guild);
 
-                await SendMessageAsync($"``Prefix changed to '{newprefix}', old prefix was '{oldprefix}'.``");
+                await SendMessageAsync($"``Prefix changed to '{newPrefix}', old prefix was '{oldPrefix}'.``");
             }
             catch
             {
                 //
             }
+        }
 
+        public async Task SetWelcome(ulong channelId)
+        {
+            var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
+            guild.WelcomeId = channelId;
+            await Database.Queries.GuildQueries.UpdateGuild(guild);
+
+            await SendMessageAsync("`Set this channel as welcome message channel!`");
+        }
+
+        public async Task SetLeave(ulong channelId)
+        {
+            var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
+            guild.LeaveId = channelId;
+            await Database.Queries.GuildQueries.UpdateGuild(guild);
+
+            await SendMessageAsync("`Set this channel as leave message channel!`");
         }
     }
 }
