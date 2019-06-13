@@ -27,11 +27,19 @@ namespace Cake.Database.Query
             }
         }
 
+        public async static Task UpdateGuild(CakeGuild guild)
+        {
+            using (var db = new CakeDb())
+            {
+                await db.UpdateAsync(guild);
+            }
+        }
+
         private async static Task<CakeGuild> CreateGuild(ulong guildId)
         {
             using (var db = new CakeDb())
             {
-                var newguild = new CakeGuild
+                var newGuild = new CakeGuild
                 {
                     Id = guildId,
                     Prefix = ">",
@@ -41,8 +49,8 @@ namespace Cake.Database.Query
                     LevelUpId = null
                 };
 
-                await db.InsertAsync(newguild);
-                return newguild;
+                await db.InsertAsync(newGuild);
+                return newGuild;
             }
         }
 
