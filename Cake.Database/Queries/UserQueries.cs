@@ -8,7 +8,7 @@ namespace Cake.Database.Queries
 {
     public class UserGueries
     {
-        public static async Task<List<CakeUser>> GetAllUsers()
+        public static async Task<List<CakeUser>> GetAll()
         {
             using (var db = new CakeDb())
             {
@@ -16,22 +16,22 @@ namespace Cake.Database.Queries
             }
         }
 
-        private static async Task<CakeUser> GetUser(ulong userId)
+        private static async Task<CakeUser> Get(ulong id)
         {
             using (var db = new CakeDb())
             {
                 var result = await (from cu in db.CakeUsers
-                                    where cu.Id == userId
+                                    where cu.Id == id
                                     select cu).ToListAsync();
                 return result.FirstOrDefault();
             }
         }
 
-        public static async Task UpdateUser(CakeUser user)
+        public static async Task Update(CakeUser record)
         {
             using (var db = new CakeDb())
             {
-                await db.UpdateAsync(user);
+                await db.UpdateAsync(record);
             }
         }
 
@@ -56,6 +56,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => await GetUser(userId) ?? await CreateUser(userId);
+        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => await Get(userId) ?? await CreateUser(userId);
     }
 }

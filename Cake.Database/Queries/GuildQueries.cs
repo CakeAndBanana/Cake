@@ -8,7 +8,7 @@ namespace Cake.Database.Queries
 {
     public class GuildQueries
     {
-        public static async Task<List<CakeGuild>> GetAllGuilds()
+        public static async Task<List<CakeGuild>> GetAll()
         {
             using (var db = new CakeDb())
             {
@@ -16,22 +16,22 @@ namespace Cake.Database.Queries
             }
         }
 
-        private static async Task<CakeGuild> GetGuild(ulong guildId)
+        private static async Task<CakeGuild> Get(ulong id)
         {
             using (var db = new CakeDb())
             {
                 var result = await (from cg in db.CakeGuilds
-                                    where cg.Id == guildId
+                                    where cg.Id == id
                                     select cg).ToListAsync();
                 return result.FirstOrDefault();
             }
         }
 
-        public static async Task UpdateGuild(CakeGuild guild)
+        public static async Task Update(CakeGuild record)
         {
             using (var db = new CakeDb())
             {
-                await db.UpdateAsync(guild);
+                await db.UpdateAsync(record);
             }
         }
 
@@ -54,6 +54,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeGuild> FindOrCreateGuild(ulong guildId) => await GetGuild(guildId) ?? await CreateGuild(guildId);
+        public static async Task<CakeGuild> FindOrCreateGuild(ulong guildId) => await Get(guildId) ?? await CreateGuild(guildId);
     }
 }
