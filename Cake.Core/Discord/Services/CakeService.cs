@@ -26,7 +26,7 @@ namespace Cake.Core.Discord.Services
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
                 var oldPrefix = guild.Prefix;
                 guild.Prefix = newPrefix;
-                await Database.Queries.GuildQueries.UpdateGuild(guild);
+                await Database.Queries.GuildQueries.Update(guild);
 
                 await SendMessageAsync($"``Prefix changed to '{newPrefix}', old prefix was '{oldPrefix}'.``");
             }
@@ -40,7 +40,7 @@ namespace Cake.Core.Discord.Services
         {
             var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
             guild.WelcomeId = channelId;
-            await Database.Queries.GuildQueries.UpdateGuild(guild);
+            await Database.Queries.GuildQueries.Update(guild);
 
             await SendMessageAsync("`Set this channel as welcome message channel!`");
         }
@@ -49,7 +49,7 @@ namespace Cake.Core.Discord.Services
         {
             var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
             guild.LeaveId = channelId;
-            await Database.Queries.GuildQueries.UpdateGuild(guild);
+            await Database.Queries.GuildQueries.Update(guild);
 
             await SendMessageAsync("`Set this channel as leave message channel!`");
         }
@@ -68,7 +68,7 @@ namespace Cake.Core.Discord.Services
                 guild.Restrict = true;
                 message = $"`Restricted guild {guildId} from using Cake!`";
             }
-            await Database.Queries.GuildQueries.UpdateGuild(guild);
+            await Database.Queries.GuildQueries.Update(guild);
 
             await SendMessageAsync(message);
         }
@@ -87,7 +87,7 @@ namespace Cake.Core.Discord.Services
                 user.Restrict = true;
                 message = $"`Restricted user {userId} from using Cake!`";
             }
-            await Database.Queries.UserGueries.UpdateUser(user);
+            await Database.Queries.UserGueries.Update(user);
 
             await SendMessageAsync(message);
         }
