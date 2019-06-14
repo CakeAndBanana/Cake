@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Services;
 using Discord.Commands;
 
@@ -64,6 +65,7 @@ namespace Cake.Core.Discord.Modules
         [Summary("cake restrict (user/guild) (id)")]
         [Alias("r")]
         [Remarks("Restricts user or guild from using Cake.")]
+        [RequireAdmin]
         public async Task SetRestrict(string result, ulong id)
         {
             switch (result)
