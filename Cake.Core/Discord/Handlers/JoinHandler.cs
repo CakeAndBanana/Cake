@@ -12,7 +12,8 @@ namespace Cake.Core.Discord.Handlers
 
             var guild = joinedUser.Guild;
             var cakeGuild = await Database.Queries.GuildQueries.FindOrCreateGuild(guild.Id);
-            SocketTextChannel channel = cakeGuild.WelcomeId == null ? guild.DefaultChannel : guild.GetTextChannel(cakeGuild.WelcomeId.Value);
+            var channel = cakeGuild.WelcomeId == null ? guild.DefaultChannel : guild.GetTextChannel(cakeGuild.WelcomeId.Value);
+
             await channel.SendMessageAsync("", false, embed.Build());
         }
 
@@ -22,7 +23,8 @@ namespace Cake.Core.Discord.Handlers
 
             var guild = leftUser.Guild;
             var cakeGuild = await Database.Queries.GuildQueries.FindOrCreateGuild(guild.Id);
-            SocketTextChannel channel = cakeGuild.LeaveId == null ? guild.DefaultChannel : guild.GetTextChannel(cakeGuild.LeaveId.Value);
+            var channel = cakeGuild.LeaveId == null ? guild.DefaultChannel : guild.GetTextChannel(cakeGuild.LeaveId.Value);
+
             await channel.SendMessageAsync("", false, embed.Build());
         }
     }
