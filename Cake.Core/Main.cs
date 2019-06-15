@@ -6,7 +6,6 @@ using Cake.Core.Logging;
 using Cake.Storage;
 using Discord;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
 using Type = Cake.Core.Logging.Type;
 
 namespace Cake.Core
@@ -14,13 +13,12 @@ namespace Cake.Core
     public class Main : ICake
     {
         private static DiscordShardedClient _client;
-        private ServiceCollection _services;
         private ICommandHandler _commandHandler;
         private CakeConfiguration _cakeConfiguration;
         private readonly Logger _logger = Logger.Get() as Logger;
 
         private const int RunningInterval = 1000;
-        private bool _running;
+        private bool Running { get; set; }
 
         public async Task StartAsync()
         {
@@ -38,7 +36,7 @@ namespace Cake.Core
                     await _client.SetStatusAsync(UserStatus.Online);
                     await _commandHandler.InitializeAsync();
 
-                    _running = true;
+                    Running = true;
                     _logger.Log(Type.Info, "Connected");
                     break;
                 }
@@ -49,9 +47,9 @@ namespace Cake.Core
                 }
             }
 
-            while (_running)
+            while (Running)
             {
-                await Task.Delay(RunningInterval);
+                await Task.Delay(RunningInterval).ConfigureAwait(false);
             }
         }
 
@@ -65,12 +63,11 @@ namespace Cake.Core
             _logger.Log(Type.Info, "Setting up Cake");
 
             _client = new DiscordShardedClient();
-            _services = new SetupServices().ReturnProvider();
-            _commandHandler = new CommandHandler(_client, _services);
+            _commandHandler = new CommandHandler(_client, new SetupServices().ReturnProvider());
             _cakeConfiguration = new CakeConfiguration();
-            Database.Init.Startup();
+            _ = new Database.Init();
 
-            _running = false;
+            Running = false;
         }
     }
 }

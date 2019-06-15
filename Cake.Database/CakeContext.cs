@@ -35,9 +35,9 @@ namespace Cake.Database
         }
     }
 
-    public static class Init
+    public class Init
     {
-        public static void Startup()
+        public Init()
         {
             DataConnection.DefaultSettings = new CakeSettings();
         }

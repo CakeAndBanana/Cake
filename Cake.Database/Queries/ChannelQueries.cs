@@ -9,6 +9,10 @@ namespace Cake.Database.Queries
 {
     public class ChannelQueries
     {
+        protected ChannelQueries()
+        {
+        }
+
         public static async Task<List<CakeChannel>> GetAll()
         {
             using (var db = new CakeDb())
