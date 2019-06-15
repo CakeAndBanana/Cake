@@ -58,7 +58,7 @@ namespace Cake.Core.Discord.Services
         {
             var user = await Database.Queries.UserGueries.FindOrCreateUser(id);
             user.Admin = !user.Admin;
-            await Database.Queries.UserGueries.UpdateUser(user);
+            await Database.Queries.UserGueries.Update(user);
 
             await SendMessageAsync($"Updated given user admin status to {user.Admin}.");
         }
