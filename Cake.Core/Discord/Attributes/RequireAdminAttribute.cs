@@ -18,7 +18,7 @@ namespace Cake.Core.Discord.Attributes
                     {
                         return PreconditionResult.FromSuccess();
                     }
-                    return PreconditionResult.FromError("Command can only be run by the admins of the bot");
+                    return PreconditionResult.FromError("Command can only be used by bot admins.");
                 default:
                     return PreconditionResult.FromError($"{nameof(RequireAdminAttribute)} is not supported by this {nameof(TokenType)}.");
             }
