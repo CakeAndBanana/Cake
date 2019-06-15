@@ -54,6 +54,15 @@ namespace Cake.Core.Discord.Services
             await SendMessageAsync("`Set this channel as leave message channel!`");
         }
 
+        public async Task SetAdmin(ulong id)
+        {
+            var user = await Database.Queries.UserGueries.FindOrCreateUser(id);
+            user.Admin = !user.Admin;
+            await Database.Queries.UserGueries.UpdateUser(user);
+
+            await SendMessageAsync($"Updated given user admin status to {user.Admin}.");
+        }
+
         public async Task RestrictGuild(ulong guildId)
         {
             string message;
