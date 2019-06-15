@@ -45,7 +45,11 @@ namespace Cake.Core.Discord.Handlers
 
         private async Task PrefixCommandAsync(ShardedCommandContext context, int argPos = 0)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             try
             {
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
@@ -53,7 +57,7 @@ namespace Cake.Core.Discord.Handlers
                 {
                     if (Database.Queries.UserGueries.FindOrCreateUser(context.User.Id).Result.Restrict || guild.Restrict)
                     {
-                        throw new Exception("User/Guild is restricted");
+                        return; // Error handler (user restricted)
                     }
 
                     var stopwatch = Stopwatch.StartNew();
@@ -62,7 +66,7 @@ namespace Cake.Core.Discord.Handlers
 
                     if (!result.IsSuccess)
                     {
-                        // Error handler
+                        // Error handler (failed command)
                     }
                     else
                     {
