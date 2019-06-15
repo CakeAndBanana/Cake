@@ -6,6 +6,10 @@ namespace Cake.Core.Discord.Embed
 {
     public class JoinHandlerEmbeds
     {
+        protected JoinHandlerEmbeds()
+        {
+        }
+
         public static CakeEmbedBuilder ReturnJoinedEmbed(SocketGuildUser joinedUser, string username, string avatarUrl)
         {
             return new CakeEmbedBuilder()

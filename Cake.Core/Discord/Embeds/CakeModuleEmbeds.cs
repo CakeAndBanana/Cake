@@ -6,6 +6,10 @@ namespace Cake.Core.Discord.Embed
 {
     public class CakeModuleEmbeds
     {
+        protected CakeModuleEmbeds()
+        {
+        }
+
         public static CakeEmbedBuilder ReturnStatusEmbed(IGuild guild)
         {
             return new CakeEmbedBuilder()

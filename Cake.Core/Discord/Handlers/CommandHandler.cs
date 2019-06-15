@@ -35,8 +35,12 @@ namespace Cake.Core.Discord.Handlers
 
         public async Task HandleCommandEvent(SocketMessage message)
         {
-            if (!(message is SocketUserMessage msg) || msg.Author.IsBot) return;
-            await PrefixCommandAsync(new ShardedCommandContext(_client, msg));
+            if (!(message is SocketUserMessage msg) || msg.Author.IsBot)
+            {
+                return;
+            }
+
+            await PrefixCommandAsync(new ShardedCommandContext(_client, msg)).ConfigureAwait(false);
         }
 
         private async Task PrefixCommandAsync(ShardedCommandContext context, int argPos = 0)
@@ -47,7 +51,10 @@ namespace Cake.Core.Discord.Handlers
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
-                    if (Database.Queries.UserGueries.FindOrCreateUser(context.User.Id).Result.Restrict || guild.Restrict) throw new Exception("User");
+                    if (Database.Queries.UserGueries.FindOrCreateUser(context.User.Id).Result.Restrict || guild.Restrict)
+                    {
+                        throw new Exception("User/Guild is restricted");
+                    }
 
                     var stopwatch = Stopwatch.StartNew();
                     var result = await _commandService.ExecuteAsync(context, 1, _services);

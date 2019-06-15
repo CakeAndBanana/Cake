@@ -8,6 +8,10 @@ namespace Cake.Database.Queries
 {
     public class GuildQueries
     {
+        protected GuildQueries()
+        {
+        }
+
         public static async Task<List<CakeGuild>> GetAll()
         {
             using (var db = new CakeDb())
@@ -54,6 +58,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeGuild> FindOrCreateGuild(ulong guildId) => await Get(guildId) ?? await CreateGuild(guildId);
+        public static async Task<CakeGuild> FindOrCreateGuild(ulong guildId) => await Get(guildId).ConfigureAwait(false) ?? await CreateGuild(guildId).ConfigureAwait(false);
     }
 }

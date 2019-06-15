@@ -8,6 +8,10 @@ namespace Cake.Database.Queries
 {
     public class UserGueries
     {
+        protected UserGueries()
+        {
+        }
+
         public static async Task<List<CakeUser>> GetAll()
         {
             using (var db = new CakeDb())
@@ -56,6 +60,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => await Get(userId) ?? await CreateUser(userId);
+        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => await Get(userId).ConfigureAwait(false) ?? await CreateUser(userId).ConfigureAwait(false);
     }
 }

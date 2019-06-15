@@ -51,7 +51,7 @@ namespace Cake.Core
 
             while (_running)
             {
-                await Task.Delay(RunningInterval);
+                await Task.Delay(RunningInterval).ConfigureAwait(false);
             }
         }
 

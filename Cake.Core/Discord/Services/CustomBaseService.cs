@@ -17,21 +17,21 @@ namespace Cake.Core.Discord.Services
         }
         protected async Task SendMessageAsync(string message, bool tts = false, RequestOptions options = null)
         {
-            await SendMessageAsync(message, Module.Context.Channel, tts, options);
+            await SendMessageAsync(message, Module.Context.Channel, tts, options).ConfigureAwait(false);
         }
         protected async Task SendMessageAsync(string message, IMessageChannel channel, bool tts = false, RequestOptions options = null)
         {
-            await channel.SendMessageAsync(message, tts);
+            await channel.SendMessageAsync(message, tts).ConfigureAwait(false);
         }
 
         protected async Task SendEmbedAsync(CakeEmbedBuilder embed, bool tts = false, RequestOptions options = null)
         {
-            await SendEmbedAsync(embed, Module.Context.Channel, tts, options);
+            await SendEmbedAsync(embed, Module.Context.Channel, tts, options).ConfigureAwait(false);
         }
 
         protected async Task SendEmbedAsync(CakeEmbedBuilder embed, IMessageChannel channel, bool tts = false, RequestOptions options = null)
         {
-            await channel.SendMessageAsync("", tts, embed.Build(), options);
+            await channel.SendMessageAsync("", tts, embed.Build(), options).ConfigureAwait(false);
         }
     }
 }
