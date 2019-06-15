@@ -2,6 +2,7 @@
 using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Services;
 using Discord.Commands;
+using Discord.WebSocket;
 
 namespace Cake.Core.Discord.Modules
 {
@@ -80,6 +81,24 @@ namespace Cake.Core.Discord.Modules
                     await Context.Channel.SendMessageAsync("``Use guild or user as param``");
                     break;
             }
+        }
+
+        [Command("setadmin")]
+        [Summary("cake setadmin (id/mention)")]
+        [Alias("sa")]
+        [Remarks("Makes an user a Bot Admin.")]
+        [RequireAdmin]
+        public async Task SetAdminId(ulong id)
+        {
+            await _service.SetAdmin(id);
+        }
+
+        [Command("setadmin")]
+        [Alias("sa")]
+        [RequireAdmin]
+        public async Task SetAdminMention(SocketGuildUser user)
+        {
+            await _service.SetAdmin(user.Id);
         }
     }
 }
