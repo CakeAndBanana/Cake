@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cake.Database.Queries
 {
-    public class UserGueries
+    public class UserQueries
     {
-        protected UserGueries()
+        protected UserQueries()
         {
         }
 

@@ -55,7 +55,7 @@ namespace Cake.Core.Discord.Handlers
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
-                    if (Database.Queries.UserGueries.FindOrCreateUser(context.User.Id).Result.Restrict && guild.Restrict)
+                    if (Database.Queries.UserQueries.FindOrCreateUser(context.User.Id).Result.Restrict && guild.Restrict)
                     {
                         return;
                     }
@@ -89,9 +89,9 @@ namespace Cake.Core.Discord.Handlers
                                     _logger.Log(Type.Info,$"\nNo permissions in guild {context.Guild}{context.Guild.Id}\nTrying to PM {context.User}.");
                                     try
                                     {
-                                        var dmchannel = await context.User.GetOrCreateDMChannelAsync();
-                                        await dmchannel.SendMessageAsync("I couldn't respond to your message because I lack the permissions to respond.\nHave you given me the correct permissions?");
-                                        _logger.Log(Type.Info, $"Succesfully send a PM to {context.User}");
+                                        var dmChannel = await context.User.GetOrCreateDMChannelAsync();
+                                        await dmChannel.SendMessageAsync("I couldn't respond to your message because I lack the permissions to respond.\nHave you given me the correct permissions?");
+                                        _logger.Log(Type.Info, $"Successfully send a PM to {context.User}");
                                     }
                                     catch
                                     {
