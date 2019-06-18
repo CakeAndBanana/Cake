@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Cake.Core.Logging;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +36,7 @@ namespace Cake.Core.Discord.Handlers
 
         public async Task HandleCommandEvent(SocketMessage message)
         {
-            if (!(message is SocketUserMessage msg) || msg.Author.IsBot)
+            if (!(message is SocketUserMessage msg) || msg.Author.IsBot || await message.Author.GetOrCreateDMChannelAsync(RequestOptions.Default) != null)
             {
                 return;
             }
