@@ -9,6 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cake.Storage\Cake.Json.csproj" />
+    <ProjectReference Include="..\Cake.Json\Cake.Json.csproj" />
   </ItemGroup>
 </Project>
