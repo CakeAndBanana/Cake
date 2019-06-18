@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cake.Core.Discord.Attributes;
@@ -11,7 +12,7 @@ namespace Cake.Core.Discord.Services
 {
     public class HelpService : CustomBaseService
     {
-        public static async Task HelpAll(CommandService service)
+        public async Task HelpAll(CommandService service)
         {
             var builder = new CakeEmbedBuilder(EmbedType.Info)
             {
@@ -23,7 +24,7 @@ namespace Cake.Core.Discord.Services
 
             foreach (var module in service.Modules)
             {
-                var showModule = false;
+                var hideModule = false;
                 string description = null;
 
                 var moduleAttributes = module.Attributes.ToList();
@@ -32,88 +33,54 @@ namespace Cake.Core.Discord.Services
                     var preconditions = module.Preconditions.ToList();
                     foreach (var pre in preconditions)
                     {
-                        if (isAdmin)
+                        if (pre.TypeId.ToString() == "Cake.Core.Discord.Attributes.RequireBotAdminAttribute" || !isAdmin)
                         {
-                            showModule = false;
-                        }
-                        else if (pre.TypeId.ToString() == "Cake.Core.Discord.Attributes.RequireAdminAttribute")
-                        {
-                            showModule = true;
+                            break;
                         }
                     }
                 }
                 else
                 {
-                    showModule = true;
+                    hideModule = true;
                 }
 
-                if (!showModule)
+
+                if (hideModule)
                 {
+                    var commands = new List<CommandInfo>();
                     foreach (var command in module.Commands)
                     {
-                        var showCommand = false;
+                        var showCommand = true;
                         var result = await command.CheckPreconditionsAsync(Module.Context);
 
                         var commandAttributes = command.Attributes.ToList();
-                        if (commandAttributes.Find(m => m.Match(typeof(HideAttribute))) == null)
+                        if (commandAttributes.Find(m => m.Match(typeof(HideAttribute))) != null)
                         {
-                            var conditions = command.Preconditions.ToList();
-                            foreach (var pre in conditions)
-                            {
-                                if (isAdmin)
-                                {
-                                    showCommand = false;
-                                }
-                                else if (pre.TypeId.ToString() == "Cake.Core.Discord.Attributes.RequireAdminAttribute")
-                                {
-                                    showCommand = true;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            showCommand = true;
+                            showCommand = false;
                         }
 
-                        var lastCommand = module.Commands.Last();
-                        if (!result.IsSuccess || showCommand) continue;
-                        if (lastCommand == command || command.Name == "" || command.Module.Group == null)
-                            switch (command.Name)
-                            {
-                                case "" when lastCommand != command:
-                                    description += $"__{guild.Prefix}{command.Module.Group}__ ``|`` ";
-                                    break;
-                                case "" when lastCommand == command:
-                                    description += $"__{guild.Prefix}{command.Module.Group}__";
-                                    break;
-                                default:
-                                    {
-                                        switch (command.Module.Group)
-                                        {
-                                            case null when lastCommand != command:
-                                                description += $"__{guild.Prefix}{command.Name}__ ``|`` ";
-                                                break;
-                                            case null when lastCommand == command:
-                                                description += $"__{guild.Prefix}{command.Name}__";
-                                                break;
-                                            default:
-                                                {
-                                                    if (lastCommand == command)
-                                                        description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__";
-                                                    break;
-                                                }
-                                        }
+                        if (!result.IsSuccess || !showCommand) break;
 
-                                        break;
-                                    }
-                            }
-                        else
-                            description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__ ``|`` ";
+                        commands.Add(command);
+                    }
+
+                    if (commands.Count > 0)
+                    {
+                        var lastCommand = commands.Last();
+                        foreach (var command in commands)
+                        {
+
+
+                            if (lastCommand.Name == command.Name)
+                                description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__";
+                            else
+                                description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__ ``|`` ";
+                        }
                     }
                 }
 
 
-                if (!string.IsNullOrWhiteSpace(description) && !showModule)
+                if (!string.IsNullOrWhiteSpace(description))
                 {
                     builder.AddField(x =>
                     {
