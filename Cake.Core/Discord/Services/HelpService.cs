@@ -145,12 +145,18 @@ namespace Cake.Core.Discord.Services
             foreach (var match in result.Commands)
             {
                 var cmd = match.Command;
+                string preconditions = null;
+                foreach (var precondition in cmd.Preconditions)
+                {
+                    preconditions += $"{precondition.TypeId}\n";
+                }
 
                 builder.AddField(x =>
                 {
                     x.Name = "Command: " + string.Join(", ", cmd.Aliases);
                     x.Value = $"**Usage:** {cmd.Summary}\n" +
-                              $"**Info:** {cmd.Remarks}";
+                              $"**Info:** {cmd.Remarks}\n" +
+                              $"**Preconditions:** {preconditions}";
                     x.IsInline = false;
                 });
             }
