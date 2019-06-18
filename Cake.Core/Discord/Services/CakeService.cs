@@ -56,9 +56,9 @@ namespace Cake.Core.Discord.Services
 
         public async Task SetAdmin(ulong id)
         {
-            var user = await Database.Queries.UserGueries.FindOrCreateUser(id);
+            var user = await Database.Queries.UserQueries.FindOrCreateUser(id);
             user.Admin = !user.Admin;
-            await Database.Queries.UserGueries.Update(user);
+            await Database.Queries.UserQueries.Update(user);
 
             await SendMessageAsync($"Updated given user admin status to {user.Admin}.");
         }
@@ -85,7 +85,7 @@ namespace Cake.Core.Discord.Services
         public async Task RestrictUser(ulong userId)
         {
             string message;
-            var user = await Database.Queries.UserGueries.FindOrCreateUser(userId);
+            var user = await Database.Queries.UserQueries.FindOrCreateUser(userId);
             if (user.Restrict)
             {
                 user.Restrict = false;
@@ -96,7 +96,7 @@ namespace Cake.Core.Discord.Services
                 user.Restrict = true;
                 message = $"`Restricted user {userId} from using Cake!`";
             }
-            await Database.Queries.UserGueries.Update(user);
+            await Database.Queries.UserQueries.Update(user);
 
             await SendMessageAsync(message);
         }

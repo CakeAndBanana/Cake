@@ -14,7 +14,7 @@ namespace Cake.Core.Discord.Attributes
             {
                 case TokenType.Bot:
                     await context.Client.GetApplicationInfoAsync();
-                    if (Database.Queries.UserGueries.FindOrCreateUser(context.User.Id).Result.Admin)
+                    if (Database.Queries.UserQueries.FindOrCreateUser(context.User.Id).Result.Admin)
                     {
                         return PreconditionResult.FromSuccess();
                     }
