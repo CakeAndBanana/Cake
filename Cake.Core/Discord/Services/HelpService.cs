@@ -28,7 +28,7 @@ namespace Cake.Core.Discord.Services
                 string description = null;
 
                 var moduleAttributes = module.Attributes.ToList();
-                if (moduleAttributes.Find(m => m.TypeId.ToString() == "Cake.Core.Discord.Attributes.HideAttribute") == null)
+                if (moduleAttributes.Find(m => m.TypeId.ToString() == "Cake.Core.Discord.Attributes.HideAttribute") != null)
                 {
                     var preconditions = module.Preconditions.ToList();
                     foreach (var pre in preconditions)
