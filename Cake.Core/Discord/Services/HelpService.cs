@@ -11,7 +11,7 @@ namespace Cake.Core.Discord.Services
 {
     public class HelpService : CustomBaseService
     {
-        public async Task HelpAll(CommandService service)
+        public static async Task HelpAll(CommandService service)
         {
             var builder = new CakeEmbedBuilder(EmbedType.Info)
             {
@@ -76,31 +76,39 @@ namespace Cake.Core.Discord.Services
                         }
 
                         var lastCommand = module.Commands.Last();
-                        if (result.IsSuccess && !showCommand)
-                        {
-                            if (lastCommand == command || command.Name == "" || command.Module.Group == null)
-                                switch (command.Name)
-                                {
-                                    case "" when lastCommand != command:
-                                        description += $"__{guild.Prefix}{command.Module.Group}__ ``|`` ";
-                                        break;
-                                    case "" when lastCommand == command:
-                                        description += $"__{guild.Prefix}{command.Module.Group}__";
-                                        break;
-                                    default:
+                        if (!result.IsSuccess || showCommand) continue;
+                        if (lastCommand == command || command.Name == "" || command.Module.Group == null)
+                            switch (command.Name)
+                            {
+                                case "" when lastCommand != command:
+                                    description += $"__{guild.Prefix}{command.Module.Group}__ ``|`` ";
+                                    break;
+                                case "" when lastCommand == command:
+                                    description += $"__{guild.Prefix}{command.Module.Group}__";
+                                    break;
+                                default:
                                     {
-                                        if (command.Module.Group == null && lastCommand != command)
-                                            description += $"__{guild.Prefix}{command.Name}__ ``|`` ";
-                                        else if (command.Module.Group == null && lastCommand == command)
-                                            description += $"__{guild.Prefix}{command.Name}__";
-                                        else if (lastCommand == command)
-                                            description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__";
+                                        switch (command.Module.Group)
+                                        {
+                                            case null when lastCommand != command:
+                                                description += $"__{guild.Prefix}{command.Name}__ ``|`` ";
+                                                break;
+                                            case null when lastCommand == command:
+                                                description += $"__{guild.Prefix}{command.Name}__";
+                                                break;
+                                            default:
+                                                {
+                                                    if (lastCommand == command)
+                                                        description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__";
+                                                    break;
+                                                }
+                                        }
+
                                         break;
                                     }
-                                }
-                            else
-                                description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__ ``|`` ";
-                        }
+                            }
+                        else
+                            description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__ ``|`` ";
                     }
                 }
 

@@ -9,7 +9,7 @@ namespace Cake.Core.Discord.Services
 {
     public class CustomBaseService
     {
-        protected CustomBaseModule Module;
+        protected static CustomBaseModule Module;
 
         public void SetBaseModule(CustomBaseModule module)
         {
@@ -29,7 +29,7 @@ namespace Cake.Core.Discord.Services
             await SendEmbedAsync(embed, Module.Context.Channel, tts, options).ConfigureAwait(false);
         }
 
-        protected async Task SendEmbedAsync(CakeEmbedBuilder embed, IMessageChannel channel, bool tts = false, RequestOptions options = null)
+        protected static async Task SendEmbedAsync(CakeEmbedBuilder embed, IMessageChannel channel, bool tts = false, RequestOptions options = null)
         {
             await channel.SendMessageAsync("", tts, embed.Build(), options).ConfigureAwait(false);
         }
