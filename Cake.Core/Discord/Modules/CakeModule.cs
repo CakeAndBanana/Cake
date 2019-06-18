@@ -66,7 +66,7 @@ namespace Cake.Core.Discord.Modules
         [Summary("cake restrict (user/guild) (id)")]
         [Alias("r")]
         [Remarks("Restricts user or guild from using Cake.")]
-        [RequireAdmin]
+        [RequireBotAdmin]
         public async Task SetRestrict(string result, ulong id)
         {
             switch (result)
@@ -87,7 +87,7 @@ namespace Cake.Core.Discord.Modules
         [Summary("cake setadmin (id/mention)")]
         [Alias("sa")]
         [Remarks("Makes an user a Bot Admin.")]
-        [RequireAdmin]
+        [RequireBotAdmin]
         public async Task SetAdminId(ulong id)
         {
             await _service.SetAdmin(id);
@@ -95,7 +95,7 @@ namespace Cake.Core.Discord.Modules
 
         [Command("setadmin")]
         [Alias("sa")]
-        [RequireAdmin]
+        [RequireBotAdmin]
         public async Task SetAdminMention(SocketGuildUser user)
         {
             await _service.SetAdmin(user.Id);
