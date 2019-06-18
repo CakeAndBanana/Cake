@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Console", "Cake.Consol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Core", "Cake.Core\Cake.Core.csproj", "{0C3748D1-3BED-4528-B532-E06D56DFFA6D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Storage", "Cake.Storage\Cake.Storage.csproj", "{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Json", "Cake.Storage\Cake.Json.csproj", "{D25CBFFE-4BCB-498C-83CF-0E5B84C05018}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Database", "Cake.Database\Cake.Database.csproj", "{C1782A29-68D8-498C-B5B1-C392EF1247F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Database", "Cake.Database\Cake.Database.csproj", "{C1782A29-68D8-498C-B5B1-C392EF1247F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

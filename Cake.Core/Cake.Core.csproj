@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cake.Database\Cake.Database.csproj" />
-    <ProjectReference Include="..\Cake.Storage\Cake.Storage.csproj" />
+    <ProjectReference Include="..\Cake.Storage\Cake.Json.csproj" />
   </ItemGroup>
 
   <ItemGroup>

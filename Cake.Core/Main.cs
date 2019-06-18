@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Cake.Core.Configuration;
 using Cake.Core.Discord.Handlers;
 using Cake.Core.Logging;
-using Cake.Storage;
+using Cake.Json;
 using Discord;
 using Discord.WebSocket;
 using Type = Cake.Core.Logging.Type;

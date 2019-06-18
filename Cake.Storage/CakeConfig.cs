@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Cake.Storage.JsonModels;
+using Cake.Json.JsonModels;
 using Newtonsoft.Json;
 
-namespace Cake.Storage
+namespace Cake.Json
 {
     public class CakeJson
     {

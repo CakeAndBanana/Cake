@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Cake.Storage.JsonModels
+namespace Cake.Json.JsonModels
 {
     [DataContract]
     public class ConfigModel

@@ -2,6 +2,7 @@
 using LinqToDB.Data;
 using System.Collections.Generic;
 using System.Linq;
+using Cake.Json;
 
 namespace Cake.Database
 {
@@ -29,7 +30,7 @@ namespace Cake.Database
                     {
                         Name = "CakeContext",
                         ProviderName = "SqlServer",
-                        ConnectionString = Storage.CakeJson.GetConfig().ConnectionString
+                        ConnectionString = CakeJson.GetConfig().ConnectionString
                     };
             }
         }
