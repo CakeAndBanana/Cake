@@ -36,7 +36,7 @@ namespace Cake.Core.Discord.Handlers
 
         public async Task HandleCommandEvent(SocketMessage message)
         {
-            if (!(message is SocketUserMessage msg) || msg.Author.IsBot || await message.Author.GetOrCreateDMChannelAsync(RequestOptions.Default) != null)
+            if (!(message is SocketUserMessage msg) || msg.Author.IsBot || message.Channel.GetType() == typeof(SocketDMChannel))
             {
                 return;
             }

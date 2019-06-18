@@ -69,8 +69,6 @@ namespace Cake.Core.Discord.Services
                         var lastCommand = commands.Last();
                         foreach (var command in commands)
                         {
-
-
                             if (lastCommand.Name == command.Name)
                                 description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__";
                             else
