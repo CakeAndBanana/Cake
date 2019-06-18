@@ -6,7 +6,7 @@ using Discord.Commands;
 namespace Cake.Core.Discord.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
-    class RequireAdminAttribute : PreconditionAttribute
+    public class RequireBotAdminAttribute : PreconditionAttribute
     {
         public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
@@ -20,7 +20,7 @@ namespace Cake.Core.Discord.Attributes
                     }
                     return PreconditionResult.FromError("Command can only be used by bot admins.");
                 default:
-                    return PreconditionResult.FromError($"{nameof(RequireAdminAttribute)} is not supported by this {nameof(TokenType)}.");
+                    return PreconditionResult.FromError($"{nameof(RequireBotAdminAttribute)} is not supported by this {nameof(TokenType)}.");
             }
         }
     }
