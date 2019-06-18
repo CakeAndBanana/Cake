@@ -5,7 +5,7 @@ namespace Cake.Core.Discord.Attributes
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class HideAttribute : Attribute
     {
-        private bool _hide;
+        private readonly bool _hide;
 
         public HideAttribute(bool status = true)
         {
