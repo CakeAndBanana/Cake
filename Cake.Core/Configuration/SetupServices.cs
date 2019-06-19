@@ -10,6 +10,7 @@ namespace Cake.Core.Configuration
             var services = new ServiceCollection();
             services.AddSingleton<CakeService>();
             services.AddSingleton<HelpService>();
+            services.AddSingleton<OsuService>();
             return services;
         }
     }

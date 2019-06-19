@@ -7,7 +7,7 @@ namespace Cake.Core.Discord.Modules
     [Name("osu!")]
     [Group("osu")]
     [Alias("o")]
-    class OsuModule : CustomBaseModule
+    public class OsuModule : CustomBaseModule
     {
         private readonly OsuService _service;
 
@@ -18,7 +18,7 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Command("set")]
-        [Summary("osu set")]
+        [Summary("osu set (?username)")]
         [Alias("s")]
         [Remarks("Binds your osu account to your discord user.")]
         public async Task SetAccount([Remainder]string username)
