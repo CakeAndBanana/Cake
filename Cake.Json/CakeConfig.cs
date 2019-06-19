@@ -20,6 +20,7 @@ namespace Cake.Json
             var model = new ConfigModel
             {
                 BotKey = "Bot Key here", 
+                OsuApiKey = "Osu Api Here",
                 LogEnabled = true,
                 ConnectionString = null
             };
