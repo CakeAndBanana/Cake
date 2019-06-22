@@ -31,11 +31,12 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task Update(CakeGuild record)
+        public static async Task<CakeGuild> Update(CakeGuild guild)
         {
             using (var db = new CakeDb())
             {
-                await db.UpdateAsync(record);
+                await db.UpdateAsync(guild);
+                return guild;
             }
         }
 

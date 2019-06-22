@@ -31,11 +31,12 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task Update(CakeUser record)
+        public static async Task<CakeUser> Update(CakeUser user)
         {
             using (var db = new CakeDb())
             {
-                await db.UpdateAsync(record);
+                await db.UpdateAsync(user);
+                return user;
             }
         }
 
