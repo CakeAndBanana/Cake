@@ -64,6 +64,22 @@ namespace Cake.Core.Discord.Services
             await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnSetAccountEmbed(user));
         }
 
+        public async Task SetMode(int mode)
+        {
+            try
+            {
+                var databaseprofile = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id);
+                databaseprofile.OsuMode = mode;
+                await Database.Queries.UserQueries.Update(databaseprofile);
+
+                await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnSetModeEmbed(mode));
+            }
+            catch (Exception e)
+            {
+                await SendMessageAsync(e.Message);
+            }
+        }
+
         public async Task GetUserProfile(string osuId, bool findWithUsername)
         {
             try

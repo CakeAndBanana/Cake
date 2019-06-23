@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Cake.Core.Discord.Services;
+using Cake.Core.Extensions;
 using Discord.Commands;
 using static System.Int32;
 
@@ -108,6 +109,23 @@ namespace Cake.Core.Discord.Modules
             await _service.SetAccount(userName);
         }
 
+        [Alias("m")]
+        [Command("mode")]
+        [Summary(">osu mode (0-3)")]
+        [Remarks("Changes the mode of your username.")]
+        public async Task SetMode(string mode)
+        {
+            try
+            {
+                var modeNumber = (int)OsuMode.GetOsuMode(mode);
+                await _service.SetMode(modeNumber);
+            }
+            catch (Exception e)
+            {
+                await Context.Channel.SendMessageAsync(e.Message);
+            }
+        }
+
         [Command("profile")]
         [Summary("osu profile (?user)")]
         [Alias("u", "p")]
@@ -182,7 +200,7 @@ namespace Cake.Core.Discord.Modules
         [Command("compare")]
         [Summary(">osu compare")]
         [Remarks("Compare your score on a recently played map")]
-        public async Task Compare([Remainder] string arg = "")
+        public async Task GetCompare([Remainder] string arg = "")
         {
             OsuArg osuDiscordArg = null;
             try

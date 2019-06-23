@@ -23,6 +23,30 @@ namespace Cake.Core.Discord.Embeds
                 .WithThumbnailUrl(user.image) as CakeEmbedBuilder;
         }
 
+        public static CakeEmbedBuilder ReturnSetModeEmbed(int mode)
+        {
+            var embedResult = new CakeEmbedBuilder(EmbedType.Success);
+            embedResult.WithTitle("osu!")
+                .WithDescription($"Successfully set your mode to \n\n**{(OsuModeEnum)mode}**");
+
+            switch (mode)
+            {
+                case 0:
+                    embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/osu.png");
+                    break;
+                case 1:
+                    embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/taiko.png");
+                    break;
+                case 2:
+                    embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/ctb.png");
+                    break;
+                case 3:
+                    embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/mania.png");
+                    break;
+            }
+            return embedResult;
+        }
+
 
         public static CakeEmbedBuilder ReturnUserProfile(OsuJsonUser user, int mode)
         {
