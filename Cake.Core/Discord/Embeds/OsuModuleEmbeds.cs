@@ -83,8 +83,8 @@ namespace Cake.Core.Discord.Embeds
             {
                 author
                     .WithName($"Recently played by {user.username}")
-                    .WithUrl($"{user.url}")
-                    .WithIconUrl($"{user.image}");
+                    .WithUrl(user.url)
+                    .WithIconUrl(user.image);
             }) as CakeEmbedBuilder;
         }
 
@@ -100,13 +100,30 @@ namespace Cake.Core.Discord.Embeds
         public static CakeEmbedBuilder ReturnUserRecent(OsuJsonUser user, OsuJsonBeatmap beatmap, OsuJsonUserRecent recent, string description, int mode, int retryCount)
         {
             return ReturnUserRecentBase(user)
-                .WithUrl($"{beatmap.beatmap_url}")
-                .WithThumbnailUrl($"{beatmap.thumbnail}")
+                .WithUrl(beatmap.beatmap_url)
+                .WithThumbnailUrl(beatmap.thumbnail)
                 .WithTimestamp(recent.date)
                 .WithTitle($"{beatmap.complete_title} {Math.Round(recent.starrating, 2)}★")
                 .WithFooter($"{(OsuModeEnum)mode} ⌑ Status: {beatmap.approved_string} ⌑ #{retryCount} Try")
                 .WithDescription(description)
                 as CakeEmbedBuilder;
+        }
+
+        public static CakeEmbedBuilder ReturnChannelCompare(OsuJsonUser user, OsuJsonBeatmap beatmap,string description, int mode)
+        {
+            return new CakeEmbedBuilder()
+                .WithAuthor(author =>
+                {
+                author
+                    .WithName($"Compare score(s) of {user.username}")
+                    .WithUrl(user.url)
+                    .WithIconUrl(user.image);
+                })
+                .WithThumbnailUrl(beatmap.thumbnail)
+                .WithTitle(beatmap.complete_title)
+                .WithUrl(beatmap.beatmap_url)
+                .WithDescription(description)
+                .WithFooter($"{(OsuModeEnum)mode} | {beatmap.approved_string}") as CakeEmbedBuilder;
         }
     }
 }

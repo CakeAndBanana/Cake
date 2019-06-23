@@ -288,5 +288,75 @@ namespace Cake.Core.Discord.Services
                 await SendMessageAsync(e.Message);
             }
         }
+
+        public async Task GetCompare(string osuId, bool findWithUsername)
+        {
+            try
+            {
+                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id);
+                var mode = databaseProfile.OsuMode;
+
+                if (osuId.IsNullOrEmpty())
+                {
+                    osuId = databaseProfile.OsuId.ToString();
+                    findWithUsername = false;
+                }
+
+                var user = GetJsonUser(osuId, findWithUsername, mode);
+                var info = "";
+                var mapId = Database.Queries.ChannelQueries.FindOrCreateChannel(Module.Context.Channel.Id).Result.OsuMapId;
+
+                if (mapId == 0)
+                {
+                    throw new Exception("No beatmap found");
+                }
+
+                var scoreBuilder = new OsuScoreBuilder
+                {
+                    BeatmapId = mapId.ToString(),
+                    Mode = mode.ToString(),
+                    UserId = user.user_id.ToString()
+                };
+
+                var beatMapBuilder = new OsuBeatmapBuilder
+                {
+                    Mode = mode.ToString(),
+                    ConvertedIncluded = "1",
+                    BeatmapId = mapId
+                };
+
+                var beatmap = beatMapBuilder.Execute().FirstOrDefault();
+
+                var score = scoreBuilder.Execute();
+
+                if (score.Count == 0)
+                {
+                    throw new Exception($"No score(s) found found in {beatmap.complete_title}");
+                }
+
+                foreach (var t in score)
+                {
+                    var modName = t.enabled_mods == "0" ? "No Mod" : OsuMods.Modnames(Convert.ToInt32(t.enabled_mods));
+
+                    var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - t.date.Ticks);
+
+                    var date = dateTicks.TotalDays > 60 ? TimeFormat.ToShortTimeSpan(dateTicks) : TimeFormat.ToLongTimeSpan(dateTicks);
+
+                    info += $"***{modName}*** \n" +
+                            $"⤷ **PP:** {Math.Round(t.pp, 0)} " +
+                            $"**Rank:**{t.rank.LevelEmotes()} " +
+                            $"**Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
+                            $"**Combo:** {t.maxcombo}({beatmap.max_combo}) \n" +
+                            $" {OsuUtil.Emote300} {t.count300} | {OsuUtil.Emote100} {t.count100} | {OsuUtil.Emote50} {t.count50} | {OsuUtil.EmoteX} {t.countmiss}\n " +
+                            $" {date} ago\n\n";
+                }
+
+                await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnChannelCompare(user, beatmap, info, mode));
+            }
+            catch (Exception e)
+            {
+                await SendMessageAsync(e.Message);
+            }
+        }
     }
 }

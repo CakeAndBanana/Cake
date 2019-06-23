@@ -177,5 +177,23 @@ namespace Cake.Core.Discord.Modules
                 await Database.Queries.ChannelQueries.Update(channel);
             }
         }
+
+        [Alias("c")]
+        [Command("compare")]
+        [Summary(">osu compare")]
+        [Remarks("Compare your score on a recently played map")]
+        public async Task Compare([Remainder] string arg = "")
+        {
+            OsuArg osuDiscordArg = null;
+            try
+            {
+                osuDiscordArg = new OsuArg(arg);
+            }
+            catch (Exception e)
+            {
+                await Context.Channel.SendMessageAsync(e.Message);
+            }
+            await _service.GetCompare(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
+        }
     }
 }
