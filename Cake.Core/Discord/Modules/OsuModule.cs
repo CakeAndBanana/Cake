@@ -114,5 +114,27 @@ namespace Cake.Core.Discord.Modules
             }
             await _service.GetUserProfile(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
+
+        [Alias("b")]
+        [Command("best")]
+        [Summary(">osu best (mode) (username)")]
+        [Remarks("Returns someones best plays.")]
+        public async Task GetUserBest([Remainder] string arg = "")
+        {
+            OsuArg osuDiscordArg = null;
+            try
+            {
+                osuDiscordArg = new OsuArg(arg, true);
+            }
+            catch (Exception e)
+            {
+                await Context.Channel.SendMessageAsync(e.Message);
+            }
+
+            if (osuDiscordArg != null)
+            {
+                await _service.GetUserBest(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), osuDiscordArg.IsRecent(), osuDiscordArg.GetPlayNumber());
+            }
+        }
     }
 }

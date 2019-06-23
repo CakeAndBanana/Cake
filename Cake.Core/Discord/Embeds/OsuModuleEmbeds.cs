@@ -1,6 +1,7 @@
 ﻿using Cake.Core.Discord.Embed.Builder;
 using Cake.Json.CakeModels.Osu;
 using System;
+using System.Collections.Generic;
 
 namespace Cake.Core.Discord.Embeds
 {
@@ -47,6 +48,32 @@ namespace Cake.Core.Discord.Embeds
                 .AddField("Links",
                     $"[osu!chan]({ user.osuchan }) [osu!Skills]({ user.osuskills }) [osu!track]({ user.osutrack })\n");
             return embedProfile;
+        }
+
+        public static CakeEmbedBuilder ReturnUserBest(OsuJsonUser user, string thumbnail, List<Tuple<string, string>> fields, int mode)
+        {
+            var embedTop = new CakeEmbedBuilder();
+            embedTop.WithAuthor(author =>
+            {
+                author
+                    .WithName($"Top play(s) of {user.username}")
+                    .WithUrl($"{user.url}")
+                    .WithIconUrl($"{user.image}");
+            })
+            .WithFooter($"{(OsuModeEnum)mode}")
+            .WithThumbnailUrl(thumbnail);
+
+            //data of fields.
+            foreach (var field in fields)
+            {
+                embedTop.AddField(x =>
+                {
+                    x.Name = field.Item1;
+                    x.Value = field.Item2;
+                });
+            }
+
+            return embedTop;
         }
     }
 }
