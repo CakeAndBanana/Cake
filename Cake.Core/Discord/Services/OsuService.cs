@@ -218,24 +218,24 @@ namespace Cake.Core.Discord.Services
 
                     if (total > 1)
                     {
-                        info += $"#{i + 1} ♢ [{beatmap[0].complete_title}]({beatmap[0].beatmap_url}) {Math.Round(t.starrating, 2)}★\n" +
-                                $"**{t.rounded_score} ♢ {t.rank.LevelEmotes()} ♢ {t.maxcombo}x({beatmap[0].max_combo}x) {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))}**\n" +
-                                $"{OsuUtil.Emote300} {t.count300} ♢ {OsuUtil.Emote100} {t.count100} ♢ {OsuUtil.Emote50} {t.count50} ♢ {OsuUtil.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
+                        info += $"**#{i + 1}** ♢ [{beatmap[0].complete_title}]({beatmap[0].beatmap_url}) **{Math.Round(t.starrating, 2)}★**\n" +
+                                $"⤷ **{t.rounded_score} ♢ {t.rank.LevelEmotes()} ♢ {t.maxcombo}x({beatmap[0].max_combo}x) {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))}**\n" +
+                                $"  {OsuUtil.Emote300} {t.count300} ♢ {OsuUtil.Emote100} {t.count100} ♢ {OsuUtil.Emote50} {t.count50} ♢ {OsuUtil.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
 
                         if (t.rank != "F")
                         {
                             if (fc)
                             {
-                                info += $"{Math.Round(t.pp, 2)} PP\n\n";
+                                info += $" **{Math.Round(t.pp, 2)} PP**\n\n";
                             }
                             else
                             {
-                                info += $"{Math.Round(t.pp, 2)} PP ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
+                                info += $" **{Math.Round(t.pp, 2)} PP** ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
                             }
                         }
                         else
                         {
-                            info += $"{Math.Round(t.completion, 2)}% completed\n";
+                            info += $" {Math.Round(t.completion, 2)}% completed\n";
                         }
 
                         mapId = Convert.ToInt32(beatmap[0].beatmap_id);
