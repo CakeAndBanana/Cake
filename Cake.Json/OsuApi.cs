@@ -1,4 +1,4 @@
-﻿using CakeBot.Helper.Modules.Osu.Model;
+﻿using Cake.Json.CakeModels.Osu;
 
 namespace Cake.Json
 {

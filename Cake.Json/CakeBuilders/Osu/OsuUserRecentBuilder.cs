@@ -4,11 +4,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Cake.Json;
-using CakeBot.Helper.Modules.Osu.Model;
+using Cake.Json.CakeModels.Osu;
 using OppaiSharp;
 
-namespace CakeBot.Helper.Modules.Osu.Builder
+namespace Cake.Json.CakeBuilders.Osu
 {
     public class OsuUserRecentBuilder : OsuJsonBaseBuilder<OsuJsonUserRecent>
     {
@@ -42,7 +41,7 @@ namespace CakeBot.Helper.Modules.Osu.Builder
                 {
                     var rawPp = new PPv2(new PPv2Parameters(beatmapData, diff, new Accuracy(item.count300, item.count100, item.count50, item.countmiss).Value(), item.countmiss, item.maxcombo, (Mods)item.enabled_mods));
                     item.nochokeaccuracy = new Accuracy(item.count300 + item.countmiss, item.count100, item.count50, 0).Value() * 100;
-                    var nochokePp = new PPv2(new PPv2Parameters(beatmapData, diff, (item.nochokeaccuracy / 100), 0, diff.Beatmap.GetMaxCombo(), (Mods)item.enabled_mods));
+                    var nochokePp = new PPv2(new PPv2Parameters(beatmapData, diff, item.nochokeaccuracy / 100, 0, diff.Beatmap.GetMaxCombo(), (Mods)item.enabled_mods));
                     item.pp = rawPp.Total;
                     item.nochokepp = nochokePp.Total;
                 }
@@ -68,7 +67,7 @@ namespace CakeBot.Helper.Modules.Osu.Builder
                 item.hitted = item.countkatu + item.countgeki + item.count300 + item.count100 + item.count50 +
                               item.countmiss;
 
-                item.completion = ((double)(item.standardhit) / (double)(item.counttotal) * 100);
+                item.completion = item.standardhit / (double)item.counttotal * 100;
             }
 
             return array;

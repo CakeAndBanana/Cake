@@ -1,5 +1,5 @@
 ﻿using Cake.Core.Discord.Embed.Builder;
-using CakeBot.Helper.Modules.Osu.Model;
+using Cake.Json.CakeModels.Osu;
 using System;
 
 namespace Cake.Core.Discord.Embeds

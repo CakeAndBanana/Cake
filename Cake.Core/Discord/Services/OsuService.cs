@@ -1,7 +1,7 @@
 ﻿using Cake.Core.Logging;
 using Cake.Database.Models;
-using CakeBot.Helper.Modules.Osu.Builder;
-using CakeBot.Helper.Modules.Osu.Model;
+using Cake.Json.CakeBuilders.Osu;
+using Cake.Json.CakeModels.Osu;
 using LinqToDB.Common;
 using System;
 using System.Threading.Tasks;
@@ -64,7 +64,7 @@ namespace Cake.Core.Discord.Services
         {
             try
             {
-                var databaseUser = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id);
+                var databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id);
                 var mode = databaseUser.OsuMode;
 
                 if (osuId.IsNullOrEmpty())

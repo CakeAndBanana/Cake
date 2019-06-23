@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace CakeBot.Helper.Modules.Osu.Model
+namespace Cake.Json.CakeModels.Osu
 {
     public class OsuJsonUserBest : OsuJsonScorable
     {

@@ -1,10 +1,9 @@
 ﻿using System.Net;
 using System.Text;
-using Cake.Json;
-using CakeBot.Helper.Modules.Osu.Model;
+using Cake.Json.CakeModels.Osu;
 using Newtonsoft.Json;
 
-namespace CakeBot.Helper.Modules.Osu.Builder
+namespace Cake.Json.CakeBuilders.Osu
 {
     public abstract class OsuJsonBaseBuilder<T> where T : OsuJsonModel
     {

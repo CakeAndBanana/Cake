@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Cake.Json;
-using CakeBot.Helper.Modules.Osu.Model;
+using Cake.Json.CakeModels.Osu;
 using OppaiSharp;
 
-namespace CakeBot.Helper.Modules.Osu.Builder
+namespace Cake.Json.CakeBuilders.Osu
 {
     public class OsuUserBestBuilder : OsuJsonBaseBuilder<OsuJsonUserBest>
     {
@@ -27,7 +26,7 @@ namespace CakeBot.Helper.Modules.Osu.Builder
             {
                 return osuJsonUserBestArray.ToList().FindAll(x => x.play_number == PlayNumber);
             }
-            return (Recent ? osuJsonUserBestArray.OrderByDescending(x => x.date).Take(5).ToList() : osuJsonUserBestArray.ToList());
+            return Recent ? osuJsonUserBestArray.OrderByDescending(x => x.date).Take(5).ToList() : osuJsonUserBestArray.ToList();
         }
 
         private OsuJsonUserBest[] ProcessJson(OsuJsonUserBest[] array)

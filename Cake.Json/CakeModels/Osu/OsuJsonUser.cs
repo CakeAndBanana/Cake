@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CakeBot.Helper.Modules.Osu.Model
+namespace Cake.Json.CakeModels.Osu
 {
 
     public class OsuJsonUser : OsuJsonModel

@@ -1,4 +1,4 @@
-﻿namespace CakeBot.Helper.Modules.Osu.Model
+﻿namespace Cake.Json.CakeModels.Osu
 {
     public class OsuJsonScorable : OsuJsonModel
     {

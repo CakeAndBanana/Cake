@@ -2,10 +2,9 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Cake.Json;
-using CakeBot.Helper.Modules.Osu.Model;
+using Cake.Json.CakeModels.Osu;
 
-namespace CakeBot.Helper.Modules.Osu.Builder
+namespace Cake.Json.CakeBuilders.Osu
 {
     public class OsuUserBuilder : OsuJsonBaseBuilder<OsuJsonUser>
     {
