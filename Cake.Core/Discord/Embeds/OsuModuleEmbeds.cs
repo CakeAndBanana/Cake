@@ -75,5 +75,38 @@ namespace Cake.Core.Discord.Embeds
 
             return embedTop;
         }
+
+        private static CakeEmbedBuilder ReturnUserRecentBase(OsuJsonUser user)
+        {
+            return new CakeEmbedBuilder()
+            .WithAuthor(author =>
+            {
+                author
+                    .WithName($"Recently played by {user.username}")
+                    .WithUrl($"{user.url}")
+                    .WithIconUrl($"{user.image}");
+            }) as CakeEmbedBuilder;
+        }
+
+        public static CakeEmbedBuilder ReturnUserRecentList(OsuJsonUser user, OsuJsonBeatmap beatmap, string description, int mode)
+        {
+            return ReturnUserRecentBase(user)
+                .WithUrl(beatmap.beatmap_url)
+                .WithThumbnailUrl(beatmap.thumbnail)
+                .WithFooter($"{(OsuModeEnum)mode}")
+                .WithDescription(description) as CakeEmbedBuilder;
+        }
+
+        public static CakeEmbedBuilder ReturnUserRecent(OsuJsonUser user, OsuJsonBeatmap beatmap, OsuJsonUserRecent recent, string description, int mode, int retryCount)
+        {
+            return ReturnUserRecentBase(user)
+                .WithUrl($"{beatmap.beatmap_url}")
+                .WithThumbnailUrl($"{beatmap.thumbnail}")
+                .WithTimestamp(recent.date)
+                .WithTitle($"{beatmap.complete_title} {Math.Round(recent.starrating, 2)}★")
+                .WithFooter($"{(OsuModeEnum)mode} ⌑ Status: {beatmap.approved_string} ⌑ #{retryCount} Try")
+                .WithDescription(description)
+                as CakeEmbedBuilder;
+        }
     }
 }

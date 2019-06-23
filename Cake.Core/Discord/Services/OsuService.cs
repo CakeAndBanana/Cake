@@ -1,4 +1,4 @@
-﻿using Cake.Core.Discord.Embed.Builder;
+﻿using Cake.Core.Discord.Modules;
 using Cake.Core.Extensions;
 using Cake.Core.Logging;
 using Cake.Database.Models;
@@ -148,6 +148,140 @@ namespace Cake.Core.Discord.Services
                 }
 
                 await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserBest(user, thumbnail, fields, mode));
+            }
+            catch (Exception e)
+            {
+                await SendMessageAsync(e.Message);
+            }
+        }
+
+        public async Task GetUserRecent(string osuId, bool findWithUsername, int total = 1)
+        {
+            try
+            {
+                if (total > 5)
+                {
+                    throw new Exception("Total amount must be lower than 5");
+                }
+
+                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id);
+                var mapId = 0;
+                var info = "";
+                var mode = databaseProfile.OsuMode;
+
+                if (osuId.IsNullOrEmpty())
+                {
+                    osuId = databaseProfile.OsuId.ToString();
+                    findWithUsername = false;
+                }
+
+                var user = GetJsonUser(osuId, findWithUsername, mode);
+
+                var recentBuilder = new OsuUserRecentBuilder
+                {
+                    Mode = mode.ToString(),
+                    Limit = total.ToString(),
+                    UserId = user.user_id.ToString()
+                };
+
+                var recent = recentBuilder.Execute(true);
+                var first = true;
+                OsuJsonBeatmap firstBeatmap = null;
+                OsuJsonUserRecent firstRecent = null;
+                var retryCount = 0;
+
+                if (recent.Count == 0)
+                {
+                    throw new Exception("No recent play(s) has been found");
+                }
+
+                for (var i = 0; i < recent.Count; i++)
+                {
+                    var t = recent[i];
+
+                    var beatmapBuilder = new OsuBeatmapBuilder
+                    {
+                        Mode = mode.ToString(),
+                        ConvertedIncluded = "1",
+                        BeatmapId = t.beatmap_id
+                    };
+
+                    var beatmap = beatmapBuilder.Execute();
+
+                    if (first)
+                    {
+                        firstBeatmap = beatmap[0];
+                        first = false;
+                    }
+
+                    var fc = t.maxcombo >= (beatmap[0].max_combo - 15) && t.countmiss == 0;
+
+                    if (total > 1)
+                    {
+                        info += $"#{i + 1} ♢ [{beatmap[0].complete_title}]({beatmap[0].beatmap_url}) {Math.Round(t.starrating, 2)}★\n" +
+                                $"**{t.rounded_score} ♢ {t.rank.LevelEmotes()} ♢ {t.maxcombo}x({beatmap[0].max_combo}x) {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))}**\n" +
+                                $"{OsuUtil.Emote300} {t.count300} ♢ {OsuUtil.Emote100} {t.count100} ♢ {OsuUtil.Emote50} {t.count50} ♢ {OsuUtil.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
+
+                        if (t.rank != "F")
+                        {
+                            if (fc)
+                            {
+                                info += $"{Math.Round(t.pp, 2)} PP\n\n";
+                            }
+                            else
+                            {
+                                info += $"{Math.Round(t.pp, 2)} PP ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
+                            }
+                        }
+                        else
+                        {
+                            info += $"{Math.Round(t.completion, 2)}% completed\n";
+                        }
+
+                        mapId = Convert.ToInt32(beatmap[0].beatmap_id);
+                    }
+                    else
+                    {
+                        firstRecent = t;
+                        retryCount = OsuCheckRetries.Tries(mode.ToString(), t.user_id, beatmap[0].beatmap_id);
+
+                        info = $"**{t.rounded_score} ♢ " +
+                                      $"{t.rank.LevelEmotes()} ♢ {t.maxcombo}x*({beatmap[0].max_combo}x)*** {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))} \n " +
+                                      $"{OsuUtil.Emote300} {t.count300} ♢ {OsuUtil.Emote100} {t.count100} ♢ {OsuUtil.Emote50} {t.count50} ♢ {OsuUtil.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
+
+                        if (t.rank == "F")
+                        {
+                            info += $"{Math.Round(t.completion, 2)}% completed";
+                        }
+                        else
+                        {
+                            if (fc)
+                            {
+                                info += $"**{Math.Round(t.pp, 2)} PP**\n\n";
+                            }
+                            else
+                            {
+                                info += $"**{Math.Round(t.pp, 2)} PP** ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
+                            }
+                        }
+
+                        mapId = Convert.ToInt32(beatmap[0].beatmap_id);
+                    }
+                }
+
+                if (total == 1)
+                {
+                    await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserRecent(user, firstBeatmap, firstRecent, info, mode, retryCount));
+                }
+                else
+                {
+                    await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserRecentList(user, firstBeatmap, info, mode));
+                }
+
+                if (mapId != 0)
+                {
+                    OsuModule.SetMapId(mapId);
+                }
             }
             catch (Exception e)
             {

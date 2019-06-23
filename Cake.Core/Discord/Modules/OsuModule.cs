@@ -81,6 +81,17 @@ namespace Cake.Core.Discord.Modules
     public class OsuModule : CustomBaseModule
     {
         private readonly OsuService _service;
+        private static int? _mapId;
+
+        public static int? GetMapId()
+        {
+            return _mapId;
+        }
+
+        public static void SetMapId(int? value)
+        {
+            _mapId = value;
+        }
 
         public OsuModule(OsuService service)
         {
@@ -104,6 +115,7 @@ namespace Cake.Core.Discord.Modules
         public async Task GetProfile([Remainder]string args = "")
         {
             OsuArg osuDiscordArg = null;
+
             try
             {
                 osuDiscordArg = new OsuArg(args);
@@ -112,6 +124,7 @@ namespace Cake.Core.Discord.Modules
             {
                 await Context.Channel.SendMessageAsync(e.Message);
             }
+
             await _service.GetUserProfile(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
 
@@ -122,6 +135,7 @@ namespace Cake.Core.Discord.Modules
         public async Task GetUserBest([Remainder] string arg = "")
         {
             OsuArg osuDiscordArg = null;
+
             try
             {
                 osuDiscordArg = new OsuArg(arg, true);
@@ -134,6 +148,33 @@ namespace Cake.Core.Discord.Modules
             if (osuDiscordArg != null)
             {
                 await _service.GetUserBest(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), osuDiscordArg.IsRecent(), osuDiscordArg.GetPlayNumber());
+            }
+        }
+
+        [Alias("r")]
+        [Command("recent")]
+        [Summary(">osu recent (amount) (username)")]
+        [Remarks("Returns someones recently played maps")]
+        public async Task Recent(int n = 1, [Remainder] string arg = "")
+        {
+            OsuArg osuDiscordArg = null;
+
+            try
+            {
+                osuDiscordArg = new OsuArg(arg);
+            }
+            catch (Exception e)
+            {
+                await Context.Channel.SendMessageAsync(e.Message);
+            }
+
+            await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), n);
+
+            if (GetMapId() != null)
+            {
+                var channel = await Database.Queries.ChannelQueries.FindOrCreateChannel(Context.Channel.Id, Context.Guild.Id);
+                channel.OsuMapId = (int)GetMapId();
+                await Database.Queries.ChannelQueries.Update(channel);
             }
         }
     }
