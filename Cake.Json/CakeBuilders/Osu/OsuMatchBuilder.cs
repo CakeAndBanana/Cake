@@ -28,7 +28,7 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public override string Build(StringBuilder urlBuilder)
         {
-            if (MatchId != null || MatchId != "")
+            if (!string.IsNullOrEmpty(MatchId))
             {
                 urlBuilder.Append("&mp=");
                 urlBuilder.Append(MatchId);

@@ -60,31 +60,31 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public override string Build(StringBuilder urlBuilder)
         {
-            if (BeatmapId != null || BeatmapId != "")
+            if (!string.IsNullOrEmpty(BeatmapId))
             {
                 urlBuilder.Append("&b=");
                 urlBuilder.Append(BeatmapId);
             }
 
-            if (UserId != null || UserId != "")
+            if (!string.IsNullOrEmpty(UserId))
             {
                 urlBuilder.Append("&u=");
                 urlBuilder.Append(UserId);
             }
 
-            if (Mode != null || Mode != "")
+            if (!string.IsNullOrEmpty(Mode))
             {
                 urlBuilder.Append("&m=");
                 urlBuilder.Append(Mode);
             }
 
-            if (Mods != null || Mods != "")
+            if (!string.IsNullOrEmpty(Mods))
             {
                 urlBuilder.Append("&mods=");
                 urlBuilder.Append(Mods);
             }
 
-            if (Limit != null || Limit != "")
+            if (!string.IsNullOrEmpty(Limit))
             {
                 urlBuilder.Append("&limit=");
                 urlBuilder.Append(Limit);

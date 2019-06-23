@@ -50,25 +50,25 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public override string Build(StringBuilder urlBuilder)
         {
-            if (UserId != null || UserId != "")
+            if (!string.IsNullOrEmpty(UserId))
             {
                 urlBuilder.Append("&u=");
                 urlBuilder.Append(UserId);
             }
 
-            if (Mode != null || Mode != "")
+            if (!string.IsNullOrEmpty(Mode))
             {
                 urlBuilder.Append("&m=");
                 urlBuilder.Append(Mode);
             }
 
-            if (Type != null || Type != "")
+            if (!string.IsNullOrEmpty(Type))
             {
                 urlBuilder.Append("&mods=");
                 urlBuilder.Append(Type);
             }
 
-            if (EventDays != null || EventDays != "")
+            if (!string.IsNullOrEmpty(EventDays))
             {
                 urlBuilder.Append("event_days");
                 urlBuilder.Append(EventDays);

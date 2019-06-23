@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Cake.Json.CakeModels.Osu;
 
 namespace Cake.Json.CakeBuilders.Osu
@@ -79,13 +81,13 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public override string Build(StringBuilder urlBuilder)
         {
-            if (Since != null || Since != "")
+            if (!string.IsNullOrEmpty(Since))
             {
                 urlBuilder.Append("&since=");
                 urlBuilder.Append(Since);
             }
 
-            if (BeatmapSetId != null || BeatmapSetId != "")
+            if (!string.IsNullOrEmpty(BeatmapSetId))
             {
                 urlBuilder.Append("&s=");
                 urlBuilder.Append(BeatmapSetId);
@@ -97,37 +99,37 @@ namespace Cake.Json.CakeBuilders.Osu
                 urlBuilder.Append(BeatmapId);
             }
 
-            if (UserId != null || UserId != "")
+            if (!string.IsNullOrEmpty(UserId))
             {
                 urlBuilder.Append("&u=");
                 urlBuilder.Append(UserId);
             }
 
-            if (Mode != null || Mode != "")
+            if (!string.IsNullOrEmpty(Mode))
             {
                 urlBuilder.Append("&m=");
                 urlBuilder.Append(Mode);
             }
 
-            if (Type != null || Type != "")
+            if (!string.IsNullOrEmpty(Type))
             {
                 urlBuilder.Append("&type=");
                 urlBuilder.Append(Type);
             }
 
-            if (ConvertedIncluded != null || ConvertedIncluded != "")
+            if (!string.IsNullOrEmpty(ConvertedIncluded))
             {
                 urlBuilder.Append("&a=");
                 urlBuilder.Append(ConvertedIncluded);
             }
 
-            if (Hash != null || Hash != "")
+            if (!string.IsNullOrEmpty(Hash))
             {
                 urlBuilder.Append("&h=");
                 urlBuilder.Append(Hash);
             }
 
-            if (Limit != null || Limit != "")
+            if (!string.IsNullOrEmpty(Limit))
             {
                 urlBuilder.Append("&limit=");
                 urlBuilder.Append(Limit);
