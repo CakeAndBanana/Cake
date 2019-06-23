@@ -57,5 +57,7 @@ namespace Cake.Database.Queries
                 return newChannel;
             }
         }
+
+        public static async Task<CakeChannel> FindOrCreateChannel(ulong channelId, ulong guildId = 0) => await Get(channelId).ConfigureAwait(false) ?? await CreateChannel(channelId, guildId).ConfigureAwait(false);
     }
 }
