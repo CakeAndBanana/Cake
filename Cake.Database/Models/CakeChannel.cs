@@ -2,7 +2,7 @@
 
 namespace Cake.Database.Models
 {
-    [Table(Name = "CakeGuild")]
+    [Table(Name = "CakeChannel")]
     public class CakeChannel
     {
         [PrimaryKey]
