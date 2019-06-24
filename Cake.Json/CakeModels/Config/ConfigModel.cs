@@ -1,12 +1,14 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Cake.Storage.JsonModels
+namespace Cake.Json.JsonModels
 {
     [DataContract]
     public class ConfigModel
     {
         [DataMember]
         public string BotKey { get; set; }
+        [DataMember]
+        public string OsuApiKey { get; set; }
 
         [DataMember]
         public string ConnectionString { get; set; }

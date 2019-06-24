@@ -9,8 +9,10 @@ namespace Cake.Database.Models
         public ulong Id { get; set; }
         [Column(Name = "Restrict"), NotNull]
         public bool Restrict { get; set; }
-        [Column(Name = "OsuId"), NotNull]
+        [Column(Name = "OsuId"), Nullable]
         public int OsuId { get; set; }
+        [Column(Name = "OsuMode"), Nullable]
+        public int OsuMode { get; set; }
         [Column(Name = "Xp"), NotNull]
         public int Xp { get; set; }
         [Column(Name = "TotalXp"), NotNull]

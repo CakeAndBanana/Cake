@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Cake.Storage.JsonModels;
+using Cake.Json.JsonModels;
 using Newtonsoft.Json;
 
-namespace Cake.Storage
+namespace Cake.Json
 {
     public class CakeJson
     {
@@ -20,6 +20,7 @@ namespace Cake.Storage
             var model = new ConfigModel
             {
                 BotKey = "Bot Key here", 
+                OsuApiKey = "Osu Api Here",
                 LogEnabled = true,
                 ConnectionString = null
             };
