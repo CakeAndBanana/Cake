@@ -34,6 +34,8 @@ namespace Cake.Json.CakeBuilders.Osu
                 case OsuApiRequest.Multiplayer:
                     urlBuilder.Append("get_match");
                     break;
+                default:
+                    break;
             }
 
             urlBuilder.Append("?");

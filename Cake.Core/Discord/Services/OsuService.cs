@@ -109,7 +109,7 @@ namespace Cake.Core.Discord.Services
             {
                 string thumbnail = null;
                 var fields = new List<Tuple<string, string>>();
-                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id);
+                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
                 var mode = databaseProfile.OsuMode;
 
                 if (osuId.IsNullOrEmpty())
@@ -348,7 +348,7 @@ namespace Cake.Core.Discord.Services
 
                 if (score.Count == 0)
                 {
-                    throw new Exception($"`No score(s) found found in {beatmap.complete_title}`");
+                    throw new CakeException($"`No score(s) found found in {beatmap.complete_title}`");
                 }
 
                 foreach (var t in score)

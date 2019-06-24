@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -52,6 +53,8 @@ namespace Cake.Json.CakeBuilders.Osu
                             (6 * (item.count50 + item.count100 + item.count300 + item.countmiss + item.countgeki +
                                   item.countkatu));
                         break;
+                    default:
+                        throw new InvalidOperationException("`Hitted unreachable code in switch statement (OsuScoreBuilder)`");
                 }
             }
 
@@ -62,32 +65,27 @@ namespace Cake.Json.CakeBuilders.Osu
         {
             if (!string.IsNullOrEmpty(BeatmapId))
             {
-                urlBuilder.Append("&b=");
-                urlBuilder.Append(BeatmapId);
+                urlBuilder.Append("&b=").Append(BeatmapId);
             }
 
             if (!string.IsNullOrEmpty(UserId))
             {
-                urlBuilder.Append("&u=");
-                urlBuilder.Append(UserId);
+                urlBuilder.Append("&u=").Append(UserId);
             }
 
             if (!string.IsNullOrEmpty(Mode))
             {
-                urlBuilder.Append("&m=");
-                urlBuilder.Append(Mode);
+                urlBuilder.Append("&m=").Append(Mode);
             }
 
             if (!string.IsNullOrEmpty(Mods))
             {
-                urlBuilder.Append("&mods=");
-                urlBuilder.Append(Mods);
+                urlBuilder.Append("&mods=").Append(Mods);
             }
 
             if (!string.IsNullOrEmpty(Limit))
             {
-                urlBuilder.Append("&limit=");
-                urlBuilder.Append(Limit);
+                urlBuilder.Append("&limit=").Append(Limit);
             }
 
             return urlBuilder.ToString();

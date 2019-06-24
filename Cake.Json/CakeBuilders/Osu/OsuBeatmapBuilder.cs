@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Cake.Json.CakeModels.Osu;
 
 namespace Cake.Json.CakeBuilders.Osu
@@ -83,56 +81,47 @@ namespace Cake.Json.CakeBuilders.Osu
         {
             if (!string.IsNullOrEmpty(Since))
             {
-                urlBuilder.Append("&since=");
-                urlBuilder.Append(Since);
+                urlBuilder.Append("&since=").Append(Since);
             }
 
             if (!string.IsNullOrEmpty(BeatmapSetId))
             {
-                urlBuilder.Append("&s=");
-                urlBuilder.Append(BeatmapSetId);
+                urlBuilder.Append("&s=").Append(BeatmapSetId);
             }
 
             if (BeatmapId != null)
             {
-                urlBuilder.Append("&b=");
-                urlBuilder.Append(BeatmapId);
+                urlBuilder.Append("&b=").Append(BeatmapId);
             }
 
             if (!string.IsNullOrEmpty(UserId))
             {
-                urlBuilder.Append("&u=");
-                urlBuilder.Append(UserId);
+                urlBuilder.Append("&u=").Append(UserId);
             }
 
             if (!string.IsNullOrEmpty(Mode))
             {
-                urlBuilder.Append("&m=");
-                urlBuilder.Append(Mode);
+                urlBuilder.Append("&m=").Append(Mode);
             }
 
             if (!string.IsNullOrEmpty(Type))
             {
-                urlBuilder.Append("&type=");
-                urlBuilder.Append(Type);
+                urlBuilder.Append("&type=").Append(Type);
             }
 
             if (!string.IsNullOrEmpty(ConvertedIncluded))
             {
-                urlBuilder.Append("&a=");
-                urlBuilder.Append(ConvertedIncluded);
+                urlBuilder.Append("&a=").Append(ConvertedIncluded);
             }
 
             if (!string.IsNullOrEmpty(Hash))
             {
-                urlBuilder.Append("&h=");
-                urlBuilder.Append(Hash);
+                urlBuilder.Append("&h=").Append(Hash);
             }
 
             if (!string.IsNullOrEmpty(Limit))
             {
-                urlBuilder.Append("&limit=");
-                urlBuilder.Append(Limit);
+                urlBuilder.Append("&limit=").Append(Limit);
             }
 
             return urlBuilder.ToString();

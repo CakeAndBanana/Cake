@@ -14,24 +14,28 @@ namespace Cake.Json
 
     public class OsuUtil
     {
+        protected OsuUtil()
+        {
+        }
+
         //Osu urls
-        public const string OsuApiBaseUrl = "https://osu.ppy.sh/api/";
-        public const string OsuDownload = "https://osu.ppy.sh/d/";
-        public const string OsuUserUrl = "https://osu.ppy.sh/u/";
-        public const string OsuAvatarUrl = "https://a.ppy.sh/";
-        public const string OsuFlagUrl = "https://osu.ppy.sh/images/flags/";
-        public const string OsuOldFlagUrl = "https://s.ppy.sh/images/flags/";
+        public static readonly string OsuApiBaseUrl = "https://osu.ppy.sh/api/";
+        public static readonly string OsuDownload = "https://osu.ppy.sh/d/";
+        public static readonly string OsuUserUrl = "https://osu.ppy.sh/u/";
+        public static readonly string OsuAvatarUrl = "https://a.ppy.sh/";
+        public static readonly string OsuFlagUrl = "https://osu.ppy.sh/images/flags/";
+        public static readonly string OsuOldFlagUrl = "https://s.ppy.sh/images/flags/";
 
         //Osu game links
-        public const string OsuDirect = "osu://s/";
-        public const string OsuSpectate = "osu://spectate/";
+        public static readonly string OsuDirect = "osu://s/";
+        public static readonly string OsuSpectate = "osu://spectate/";
 
         //Thirdparty urls
-        public const string Bloodcat = "https://bloodcat.com/osu/s/";
-        public const string OsuTrack = "https://ameobea.me/osutrack/user/";
-        public const string OsuStats = "https://osustats.ppy.sh/u/";
-        public const string OsuSkills = "http://osuskills.tk/user/";
-        public const string OsuChan = "https://syrin.me/osuchan/u/";
+        public static readonly string Bloodcat = "https://bloodcat.com/osu/s/";
+        public static readonly string OsuTrack = "https://ameobea.me/osutrack/user/";
+        public static readonly string OsuStats = "https://osustats.ppy.sh/u/";
+        public static readonly string OsuSkills = "http://osuskills.tk/user/";
+        public static readonly string OsuChan = "https://syrin.me/osuchan/u/";
 
         public static string GetOsuUserPictureUrl(int userId)
         {

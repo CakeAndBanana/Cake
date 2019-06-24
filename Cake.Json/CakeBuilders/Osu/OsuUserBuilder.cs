@@ -52,26 +52,22 @@ namespace Cake.Json.CakeBuilders.Osu
         {
             if (!string.IsNullOrEmpty(UserId))
             {
-                urlBuilder.Append("&u=");
-                urlBuilder.Append(UserId);
+                urlBuilder.Append("&u=").Append(UserId);
             }
 
             if (!string.IsNullOrEmpty(Mode))
             {
-                urlBuilder.Append("&m=");
-                urlBuilder.Append(Mode);
+                urlBuilder.Append("&m=").Append(Mode);
             }
 
             if (!string.IsNullOrEmpty(Type))
             {
-                urlBuilder.Append("&mods=");
-                urlBuilder.Append(Type);
+                urlBuilder.Append("&mods=").Append(Type);
             }
 
             if (!string.IsNullOrEmpty(EventDays))
             {
-                urlBuilder.Append("event_days");
-                urlBuilder.Append(EventDays);
+                urlBuilder.Append("event_days").Append(EventDays);
             }
 
             return urlBuilder.ToString();

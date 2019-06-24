@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cake.Json.CakeModels.Osu;
@@ -8,8 +8,6 @@ namespace Cake.Json.CakeBuilders.Osu
 {
     public class OsuBestBuilder : OsuJsonBaseBuilder<OsuJsonBest>
     {
-        private static readonly NumberFormatInfo Nfi = new NumberFormatInfo { NumberDecimalSeparator = ".", NumberGroupSeparator = ".", CurrencySymbol = "" };
-
         public string UserId; // u
         public string Mode; // m
         public string Limit; // limit
@@ -50,6 +48,8 @@ namespace Cake.Json.CakeBuilders.Osu
                             (6 * (item.count50 + item.count100 + item.count300 + item.countmiss + item.countgeki +
                                   item.countkatu));
                         break;
+                    default:
+                        throw new InvalidOperationException("`Hitted unreachable code in switch statement (OsuBestBuilder)`");
                 }
             }
 
@@ -60,26 +60,22 @@ namespace Cake.Json.CakeBuilders.Osu
         {
             if (!string.IsNullOrEmpty(UserId))
             {
-                urlBuilder.Append("&u=");
-                urlBuilder.Append(UserId);
+                urlBuilder.Append("&u=").Append(UserId);
             }
 
             if (!string.IsNullOrEmpty(Mode))
             {
-                urlBuilder.Append("&m=");
-                urlBuilder.Append(Mode);
+                urlBuilder.Append("&m=").Append(Mode);
             }
 
             if (!string.IsNullOrEmpty(Limit))
             {
-                urlBuilder.Append("&limit=");
-                urlBuilder.Append(Limit);
+                urlBuilder.Append("&limit=").Append(Limit);
             }
 
             if (!string.IsNullOrEmpty(Type))
             {
-                urlBuilder.Append("&type=");
-                urlBuilder.Append(Type);
+                urlBuilder.Append("&type=").Append(Type);
             }
 
             return urlBuilder.ToString();

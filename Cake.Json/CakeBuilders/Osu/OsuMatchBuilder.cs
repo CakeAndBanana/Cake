@@ -12,7 +12,7 @@ namespace Cake.Json.CakeBuilders.Osu
         public List<OsuJsonMatch> Execute()
         {
             var osuJsonMatchArray = ExecuteJson(OsuApiRequest.Multiplayer);
-            //osuJsonMatchArray = ProcessJson(osuJsonMatchArray);
+            osuJsonMatchArray = ProcessJson(osuJsonMatchArray);
             return osuJsonMatchArray.ToList();
         }
 
@@ -30,8 +30,7 @@ namespace Cake.Json.CakeBuilders.Osu
         {
             if (!string.IsNullOrEmpty(MatchId))
             {
-                urlBuilder.Append("&mp=");
-                urlBuilder.Append(MatchId);
+                urlBuilder.Append("&mp=").Append(MatchId);
             }
 
             return urlBuilder.ToString();

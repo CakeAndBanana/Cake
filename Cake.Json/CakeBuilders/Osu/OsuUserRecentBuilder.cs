@@ -77,26 +77,22 @@ namespace Cake.Json.CakeBuilders.Osu
         {
             if (!string.IsNullOrEmpty(UserId))
             {
-                urlBuilder.Append("&u=");
-                urlBuilder.Append(UserId);
+                urlBuilder.Append("&u=").Append(UserId);
             }
 
             if (!string.IsNullOrEmpty(Mode))
             {
-                urlBuilder.Append("&m=");
-                urlBuilder.Append(Mode);
+                urlBuilder.Append("&m=").Append(Mode);
             }
 
             if (!string.IsNullOrEmpty(Type))
             {
-                urlBuilder.Append("&type=");
-                urlBuilder.Append(Type);
+                urlBuilder.Append("&type=").Append(Type);
             }
 
             if (!string.IsNullOrEmpty(Limit))
             {
-                urlBuilder.Append("&limit=");
-                urlBuilder.Append(Limit);
+                urlBuilder.Append("&limit=").Append(Limit);
             }
 
             return urlBuilder.ToString();
