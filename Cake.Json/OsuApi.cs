@@ -33,13 +33,6 @@ namespace Cake.Json
         public const string OsuSkills = "http://osuskills.tk/user/";
         public const string OsuChan = "https://syrin.me/osuchan/u/";
 
-        public const string EmoteX = "<:miss:486635818224713739>";
-        public const string Emote50 = "<:hit50:486637577286189056>";
-        public const string Emote100 = "<:hit100:486637577181593610>";
-        public const string Emote300 = "<:hit300:486637577202302976>";
-
-
-
         public static string GetOsuUserPictureUrl(int userId)
         {
             return OsuAvatarUrl + userId + "_1512645682.png";

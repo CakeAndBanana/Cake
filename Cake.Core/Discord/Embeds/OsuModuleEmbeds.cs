@@ -1,4 +1,5 @@
 ﻿using Cake.Core.Discord.Embed.Builder;
+using Cake.Core.Exceptions;
 using Cake.Json.CakeModels.Osu;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace Cake.Core.Discord.Embeds
 
     public class OsuModuleEmbeds
     {
+        protected OsuModuleEmbeds()
+        {
+        }
+
         public static CakeEmbedBuilder ReturnSetAccountEmbed(OsuJsonUser user)
         {
             return new CakeEmbedBuilder(EmbedType.Success)
@@ -43,6 +48,8 @@ namespace Cake.Core.Discord.Embeds
                 case 3:
                     embedResult.WithThumbnailUrl("http://cakebot.org/resource/osu/mania.png");
                     break;
+                default:
+                    throw new CakeException("Unexpected value in SetMode");
             }
             return embedResult;
         }

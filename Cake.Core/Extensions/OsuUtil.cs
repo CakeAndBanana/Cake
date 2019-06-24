@@ -1,4 +1,5 @@
 ﻿using Cake.Core.Discord.Embeds;
+using Cake.Core.Exceptions;
 using Cake.Json.CakeBuilders.Osu;
 using System;
 using System.Linq;
@@ -7,15 +8,19 @@ namespace Cake.Core.Extensions
 {
     public class OsuMode
     {
-        private static string OsuOfficialName = "osu!";
-        private static string TaikoOfficialName = "osu!taiko";
-        private static string CtbOfficialName = "osu!catch";
-        private static string ManiaOfficialName = "osu!mania";
+        protected OsuMode()
+        {
+        }
 
-        public static string[] OsuNames = { "0", OsuOfficialName, "osu", "std", "standard" };
-        public static string[] TaikoNames = { "1", TaikoOfficialName, "taiko" };
-        public static string[] CTBNames = { "2", CtbOfficialName, "ctb", "catch the beat", "catch" };
-        public static string[] ManiaNames = { "3", ManiaOfficialName, "mania" };
+        private static readonly string OsuOfficialName = "osu!";
+        private static readonly string TaikoOfficialName = "osu!taiko";
+        private static readonly string CtbOfficialName = "osu!catch";
+        private static readonly string ManiaOfficialName = "osu!mania";
+
+        public static readonly string[] OsuNames = { "0", OsuOfficialName, "osu", "std", "standard" };
+        public static readonly string[] TaikoNames = { "1", TaikoOfficialName, "taiko" };
+        public static readonly string[] CTBNames = { "2", CtbOfficialName, "ctb", "catch the beat", "catch" };
+        public static readonly string[] ManiaNames = { "3", ManiaOfficialName, "mania" };
 
         public static string GetOfficialName(string number)
         {
@@ -29,14 +34,13 @@ namespace Cake.Core.Extensions
                     return CtbOfficialName;
                 case "3":
                     return ManiaOfficialName;
-                default:
-                    return OsuOfficialName;
             }
+            return OsuOfficialName;
         }
 
         public static OsuModeEnum GetOsuMode(string name)
         {
-            name = name.ToLower();
+            name = name.ToLowerInvariant();
 
             if (OsuNames.Any(osuName => osuName == name))
             {
@@ -58,30 +62,12 @@ namespace Cake.Core.Extensions
                 return OsuModeEnum.Mania;
             }
 
-            throw new Exception($"No osu! mode found with the following name: `{name}`");
+            throw new CakeException($"No osu! mode found with the following name: `{name}`");
         }
     }
 
-    public class OsuUtil
+    public class OsuEmoteCodes
     {
-        public const string OsuApiBaseUrl = "https://osu.ppy.sh/api/";
-        public const string OsuDownload = "https://osu.ppy.sh/d/";
-        public const string OsuUserUrl = "https://osu.ppy.sh/u/";
-        public const string OsuAvatarUrl = "https://a.ppy.sh/";
-        public const string OsuFlagUrl = "https://osu.ppy.sh/images/flags/";
-        public const string OsuOldFlagUrl = "https://s.ppy.sh/images/flags/";
-
-        //Osu game links
-        public const string OsuDirect = "osu://s/";
-        public const string OsuSpectate = "osu://spectate/";
-
-        //Thirdparty urls
-        public const string Bloodcat = "https://bloodcat.com/osu/s/";
-        public const string OsuTrack = "https://ameobea.me/osutrack/user/";
-        public const string OsuStats = "https://osustats.ppy.sh/u/";
-        public const string OsuSkills = "http://osuskills.tk/user/";
-        public const string OsuChan = "https://syrin.me/osuchan/u/";
-
         public const string EmoteX = "<:miss:486635818224713739>";
         public const string Emote50 = "<:hit50:486637577286189056>";
         public const string Emote100 = "<:hit100:486637577181593610>";
@@ -132,14 +118,12 @@ namespace Cake.Core.Extensions
                 modString = "";
             }
 
-
             if (IsBitSet(mods, 0))
                 modString += "NF";
             if (IsBitSet(mods, 1))
                 modString += "EZ";
             if (IsBitSet(mods, 8))
                 modString += "HT";
-
             if (IsBitSet(mods, 3))
                 modString += "HD";
             if (IsBitSet(mods, 4))
@@ -150,12 +134,10 @@ namespace Cake.Core.Extensions
                 modString += "NC";
             if (IsBitSet(mods, 10))
                 modString += "FL";
-
             if (IsBitSet(mods, 5))
                 modString += "SD";
             if (IsBitSet(mods, 14))
                 modString += "PF";
-
             if (IsBitSet(mods, 7))
                 modString += "RX";
             if (IsBitSet(mods, 11))

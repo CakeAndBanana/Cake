@@ -4,6 +4,10 @@ namespace Cake.Core.Extensions
 {
     public class TimeFormat
     {
+        protected TimeFormat()
+        {
+        }
+
         public static string ToShortTimeSpan(TimeSpan time)
         {
             var timestamp = "";

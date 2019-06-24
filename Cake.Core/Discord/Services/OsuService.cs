@@ -1,4 +1,5 @@
 ﻿using Cake.Core.Discord.Modules;
+using Cake.Core.Exceptions;
 using Cake.Core.Extensions;
 using Cake.Core.Logging;
 using Cake.Database.Models;
@@ -26,7 +27,7 @@ namespace Cake.Core.Discord.Services
                         "`No osu account has been linked to this discord account, use osu set (username / user id).`");
                 }
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 Logger.Get().LogError(e);
             }
@@ -47,7 +48,7 @@ namespace Cake.Core.Discord.Services
 
             if (user == null)
             {
-                throw new Exception("``User with given username or id is not found on osu!``");
+                throw new CakeException("``User with given username or id is not found on osu!``");
             }
 
             return user;
@@ -55,7 +56,7 @@ namespace Cake.Core.Discord.Services
 
         public async Task SetAccount(string username)
         {
-            var databaseprofile = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id);
+            var databaseprofile = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id).ConfigureAwait(false);
             var user = GetJsonUser(username, true);
 
             databaseprofile.OsuId = user.user_id;
@@ -68,13 +69,13 @@ namespace Cake.Core.Discord.Services
         {
             try
             {
-                var databaseprofile = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id);
+                var databaseprofile = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id).ConfigureAwait(false);
                 databaseprofile.OsuMode = mode;
                 await Database.Queries.UserQueries.Update(databaseprofile);
 
                 await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnSetModeEmbed(mode));
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await SendMessageAsync(e.Message);
             }
@@ -84,7 +85,7 @@ namespace Cake.Core.Discord.Services
         {
             try
             {
-                var databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id);
+                var databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
                 var mode = databaseUser.OsuMode;
 
                 if (osuId.IsNullOrEmpty())
@@ -96,7 +97,7 @@ namespace Cake.Core.Discord.Services
 
                 await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserProfile(user, mode));
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await SendMessageAsync(e.Message);
             }
@@ -156,7 +157,7 @@ namespace Cake.Core.Discord.Services
                                   $@"⤷ **PP:** {Math.Round(item.pp, 0)} " +
                                   $"**Rank:** {item.rank.LevelEmotes()} " +
                                   $"**Combo:** {item.maxcombo}({result[0].max_combo}) \n" +
-                                  $" {OsuUtil.Emote300} {item.count300} ♢ {OsuUtil.Emote100} {item.count100} ♢ {OsuUtil.Emote50} {item.count50} ♢ {OsuUtil.EmoteX} {item.countmiss} ♢ {Math.Round(item.calculated_accuracy, 2)}%\n" +
+                                  $" {OsuEmoteCodes.Emote300} {item.count300} ♢ {OsuEmoteCodes.Emote100} {item.count100} ♢ {OsuEmoteCodes.Emote50} {item.count50} ♢ {OsuEmoteCodes.EmoteX} {item.countmiss} ♢ {Math.Round(item.calculated_accuracy, 2)}%\n" +
                                   $" **Downloads:** [Beatmap]({result[0].beatmap_url})" +
                                   $"([no vid]({result[0].beatmap_url + "n"})) " +
                                   $"[Bloodcat]({result[0].bloodcat})\n" +
@@ -177,10 +178,10 @@ namespace Cake.Core.Discord.Services
             {
                 if (total > 5)
                 {
-                    throw new Exception("Total amount must be lower than 5");
+                    throw new CakeException("`Total amount must be lower than 5`");
                 }
 
-                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id);
+                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
                 var mapId = 0;
                 var info = "";
                 var mode = databaseProfile.OsuMode;
@@ -208,7 +209,7 @@ namespace Cake.Core.Discord.Services
 
                 if (recent.Count == 0)
                 {
-                    throw new Exception("No recent play(s) has been found");
+                    throw new CakeException("`No recent play(s) has been found`");
                 }
 
                 for (var i = 0; i < recent.Count; i++)
@@ -236,7 +237,7 @@ namespace Cake.Core.Discord.Services
                     {
                         info += $"**#{i + 1}** ♢ [{beatmap[0].complete_title}]({beatmap[0].beatmap_url}) **{Math.Round(t.starrating, 2)}★**\n" +
                                 $"⤷ **{t.rounded_score} ♢ {t.rank.LevelEmotes()} ♢ {t.maxcombo}x({beatmap[0].max_combo}x) {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))}**\n" +
-                                $"  {OsuUtil.Emote300} {t.count300} ♢ {OsuUtil.Emote100} {t.count100} ♢ {OsuUtil.Emote50} {t.count50} ♢ {OsuUtil.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
+                                $"  {OsuEmoteCodes.Emote300} {t.count300} ♢ {OsuEmoteCodes.Emote100} {t.count100} ♢ {OsuEmoteCodes.Emote50} {t.count50} ♢ {OsuEmoteCodes.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
 
                         if (t.rank != "F")
                         {
@@ -263,7 +264,7 @@ namespace Cake.Core.Discord.Services
 
                         info = $"**{t.rounded_score} ♢ " +
                                       $"{t.rank.LevelEmotes()} ♢ {t.maxcombo}x*({beatmap[0].max_combo}x)*** {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))} \n " +
-                                      $"{OsuUtil.Emote300} {t.count300} ♢ {OsuUtil.Emote100} {t.count100} ♢ {OsuUtil.Emote50} {t.count50} ♢ {OsuUtil.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
+                                      $"{OsuEmoteCodes.Emote300} {t.count300} ♢ {OsuEmoteCodes.Emote100} {t.count100} ♢ {OsuEmoteCodes.Emote50} {t.count50} ♢ {OsuEmoteCodes.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
 
                         if (t.rank == "F")
                         {
@@ -299,7 +300,7 @@ namespace Cake.Core.Discord.Services
                     OsuModule.SetMapId(mapId);
                 }
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await SendMessageAsync(e.Message);
             }
@@ -309,7 +310,7 @@ namespace Cake.Core.Discord.Services
         {
             try
             {
-                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id);
+                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
                 var mode = databaseProfile.OsuMode;
 
                 if (osuId.IsNullOrEmpty())
@@ -324,7 +325,7 @@ namespace Cake.Core.Discord.Services
 
                 if (mapId == 0)
                 {
-                    throw new Exception("No beatmap found");
+                    throw new CakeException("`No beatmap found in channel`");
                 }
 
                 var scoreBuilder = new OsuScoreBuilder
@@ -347,7 +348,7 @@ namespace Cake.Core.Discord.Services
 
                 if (score.Count == 0)
                 {
-                    throw new Exception($"No score(s) found found in {beatmap.complete_title}");
+                    throw new Exception($"`No score(s) found found in {beatmap.complete_title}`");
                 }
 
                 foreach (var t in score)
@@ -363,13 +364,13 @@ namespace Cake.Core.Discord.Services
                             $"**Rank:**{t.rank.LevelEmotes()} " +
                             $"**Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
                             $"**Combo:** {t.maxcombo}({beatmap.max_combo}) \n" +
-                            $" {OsuUtil.Emote300} {t.count300} | {OsuUtil.Emote100} {t.count100} | {OsuUtil.Emote50} {t.count50} | {OsuUtil.EmoteX} {t.countmiss}\n " +
+                            $" {OsuEmoteCodes.Emote300} {t.count300} | {OsuEmoteCodes.Emote100} {t.count100} | {OsuEmoteCodes.Emote50} {t.count50} | {OsuEmoteCodes.EmoteX} {t.countmiss}\n " +
                             $" {date} ago\n\n";
                 }
 
                 await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnChannelCompare(user, beatmap, info, mode));
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await SendMessageAsync(e.Message);
             }

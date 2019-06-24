@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Cake.Core.Discord.Services;
+using Cake.Core.Exceptions;
 using Cake.Core.Extensions;
 using Discord.Commands;
 using static System.Int32;
@@ -40,7 +41,7 @@ namespace Cake.Core.Discord.Modules
                 _play = Parse(Regex.Match(arg, @"\d+").Value);
                 if (_play > 100 || _play == 0)
                 {
-                    throw new Exception("``Play number has to be between 1 and 100``");
+                    throw new CakeException("``Play number has to be between 1 and 100``");
                 }
             }
             else if (arg.Contains("-id"))
@@ -120,9 +121,13 @@ namespace Cake.Core.Discord.Modules
                 var modeNumber = (int)OsuMode.GetOsuMode(mode);
                 await _service.SetMode(modeNumber);
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await Context.Channel.SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logging.Logger.Get().LogException(e);
             }
         }
 
@@ -138,9 +143,13 @@ namespace Cake.Core.Discord.Modules
             {
                 osuDiscordArg = new OsuArg(args);
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await Context.Channel.SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logging.Logger.Get().LogException(e);
             }
 
             await _service.GetUserProfile(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
@@ -158,9 +167,13 @@ namespace Cake.Core.Discord.Modules
             {
                 osuDiscordArg = new OsuArg(arg, true);
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await Context.Channel.SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logging.Logger.Get().LogException(e);
             }
 
             if (osuDiscordArg != null)
@@ -181,9 +194,13 @@ namespace Cake.Core.Discord.Modules
             {
                 osuDiscordArg = new OsuArg(arg);
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await Context.Channel.SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                Logging.Logger.Get().LogException(e);
             }
 
             await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), n);
@@ -203,14 +220,20 @@ namespace Cake.Core.Discord.Modules
         public async Task GetCompare([Remainder] string arg = "")
         {
             OsuArg osuDiscordArg = null;
+
             try
             {
                 osuDiscordArg = new OsuArg(arg);
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await Context.Channel.SendMessageAsync(e.Message);
             }
+            catch (Exception e)
+            {
+                Logging.Logger.Get().LogException(e);
+            }
+
             await _service.GetCompare(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
     }
