@@ -34,7 +34,7 @@ namespace Cake.Json.CakeBuilders.Osu
 
                 OsuUtil.GetCalculatedAccuracy(item, Mode);
                 var data = OsuDlBeatmap.FindMap(item.beatmap_id);
-                var beatmapData = Beatmap.Read(new StreamReader(new MemoryStream(data, false))) ?? throw new ArgumentNullException("Beatmap.Read(new StreamReader(new MemoryStream(data, false)))");
+                var beatmapData = Beatmap.Read(new StreamReader(new MemoryStream(data, false)));
                 var diff = new DiffCalc().Calc(beatmapData, (Mods)item.enabled_mods);
 
                 if (pp && Mode == "0")

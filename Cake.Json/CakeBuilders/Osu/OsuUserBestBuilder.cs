@@ -41,8 +41,7 @@ namespace Cake.Json.CakeBuilders.Osu
                 {
                     //Star rating
                     var data = OsuDlBeatmap.FindMap(item.beatmap_id);
-                    var beatmapData = Beatmap.Read(new StreamReader(new MemoryStream(data, false))) ?? throw new ArgumentNullException("Beatmap.Read(new StreamReader(new MemoryStream(data, false)))");
-                    var diff = new DiffCalc().Calc(beatmapData, (Mods)item.enabled_mods);
+                    var diff = new DiffCalc().Calc(Beatmap.Read(new StreamReader(new MemoryStream(data, false))), (Mods)item.enabled_mods);
                     item.starrating = diff.Total;
                 }
 
