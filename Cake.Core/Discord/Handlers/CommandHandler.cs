@@ -113,7 +113,7 @@ namespace Cake.Core.Discord.Handlers
                     }
                     else
                     {
-                        _logger.Log(Type.Info, $"\nCommand executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
+                        _logger.Log(Type.Info, $"\nCommand {context.Message} executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
                     }
                 }
             }
