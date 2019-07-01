@@ -3,6 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Authors>Cake Inc.</Authors>
+    <Company>Cake Inc.</Company>
+    <Product>CakeBot</Product>
+    <Description>Console of the CakeBot.</Description>
+    <PackageProjectUrl>https://github.com/CakeAndBanana/CakeBot</PackageProjectUrl>
+    <PackageIconUrl>https://camo.githubusercontent.com/83f973b397e44c2d732a0ec02110f2686596cd89/68747470733a2f2f63616b652e732d756c2e65752f6c626f6652576373</PackageIconUrl>
+    <RepositoryUrl>https://github.com/CakeAndBanana/CakeBot</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <Version>1.0</Version>
+
   </PropertyGroup>
 
   <ItemGroup>
