@@ -1,14 +1,16 @@
-﻿namespace Cake.Console
+﻿using Cake.Core;
+
+namespace Cake.Console
 {
     public class Program
     {
-        private static readonly Core.Main Constant = GetInstance()._cake;
+        private static readonly Main Constant = GetInstance()._cake;
 
         private static void Main() => Constant.StartAsync().GetAwaiter().GetResult();
 
         private static Program _instance; // Singleton instance
 
-        private Core.Main _cake;
+        private Main _cake;
 
         public static Program GetInstance() // Singleton pattern
         {
@@ -25,7 +27,7 @@
 
         public void Initialize()
         {
-            _cake = new Core.Main();
+            _cake = new Main();
         }
     }
 }
