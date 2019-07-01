@@ -1,4 +1,4 @@
-Alt-H1 Cake
+Cake
 ======
 ![](https://cake.s-ul.eu/lbofRWcs)
 
@@ -6,7 +6,7 @@ Alt-H1 Cake
 
 Cake is a multipurpose bot that is made to create your life a bit easier.
 
-Alt-H2 Built using
+Built using
 ------
 ⋅⋅* .Net Core 2.2.0
 ⋅⋅* .Net Standard 2.0
@@ -14,9 +14,9 @@ Alt-H2 Built using
 ⋅⋅* Discord .Net
 ⋅⋅* linq2db 
 
-Alt-H2 Features
+Features
 ------
-⋅⋅* osu! module with recently played, top, compare scores and user profiles.
+⋅⋅* osu! stats with recently played, top, compare scores and user profiles.
 
 ⋅⋅* Detailed Leave and Welcome message.
 
