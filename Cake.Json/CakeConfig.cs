@@ -10,7 +10,7 @@ namespace Cake.Json
         private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
         public static ConfigModel GetConfig()
         {
-            ConfigModel config = null;
+            ConfigModel config;
             if (!File.Exists(Path))
             {
                 config = CreateConfig();
@@ -48,9 +48,6 @@ namespace Cake.Json
             return JsonConvert.DeserializeObject<ConfigModel>(File.ReadAllText(Path));
         }
 
-        private static ConfigModel GetConfigModel()
-        {
-            return JsonConvert.DeserializeObject<ConfigModel>(File.ReadAllText(Path));
-        }
+        private static ConfigModel GetConfigModel() => JsonConvert.DeserializeObject<ConfigModel>(File.ReadAllText(Path));
     }
 }
