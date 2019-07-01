@@ -6,6 +6,8 @@ namespace Cake.Json.JsonModels
     public class ConfigModel
     {
         [DataMember]
+        public string Version { get; set; }
+        [DataMember]
         public string BotKey { get; set; }
         [DataMember]
         public string OsuApiKey { get; set; }
