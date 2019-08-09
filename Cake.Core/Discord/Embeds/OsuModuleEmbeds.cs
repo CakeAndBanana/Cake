@@ -1,5 +1,6 @@
 ﻿using Cake.Core.Discord.Embed.Builder;
 using Cake.Core.Exceptions;
+using Cake.Core.Extensions;
 using Cake.Json.CakeModels.Osu;
 using System;
 using System.Collections.Generic;
@@ -124,7 +125,7 @@ namespace Cake.Core.Discord.Embeds
             return ReturnUserRecentBase(user)
                 .WithUrl(beatmap.beatmap_url)
                 .WithThumbnailUrl(beatmap.thumbnail)
-                .WithFooter($"{(OsuModeEnum)mode}")
+                .WithFooter($"{OsuMode.GetOfficialName(mode)}")
                 .WithDescription(description) as CakeEmbedBuilder;
         }
 
@@ -135,7 +136,7 @@ namespace Cake.Core.Discord.Embeds
                 .WithThumbnailUrl(beatmap.thumbnail)
                 .WithTimestamp(recent.date)
                 .WithTitle($"{beatmap.complete_title} {Math.Round(recent.starrating, 2)}★")
-                .WithFooter($"{(OsuModeEnum)mode} ⌑ Status: {beatmap.approved_string} ⌑ #{retryCount} Try")
+                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {beatmap.approved_string} ⌑ #{retryCount} try")
                 .WithDescription(description)
                 as CakeEmbedBuilder;
         }
@@ -154,7 +155,7 @@ namespace Cake.Core.Discord.Embeds
                 .WithTitle(beatmap.complete_title)
                 .WithUrl(beatmap.beatmap_url)
                 .WithDescription(description)
-                .WithFooter($"{(OsuModeEnum)mode} | {beatmap.approved_string}") as CakeEmbedBuilder;
+                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {beatmap.approved_string}") as CakeEmbedBuilder;
         }
     }
 }
