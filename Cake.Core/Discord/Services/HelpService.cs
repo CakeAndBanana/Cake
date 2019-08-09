@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Embed.Builder;
-using Cake.Core.Logging;
 using Cake.Database.Queries;
 using Discord.Commands;
 
