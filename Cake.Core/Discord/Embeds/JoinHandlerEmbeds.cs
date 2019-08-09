@@ -13,8 +13,8 @@ namespace Cake.Core.Discord.Embed
         public static CakeEmbedBuilder ReturnJoinedEmbed(SocketGuildUser joinedUser, string username, string avatarUrl)
         {
             return new CakeEmbedBuilder()
-                .AddField("Message", joinedUser.Mention + " joined the server!")
-                .AddField("Creation Date", joinedUser.CreatedAt)
+                .AddField("User joined! :)", joinedUser.Mention + " joined the server!")
+                .AddField("Creation Date", joinedUser.CreatedAt.DateTime.ToShortDateString())
                 .WithThumbnailUrl(joinedUser.GetAvatarUrl())
                 .WithFooter(footer =>
                 {
@@ -28,8 +28,8 @@ namespace Cake.Core.Discord.Embed
         public static CakeEmbedBuilder ReturnLeaveEmbed(SocketGuildUser leftUser, string username, string avatarUrl)
         {
             return new CakeEmbedBuilder()
-                .AddField("Message", leftUser.Mention + " left the server!")
-                .AddField("Creation Date", leftUser.CreatedAt)
+                .AddField("User left... :(", leftUser.Mention + " left the server!")
+                .AddField("Creation Date", leftUser.CreatedAt.DateTime.ToShortDateString())
                 .WithThumbnailUrl(leftUser.GetAvatarUrl())
                 .WithFooter(footer =>
                 {
