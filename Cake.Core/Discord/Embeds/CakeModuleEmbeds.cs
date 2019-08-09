@@ -13,7 +13,7 @@ namespace Cake.Core.Discord.Embed
         public static CakeEmbedBuilder ReturnStatusEmbed(IGuild guild)
         {
             return new CakeEmbedBuilder()
-                .WithTitle("Status of Cake")
+                .WithTitle($"Status of {Main.GetClient().CurrentUser.Username}")
                 .WithAuthor(m => m.IconUrl = Main.GetClient().CurrentUser.GetAvatarUrl())
                 .WithDescription($"Version: ``{Assembly.GetExecutingAssembly().GetName().Version}``\n" +
                               $"Discord Latency: ``{Main.GetClient().Latency}ms``\n" +
