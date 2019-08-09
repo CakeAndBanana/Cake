@@ -23,8 +23,7 @@ namespace Cake.Core.Discord.Services
             {
                 if (databaseProfile.OsuId == 0)
                 {
-                    await SendMessageAsync(
-                        "`No osu account has been linked to this discord account, use osu set (username / user id).`");
+                    await SendMessageAsync("`No osu account has been linked to this discord account, use osu set (username / user id).`");
                 }
             }
             catch (CakeException e)

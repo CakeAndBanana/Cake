@@ -53,6 +53,13 @@ namespace Cake.Core
             }
         }
 
+        public async Task StopASync()
+        {
+            await _client.LogoutAsync();
+            _client.Dispose();
+            _logger.Log(Type.Info, "~Stopped Cake~");
+        }
+
         public static DiscordShardedClient GetClient()
         {
             return _client;
