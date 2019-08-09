@@ -14,12 +14,11 @@ namespace Cake.Core.Discord.Embed
         {
             return new CakeEmbedBuilder()
                 .WithTitle("Status of Cake")
-                .WithAuthor(
-                m =>
-                m.IconUrl = Main.GetClient().CurrentUser.GetAvatarUrl())
+                .WithAuthor(m => m.IconUrl = Main.GetClient().CurrentUser.GetAvatarUrl())
                 .WithDescription($"Version: ``{Assembly.GetExecutingAssembly().GetName().Version}``\n" +
                               $"Discord Latency: ``{Main.GetClient().Latency}ms``\n" +
-                              $"Shards: ``{Main.GetClient().Shards.Count} / {Main.GetClient().GetShardIdFor(guild) + 1}``") as CakeEmbedBuilder;
+                              $"Shards: ``{Main.GetClient().Shards.Count}``" +
+                              $"Guild Shard: ``{Main.GetClient().GetShardIdFor(guild) + 1}``") as CakeEmbedBuilder;
         }
     }
 }
