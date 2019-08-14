@@ -1,7 +1,6 @@
 ﻿using Cake.Core.Discord.Embeds;
 using Cake.Core.Exceptions;
 using Cake.Json.CakeBuilders.Osu;
-using System;
 using System.Linq;
 
 namespace Cake.Core.Extensions
@@ -22,17 +21,17 @@ namespace Cake.Core.Extensions
         public static readonly string[] CTBNames = { "2", CtbOfficialName, "ctb", "catch the beat", "catch" };
         public static readonly string[] ManiaNames = { "3", ManiaOfficialName, "mania" };
 
-        public static string GetOfficialName(string number)
+        public static string GetOfficialName(int number)
         {
             switch (number)
             {
-                case "0":
+                case 0:
                     return OsuOfficialName;
-                case "1":
+                case 1:
                     return TaikoOfficialName;
-                case "2":
+                case 2:
                     return CtbOfficialName;
-                case "3":
+                case 3:
                     return ManiaOfficialName;
             }
             return OsuOfficialName;

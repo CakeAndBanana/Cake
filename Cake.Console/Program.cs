@@ -29,5 +29,10 @@ namespace Cake.Console
         {
             _cake = new Main();
         }
+
+        public async void Stop()
+        {
+            await _cake.StopASync();
+        }
     }
 }
