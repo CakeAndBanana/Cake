@@ -8,17 +8,22 @@ namespace Cake.Core.Discord.Handlers
     {
         public async Task GiveExpToUser(CakeUser user, int expToGive)
         {
-            throw new NotImplementedException("");
+            throw new NotImplementedException("Give experience to user, amount is depended on task");
         }
 
-        private async Task IncrementLevel(CakeUser user, int amount = 1)
+        public async Task IncrementLevel(CakeUser user, int amount = 1)
         {
-            throw new NotImplementedException("");
+            throw new NotImplementedException("Should also increase totalxp.");
         }
 
-        private async Task DecreaseLevel(CakeUser user, int amount = 1)
+        public async Task DecreaseLevel(CakeUser user, int amount = 1)
         {
-            throw new NotImplementedException("");
+            throw new NotImplementedException("Should also increase totalxp.");
+        }
+
+        public async Task ResetUser(CakeUser user)
+        {
+            throw new NotImplementedException("Resets XP and Level of user.");
         }
     }
 }
