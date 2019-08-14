@@ -9,7 +9,7 @@ namespace Cake.Core.Discord.Attributes
 
         public CooldownAttribute(bool status = true)
         {
-            throw new NotImplementedException("Issue #33 github");
+            throw new NotImplementedException("Issue #33 github :)");
         }
     }
 }
