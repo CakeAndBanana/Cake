@@ -1,4 +1,5 @@
 ﻿using Cake.Database.Models;
+using Cake.Database.Queries;
 using System;
 using System.Threading.Tasks;
 
@@ -6,9 +7,21 @@ namespace Cake.Core.Discord.Handlers
 {
     public class LevelHandler
     {
-        public async Task GiveExpToUser(CakeUser user, int expToGive)
+        public async Task<bool> GiveExpToUser(CakeUser user, int expToGive)
         {
-            throw new NotImplementedException("Give experience to user, amount is depended on task");
+            user.Xp += expToGive;
+            user.TotalXp += expToGive;
+            int nextLevelXp = (int)(125 * (user.Level * 1.45));
+            if (user.Xp >= nextLevelXp)
+            {
+                user.Level += 1;
+                user.Xp = (0 + user.Xp - nextLevelXp);
+                await UserQueries.Update(user);
+                return true;
+            }
+
+            await UserQueries.Update(user);
+            return false;
         }
 
         public async Task IncrementLevel(CakeUser user, int amount = 1)
@@ -21,9 +34,12 @@ namespace Cake.Core.Discord.Handlers
             throw new NotImplementedException("Should also increase totalxp.");
         }
 
-        public async Task ResetUser(CakeUser user)
+        public CakeUser ResetUser(CakeUser user)
         {
-            throw new NotImplementedException("Resets XP and Level of user.");
+            user.Xp = 0;
+            user.TotalXp += 0;
+            user.Level = 1;
+            return user;
         }
     }
 }
