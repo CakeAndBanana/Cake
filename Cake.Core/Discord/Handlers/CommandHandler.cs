@@ -52,15 +52,19 @@ namespace Cake.Core.Discord.Handlers
 
             try
             {
+                //Get or generation of user.
+                var user = await Database.Queries.UserQueries.FindOrCreateUser(context.User.Id);
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
+
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
-                    if (Database.Queries.UserQueries.FindOrCreateUser(context.User.Id).Result.Restrict && guild.Restrict)
+                    if (user.Restrict && guild.Restrict)
                     {
                         return;
                     }
 
                     var stopwatch = Stopwatch.StartNew();
+                    //Execute Command
                     var result = await _commandService.ExecuteAsync(context, 1, _services);
                     stopwatch.Stop();
 
@@ -112,6 +116,7 @@ namespace Cake.Core.Discord.Handlers
                     }
                     else
                     {
+                        await LevelHandler.GiveExpToUser(user, 2);
                         _logger.Log(Type.Info, $"\nCommand {context.Message} executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
                     }
                 }

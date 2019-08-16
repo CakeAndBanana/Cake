@@ -13,10 +13,12 @@ namespace Cake.Core.Discord.Services
         {
             Module = module;
         }
+
         protected async Task SendMessageAsync(string message, bool tts = false, RequestOptions options = null)
         {
             await SendMessageAsync(message, Module.Context.Channel, tts, options).ConfigureAwait(false);
         }
+
         protected async Task SendMessageAsync(string message, IMessageChannel channel, bool tts = false, RequestOptions options = null)
         {
             await channel.SendMessageAsync(message, tts).ConfigureAwait(false);

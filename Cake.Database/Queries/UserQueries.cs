@@ -48,7 +48,6 @@ namespace Cake.Database.Queries
                 {
                     Id = userId,
                     TotalXp = 0,
-                    Xp = 0,
                     Admin = false,
                     Restrict = false,
                     OsuId = 0,

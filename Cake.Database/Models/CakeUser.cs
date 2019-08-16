@@ -13,8 +13,6 @@ namespace Cake.Database.Models
         public int OsuId { get; set; }
         [Column(Name = "OsuMode"), Nullable]
         public int OsuMode { get; set; }
-        [Column(Name = "Xp"), NotNull]
-        public int Xp { get; set; }
         [Column(Name = "TotalXp"), NotNull]
         public long TotalXp { get; set; }
         [Column(Name = "Level"), NotNull]
@@ -25,5 +23,9 @@ namespace Cake.Database.Models
         public long Money { get; set; }
         [Column(Name = "BackgroundId"), Nullable]
         public int? BackgroundId { get; set; }
+
+        public long GetCurrentExp() => TotalXp - (long)(125 * ((Level - 1) * 1.45));
+
+        public long GetNextLevelExp() => (long)(125 * (Level * 1.45));
     }
 }
