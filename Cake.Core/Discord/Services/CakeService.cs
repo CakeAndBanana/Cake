@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Cake.Database.Queries;
+using System.Threading.Tasks;
 
 namespace Cake.Core.Discord.Services
 {
@@ -11,7 +12,7 @@ namespace Cake.Core.Discord.Services
 
         public async Task GetPrefix()
         {
-            await SendMessageAsync($"``Current prefix in this server is {Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id).Result.Prefix}.``");
+            await SendMessageAsync($"``Current prefix in this server is {GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id).Result.Prefix}.``");
         }
 
         public async Task SetPrefix(string newPrefix)
@@ -23,10 +24,10 @@ namespace Cake.Core.Discord.Services
                     throw new System.Exception("New prefix is too long for database.");
                 }
 
-                var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
+                var guild = await GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
                 var oldPrefix = guild.Prefix;
                 guild.Prefix = newPrefix;
-                await Database.Queries.GuildQueries.Update(guild);
+                await GuildQueries.Update(guild);
 
                 await SendMessageAsync($"``Prefix changed to '{newPrefix}', old prefix was '{oldPrefix}'.``");
             }
@@ -38,27 +39,27 @@ namespace Cake.Core.Discord.Services
 
         public async Task SetWelcome(ulong channelId)
         {
-            var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
+            var guild = await GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
             guild.WelcomeId = channelId;
-            await Database.Queries.GuildQueries.Update(guild);
+            await GuildQueries.Update(guild);
 
             await SendMessageAsync("`Set this channel as welcome message channel!`");
         }
 
         public async Task SetLeave(ulong channelId)
         {
-            var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
+            var guild = await GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id);
             guild.LeaveId = channelId;
-            await Database.Queries.GuildQueries.Update(guild);
+            await GuildQueries.Update(guild);
 
             await SendMessageAsync("`Set this channel as leave message channel!`");
         }
 
         public async Task SetAdmin(ulong id)
         {
-            var user = await Database.Queries.UserQueries.FindOrCreateUser(id);
+            var user = await UserQueries.FindOrCreateUser(id);
             user.Admin = !user.Admin;
-            await Database.Queries.UserQueries.Update(user);
+            await UserQueries.Update(user);
 
             await SendMessageAsync($"Updated given user admin status to {user.Admin}.");
         }
@@ -66,7 +67,7 @@ namespace Cake.Core.Discord.Services
         public async Task RestrictGuild(ulong guildId)
         {
             string message;
-            var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(guildId);
+            var guild = await GuildQueries.FindOrCreateGuild(guildId);
             if (guild.Restrict)
             {
                 guild.Restrict = false;
@@ -77,7 +78,7 @@ namespace Cake.Core.Discord.Services
                 guild.Restrict = true;
                 message = $"`Restricted guild {guildId} from using Cake!`";
             }
-            await Database.Queries.GuildQueries.Update(guild);
+            await GuildQueries.Update(guild);
 
             await SendMessageAsync(message);
         }
@@ -85,7 +86,7 @@ namespace Cake.Core.Discord.Services
         public async Task RestrictUser(ulong userId)
         {
             string message;
-            var user = await Database.Queries.UserQueries.FindOrCreateUser(userId);
+            var user = await UserQueries.FindOrCreateUser(userId);
             if (user.Restrict)
             {
                 user.Restrict = false;
@@ -96,7 +97,7 @@ namespace Cake.Core.Discord.Services
                 user.Restrict = true;
                 message = $"`Restricted user {userId} from using Cake!`";
             }
-            await Database.Queries.UserQueries.Update(user);
+            await UserQueries.Update(user);
 
             await SendMessageAsync(message);
         }
