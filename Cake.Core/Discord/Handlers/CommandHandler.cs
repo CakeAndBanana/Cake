@@ -116,6 +116,7 @@ namespace Cake.Core.Discord.Handlers
                     }
                     else
                     {
+                        await LevelHandler.GiveExpToUser(user, 2);
                         _logger.Log(Type.Info, $"\nCommand {context.Message} executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
                     }
                 }
