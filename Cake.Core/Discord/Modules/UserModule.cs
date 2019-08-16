@@ -1,12 +1,10 @@
 ﻿using Cake.Core.Discord.Services;
 using Discord.Commands;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cake.Core.Discord.Modules
 {
+    [Name("User")]
     public class UserModule : CustomBaseModule
     {
         private readonly UserService _service;
@@ -18,7 +16,7 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Command("experience")]
-        [Summary("cake xp")]
+        [Summary("xp")]
         [Alias("xp")]
         [Remarks("Returns your experience in Cake.")]
         public async Task ReturnUserExperience()
