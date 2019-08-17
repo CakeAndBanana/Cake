@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using System.Linq;
+
 using Discord;
 using System.Threading.Tasks;
 
@@ -20,7 +22,7 @@ namespace Cake.Core.Discord.Handlers
 
         internal static Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
         {
-            foreach (var handle in _messageReactionHandlers)
+            foreach (var handle in _messageReactionHandlers.ToArray())
             {
                 handle.OnReactionAdded(arg1, arg2, arg3);
             }
@@ -30,7 +32,7 @@ namespace Cake.Core.Discord.Handlers
 
         internal static Task OnReactionRemoved(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3) {
 
-            foreach (var handle in _messageReactionHandlers)
+            foreach (var handle in _messageReactionHandlers.ToArray())
             {
                 handle.OnReactionRemoved(arg1, arg2, arg3);
             }
@@ -40,7 +42,7 @@ namespace Cake.Core.Discord.Handlers
 
         internal static Task OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2) {
 
-            foreach (var handle in _messageReactionHandlers)
+            foreach (var handle in _messageReactionHandlers.ToArray())
             {
                 handle.OnReactionCleared(arg1, arg2);
             }

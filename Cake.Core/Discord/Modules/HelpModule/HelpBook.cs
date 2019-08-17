@@ -11,11 +11,10 @@ namespace Cake.Core.Discord.Modules
 {
     internal class HelpBook : IMessageReactionHandle
     {
-        internal const string RightArrowEmojiDisplayName = "➡️";
-        internal const string LeftArrowEmojiDisplayName = "⬅️";
-
-        internal static readonly Emoji RightArrowEmoji = new Emoji(RightArrowEmojiDisplayName);
-        internal static readonly Emoji LeftArrowEmoji = new Emoji(LeftArrowEmojiDisplayName);
+        internal static readonly string RightArrowEmojiDisplayName;
+        internal static readonly string LeftArrowEmojiDisplayName;
+        internal static readonly Emoji RightArrowEmoji;
+        internal static readonly Emoji LeftArrowEmoji;
 
         /// <summary>
         /// The ID of the message this help book is targeted towards.
@@ -26,13 +25,25 @@ namespace Cake.Core.Discord.Modules
 
         private int _currentPageIndex;
 
-        private CakeEmbedBuilder CurrentPage {
-            get {
+        private CakeEmbedBuilder CurrentPage
+        {
+            get
+            {
                 return _helpPages[_currentPageIndex];
             }
         }
 
-        internal HelpBook(List<CakeEmbedBuilder> helpPages, ulong targetMessageID) {
+        static HelpBook()
+        {
+            RightArrowEmojiDisplayName = ((char)11013).ToString();
+            LeftArrowEmojiDisplayName = ((char)10145).ToString();
+
+            RightArrowEmoji = new Emoji(RightArrowEmojiDisplayName);
+            LeftArrowEmoji = new Emoji(LeftArrowEmojiDisplayName);
+        }
+
+        internal HelpBook(List<CakeEmbedBuilder> helpPages, ulong targetMessageID)
+        {
             _helpPages = helpPages;
             _targetMessageID = targetMessageID;
             _currentPageIndex = 0;
@@ -40,17 +51,22 @@ namespace Cake.Core.Discord.Modules
 
         public Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
         {
-            if (ReactionAdderIsBot()) {
+            if (ReactionAdderIsBot())
+            {
                 return Task.CompletedTask;
             }
 
-            if (TryFlipPageByEmojiReaction()) {
-                if (TryGetUserMessageFromCachedMessage(arg1, out IUserMessage userMessage))
+            if (TryFlipPageByEmojiReaction())
+            {
+                IUserMessage userMessage = arg2.GetMessageAsync(arg1.Id).Result as IUserMessage;
+
+                if (userMessage != null)
                 {
-                    userMessage.RemoveReactionAsync(arg3.Emote, userMessage.Author);
+                    userMessage.RemoveReactionAsync(arg3.Emote, arg3.User.Value);
                     ShowNewPageOnMessage(ref userMessage);
                 }
-                else {
+                else
+                {
                     // This message was probably deleted before we can do anything else.
                     MessageReactionHandler.RemoveMessageReactionHandle(this);
                 }
@@ -60,21 +76,25 @@ namespace Cake.Core.Discord.Modules
 
             #region Local_Function
 
-            Task ShowNewPageOnMessage(ref IUserMessage message) {
+            Task ShowNewPageOnMessage(ref IUserMessage message)
+            {
                 message.ModifyAsync(msg => msg.Embed = CurrentPage.Build());
 
                 return Task.CompletedTask;
             }
-            bool ReactionAdderIsBot() {
+            bool ReactionAdderIsBot()
+            {
                 var reactionAdder = arg3.User;
-                if (reactionAdder.IsSpecified) {
+                if (reactionAdder.IsSpecified)
+                {
                     return reactionAdder.Value.IsBot;
                 }
 
                 return false;
             }
 
-            bool TryFlipPageByEmojiReaction() {
+            bool TryFlipPageByEmojiReaction()
+            {
                 bool pageFlipped = false;
 
                 if (arg3.Emote.Name.Equals(RightArrowEmojiDisplayName))
@@ -82,7 +102,8 @@ namespace Cake.Core.Discord.Modules
                     FlipNextHelpPage();
                     pageFlipped = true;
                 }
-                else if (arg3.Emote.Name.Equals(LeftArrowEmojiDisplayName)) {
+                else if (arg3.Emote.Name.Equals(LeftArrowEmojiDisplayName))
+                {
                     FlipPreviousHelpPage();
                     pageFlipped = true;
                 }
@@ -95,12 +116,15 @@ namespace Cake.Core.Discord.Modules
 
         public Task OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2)
         {
-            if (TryGetUserMessageFromCachedMessage(arg1, out IUserMessage userMessage))
+            IUserMessage userMessage = arg2.GetMessageAsync(arg1.Id).Result as IUserMessage;
+
+            if (userMessage != null)
             {
                 // Add back the bot's reaction
-                userMessage.AddReactionsAsync(new IEmote[]{ LeftArrowEmoji, RightArrowEmoji });
+                userMessage.AddReactionsAsync(new IEmote[] { LeftArrowEmoji, RightArrowEmoji });
             }
-            else {
+            else
+            {
                 MessageReactionHandler.RemoveMessageReactionHandle(this);
             }
 
@@ -114,38 +138,26 @@ namespace Cake.Core.Discord.Modules
 
         #region Util
 
-        private bool TryGetUserMessageFromCachedMessage(Cacheable<IUserMessage, ulong> cachedMessage, out IUserMessage userMessage)
+        private void FlipNextHelpPage()
         {
-            bool canGetMessage = cachedMessage.HasValue;
-
-            if (canGetMessage)
-            {
-                userMessage = cachedMessage.Value;
-            }
-            else
-            {
-                userMessage = null;
-            }
-
-            return canGetMessage;
-        }
-
-        private void FlipNextHelpPage() {
             ++_currentPageIndex;
             ClampCurrentPageIndex();
         }
 
-        private void FlipPreviousHelpPage() {
+        private void FlipPreviousHelpPage()
+        {
             --_currentPageIndex;
             ClampCurrentPageIndex();
         }
 
-        private void ClampCurrentPageIndex() {
+        private void ClampCurrentPageIndex()
+        {
             if (_currentPageIndex >= _helpPages.Count)
             {
                 _currentPageIndex = 0;
             }
-            else if (_currentPageIndex <= 0) {
+            else if (_currentPageIndex <= 0)
+            {
                 _currentPageIndex = _helpPages.Count - 1;
             }
         }

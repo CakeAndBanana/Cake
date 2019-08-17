@@ -4,6 +4,7 @@ using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Embed.Builder;
 using Cake.Core.Discord.Handlers;
 using Cake.Core.Discord.Services;
+using Discord;
 using Discord.Commands;
 
 namespace Cake.Core.Discord.Modules
@@ -27,9 +28,15 @@ namespace Cake.Core.Discord.Modules
         [Alias("cmds", "commands")]
         public async Task CommandHelp([Remainder] string command = "")
         {
+            IUserMessage newMessage = await Context.Channel.SendMessageAsync("Fetching Commands...");
+
             List<CakeEmbedBuilder> helpPages = await _service.FetchAllCommandInfoAsPages(_commandService);
 
-            HelpBook helpBook = new HelpBook(helpPages, Context.Message.Id);
+            await newMessage.ModifyAsync(msg => { msg.Embed = helpPages[0].Build(); msg.Content = string.Empty; });
+
+            await newMessage.AddReactionsAsync(new Emoji[] { HelpBook.RightArrowEmoji, HelpBook.LeftArrowEmoji });
+
+            HelpBook helpBook = new HelpBook(helpPages, newMessage.Id);
 
             MessageReactionHandler.AddMessageReactionHandle(helpBook);
 
