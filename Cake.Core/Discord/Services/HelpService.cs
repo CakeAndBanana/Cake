@@ -1,15 +1,107 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Embed.Builder;
 using Cake.Database.Queries;
+using Discord;
 using Discord.Commands;
 
 namespace Cake.Core.Discord.Services
 {
     public class HelpService : CustomBaseService
     {
+        public async Task<List<CakeEmbedBuilder>> FetchAllCommandInfoAsPages(CommandService service)
+        {
+            List<CakeEmbedBuilder> helpPage = new List<CakeEmbedBuilder>();
+
+            foreach (ModuleInfo module in service.Modules)
+            {
+                CakeEmbedBuilder newEmbedPage = new CakeEmbedBuilder();
+
+                PopulateEmbedWithModuleInfo(module, ref newEmbedPage);
+                PopulateEmbedFieldsWithModuleCommands(module, ref newEmbedPage);
+            }
+
+            return helpPage;
+        }
+
+        private void PopulateEmbedFieldsWithModuleCommands(ModuleInfo moduleInfo, ref CakeEmbedBuilder cakeEmbedBuilder) {
+
+            foreach (CommandInfo command in moduleInfo.Commands) {
+                EmbedFieldBuilder commandField = GetEmbedFieldWithCommandInfo(command);
+                cakeEmbedBuilder.AddField(commandField);
+            }
+
+            #region Local_Function
+
+            EmbedFieldBuilder GetEmbedFieldWithCommandInfo(CommandInfo commandInfo) {
+                EmbedFieldBuilder commandField = new EmbedFieldBuilder();
+                commandField.WithIsInline(true);
+                commandField.WithName(commandInfo.Name);
+                commandField.WithValue(GetCommandDescriptionFromCommandInfo(commandInfo));
+                return commandField;
+            }
+
+            string GetCommandDescriptionFromCommandInfo(CommandInfo commandInfo) {
+                return $"`{commandInfo.Summary}`; {commandInfo.Remarks}";
+            }
+
+            #endregion
+        }
+
+        private void PopulateEmbedWithModuleInfo(ModuleInfo moduleInfo, ref CakeEmbedBuilder cakeEmbedBuilder)
+        {
+            cakeEmbedBuilder.WithTitle(GetModuleName());
+            cakeEmbedBuilder.WithDescription(GetModuleDescription());
+            // TODO: Fill footer with prefix of the bot.
+
+            #region Local_Function
+
+            string GetModuleDescription() {
+                string moduleDescription = moduleInfo.Summary;
+
+                if (string.IsNullOrWhiteSpace(moduleDescription))
+                {
+                    moduleDescription = moduleInfo.Remarks;
+                }
+
+                return moduleDescription;
+            }
+
+            string GetModuleName() {
+                string moduleName = moduleInfo.Name;
+                // TODO: Possible refactor?
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    moduleName = moduleInfo.Summary;
+                }
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    moduleName = moduleInfo.Remarks;
+                }
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    moduleName = moduleInfo.Group;
+                }
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    // No 'name', 'group', 'summary' or 'remark' attribute attached to it;
+                    moduleName = moduleInfo.GetType().Name;
+                }
+
+                return moduleName;
+            }
+
+            #endregion
+        }
+
+
         public async Task HelpAll(CommandService service)
         {
             var builder = new CakeEmbedBuilder(EmbedType.Info)
