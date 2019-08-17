@@ -32,10 +32,6 @@ namespace Cake.Core.Discord.Services
             }
 
             return Task.FromResult(helpPage);
-
-            #region Local_Function
-
-            #endregion
         }
 
         private void PopulateEmbedFieldsWithModuleCommands(ModuleInfo moduleInfo, ref CakeEmbedBuilder cakeEmbedBuilder, string commandSearchFilter = "")
@@ -106,7 +102,7 @@ namespace Cake.Core.Discord.Services
 
             string GetCommandDescriptionFromCommandInfo(CommandInfo commandInfo)
             {
-                return $"`{commandInfo.Summary}`; {commandInfo.Remarks}";
+                return $"`{commandInfo.Summary}`{ System.Environment.NewLine + commandInfo.Remarks}";
             }
 
             #endregion
@@ -116,7 +112,6 @@ namespace Cake.Core.Discord.Services
         {
             cakeEmbedBuilder.WithTitle(GetModuleName());
             cakeEmbedBuilder.WithDescription(GetModuleDescription());
-            // TODO: Fill footer with prefix of the bot.
 
             #region Local_Function
 

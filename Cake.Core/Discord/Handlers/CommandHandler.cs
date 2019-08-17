@@ -56,18 +56,16 @@ namespace Cake.Core.Discord.Handlers
 
             try
             {
-                // TODO: UNCOMMENT THESE:
                 //Get or generation of user.
-                //var user = await Database.Queries.UserQueries.FindOrCreateUser(context.User.Id);
-                //var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
+                var user = await Database.Queries.UserQueries.FindOrCreateUser(context.User.Id);
+                var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
 
-                if (context.Message.HasCharPrefix(Convert.ToChar(">"/*guild.Prefix*/), ref argPos))
+                if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
-                    // TODO: UNCOMMENT
-                    //if (user.Restrict && guild.Restrict)
-                    //{
-                    //    return;
-                    //}
+                    if (user.Restrict && guild.Restrict)
+                    {
+                        return;
+                    }
 
                     var stopwatch = Stopwatch.StartNew();
                     //Execute Command
@@ -94,9 +92,9 @@ namespace Cake.Core.Discord.Handlers
                                 await context.Channel.SendMessageAsync($"``{context.User} lack the sufficient permissions, check usage of command.``");
                                 break;
                             case CommandError.Exception:
-                                if(result.ErrorReason.Contains("Missing Permissions"))
+                                if (result.ErrorReason.Contains("Missing Permissions"))
                                 {
-                                    _logger.Log(Type.Info,$"\nNo permissions in guild {context.Guild}{context.Guild.Id}\nTrying to PM {context.User}.");
+                                    _logger.Log(Type.Info, $"\nNo permissions in guild {context.Guild}{context.Guild.Id}\nTrying to PM {context.User}.");
                                     try
                                     {
                                         var dmChannel = await context.User.GetOrCreateDMChannelAsync();
