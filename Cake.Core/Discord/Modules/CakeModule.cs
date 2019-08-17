@@ -25,8 +25,10 @@ namespace Cake.Core.Discord.Modules
         [Command("invite")]
         [Summary("cake invite (isPermanentInvite?)")]
         [Remarks("Fetches an invite URL to the current guild which this command is executed in.")]
-        public async Task GetGuildInvite(bool permanentInvite = true) {
-            if (!(Context.Guild is SocketGuild guild)) {
+        public async Task GetGuildInvite(bool permanentInvite = true) 
+        {
+            if (!(Context.Guild is SocketGuild guild)) 
+            {
                 await ReplyAsync("Please use this command in a server only!");
                 return;
             }
@@ -35,48 +37,64 @@ namespace Cake.Core.Discord.Modules
 
             #region Local_Function
 
-            async Task SendInviteForUser() {
+            async Task SendInviteForUser() 
+            {
                 RestInviteMetadata[] invites = await FetchInvitesByPermanentInvite();
 
-                if (invites.Length <= 0) {
+                if (invites.Length <= 0) 
+                {
                     await ReplyAsync(GetErrorMessageToSend());
-                } else {
+                } 
+                else 
+                {
                     var inviteToUse = invites.FirstOrDefault();
                     await ReplyAsync(inviteToUse.Url);
                 }
             }
 
-            string GetErrorMessageToSend() {
-                if (permanentInvite) {
-                    return $"There is no permanent invites in this server! {System.Environment.NewLine} Ask your owner to create one.";
-                } else {
-                    return $"There is no invites in this server! {System.Environment.NewLine} Ask your owner to create one.";
+            string GetErrorMessageToSend() 
+            {
+                if (permanentInvite) 
+                {
+                    return $"There is no permanent invites in this server! {System.Environment.NewLine}Ask your owner to create one.";
+                } 
+                else 
+                {
+                    return $"There is no invites in this server! {System.Environment.NewLine}Ask your owner to create one.";
                 }
             }
 
-            async Task<RestInviteMetadata[]> FetchInvitesByPermanentInvite() {
-                if (permanentInvite) {
+            async Task<RestInviteMetadata[]> FetchInvitesByPermanentInvite()
+            {
+                if (permanentInvite) 
+                {
                     return await FetchPermanentInvitesFromGuild();
-                } else {
+                } 
+                else 
+                {
                     return (await guild.GetInvitesAsync()).ToArray();
                 }
             }
 
-            async Task<RestInviteMetadata[]> FetchPermanentInvitesFromGuild() {
+            async Task<RestInviteMetadata[]> FetchPermanentInvitesFromGuild() 
+            {
                 var guildInvites = await guild.GetInvitesAsync();
 
                 return guildInvites.Where(InviteIsPermanent).ToArray();
             }
 
-            bool InviteIsPermanent(RestInviteMetadata invite) {
+            bool InviteIsPermanent(RestInviteMetadata invite) 
+            {
 
                 bool doesNotAge = invite.MaxAge == null;
-                if (!doesNotAge) {
+                if (!doesNotAge) 
+                {
                     doesNotAge = invite.MaxAge == 0;
                 }
 
                 bool doesNotHaveMaxUses = invite.MaxUses == null;
-                if (!doesNotHaveMaxUses) {
+                if (!doesNotHaveMaxUses) 
+                {
                     doesNotHaveMaxUses = invite.MaxUses == 0;
                 }
 
