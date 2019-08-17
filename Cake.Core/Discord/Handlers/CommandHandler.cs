@@ -30,6 +30,10 @@ namespace Cake.Core.Discord.Handlers
             _client.UserJoined += JoinHandler.UserJoined;
             _client.UserLeft += JoinHandler.UserLeft;
 
+            _client.ReactionAdded += MessageReactionHandler.OnReactionAdded;
+            _client.ReactionRemoved += MessageReactionHandler.OnReactionRemoved;
+            _client.ReactionsCleared += MessageReactionHandler.OnReactionCleared;
+
             await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
         }
 
@@ -52,16 +56,18 @@ namespace Cake.Core.Discord.Handlers
 
             try
             {
+                // TODO: UNCOMMENT THESE:
                 //Get or generation of user.
-                var user = await Database.Queries.UserQueries.FindOrCreateUser(context.User.Id);
-                var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
+                //var user = await Database.Queries.UserQueries.FindOrCreateUser(context.User.Id);
+                //var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
 
-                if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
+                if (context.Message.HasCharPrefix(Convert.ToChar(">"/*guild.Prefix*/), ref argPos))
                 {
-                    if (user.Restrict && guild.Restrict)
-                    {
-                        return;
-                    }
+                    // TODO: UNCOMMENT
+                    //if (user.Restrict && guild.Restrict)
+                    //{
+                    //    return;
+                    //}
 
                     var stopwatch = Stopwatch.StartNew();
                     //Execute Command
@@ -116,7 +122,8 @@ namespace Cake.Core.Discord.Handlers
                     }
                     else
                     {
-                        await LevelHandler.GiveExpToUser(user, 2);
+                        // TODO: UNCOMMENT
+                        //await LevelHandler.GiveExpToUser(user, 2);
                         _logger.Log(Type.Info, $"\nCommand {context.Message} executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
                     }
                 }
