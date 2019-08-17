@@ -11,16 +11,16 @@ namespace Cake.Core.Discord.Handlers
     public static class MessageReactionHandler
     {
 
-        private static HashSet<IMessageReactionHandle> messageReactionHandlers;
+        private static HashSet<IMessageReactionHandle> _messageReactionHandlers;
 
         static MessageReactionHandler()
         {
-            messageReactionHandlers = new HashSet<IMessageReactionHandle>();
+            _messageReactionHandlers = new HashSet<IMessageReactionHandle>();
         }
 
         internal static Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
         {
-            foreach (var handle in messageReactionHandlers)
+            foreach (var handle in _messageReactionHandlers)
             {
                 handle.OnReactionAdded(arg1, arg2, arg3);
             }
@@ -30,7 +30,7 @@ namespace Cake.Core.Discord.Handlers
 
         internal static Task OnReactionRemoved(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3) {
 
-            foreach (var handle in messageReactionHandlers)
+            foreach (var handle in _messageReactionHandlers)
             {
                 handle.OnReactionRemoved(arg1, arg2, arg3);
             }
@@ -40,7 +40,7 @@ namespace Cake.Core.Discord.Handlers
 
         internal static Task OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2) {
 
-            foreach (var handle in messageReactionHandlers)
+            foreach (var handle in _messageReactionHandlers)
             {
                 handle.OnReactionCleared(arg1, arg2);
             }
@@ -57,12 +57,12 @@ namespace Cake.Core.Discord.Handlers
                 throw new ArgumentNullException(nameof(messageReactionHandle));
             }
 
-            messageReactionHandlers.Add(messageReactionHandle);
+            _messageReactionHandlers.Add(messageReactionHandle);
         }
 
         public static void RemoveMessageReactionHandle(IMessageReactionHandle messageReactionHandle)
         {
-            messageReactionHandlers.Remove(messageReactionHandle);
+            _messageReactionHandlers.Remove(messageReactionHandle);
         }
 
         #endregion
