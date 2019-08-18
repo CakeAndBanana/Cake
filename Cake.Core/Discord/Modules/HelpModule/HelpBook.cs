@@ -75,8 +75,7 @@ namespace Cake.Core.Discord.Modules
 
         private void OnInactivityTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            MessageReactionHandler.RemoveMessageReactionHandle(this);
-            DisposeTimer();
+            DisposeThisHelpBook();
         }
 
         public Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
@@ -99,8 +98,7 @@ namespace Cake.Core.Discord.Modules
                 else
                 {
                     // This message was probably deleted before we can do anything else.
-                    MessageReactionHandler.RemoveMessageReactionHandle(this);
-                    DisposeTimer();
+                    DisposeThisHelpBook();
                 }
             }
 
@@ -159,8 +157,7 @@ namespace Cake.Core.Discord.Modules
             }
             else
             {
-                MessageReactionHandler.RemoveMessageReactionHandle(this);
-                DisposeTimer();
+                DisposeThisHelpBook();
             }
 
             return Task.CompletedTask;
@@ -172,6 +169,11 @@ namespace Cake.Core.Discord.Modules
         }
 
         #region Util
+
+        private void DisposeThisHelpBook() {
+            MessageReactionHandler.RemoveMessageReactionHandle(this);
+            DisposeTimer();
+        }
 
         private void ResetTimer() {
             _inactivityTimer.Stop();
