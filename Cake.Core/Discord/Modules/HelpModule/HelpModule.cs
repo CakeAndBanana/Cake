@@ -36,15 +36,12 @@ namespace Cake.Core.Discord.Modules
             if (helpPages.Count <= 0)
             {
                 await newMessage.ModifyAsync(msg => msg.Content = "There is no matching command based on the search filter!");
+                return;
             }
-            else if (helpPages.Count == 1)
+            await newMessage.ModifyAsync(msg => { msg.Embed = helpPages[0].Build(); msg.Content = string.Empty; });
+            
+            if (helpPages.Count != 1)
             {
-                await newMessage.ModifyAsync(msg => { msg.Embed = helpPages[0].Build(); msg.Content = string.Empty; });
-            }
-            else
-            {
-                await newMessage.ModifyAsync(msg => { msg.Embed = helpPages[0].Build(); msg.Content = string.Empty; });
-
                 await newMessage.AddReactionsAsync(new Emoji[] { HelpBook.RightArrowEmoji, HelpBook.LeftArrowEmoji });
 
                 HelpBook helpBook = new HelpBook(helpPages, newMessage.Id);
