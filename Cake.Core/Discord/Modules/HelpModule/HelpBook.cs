@@ -81,7 +81,7 @@ namespace Cake.Core.Discord.Modules
 
         public Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
         {
-            if (ReactionAdderIsBot())
+            if (ReactionAdderIsBot() || arg1.Id != _targetMessageID)
             {
                 return Task.CompletedTask;
             }
@@ -148,6 +148,8 @@ namespace Cake.Core.Discord.Modules
 
         public Task OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2)
         {
+            if (arg1.Id != _targetMessageID) { return Task.CompletedTask; }
+
             IUserMessage userMessage = arg2.GetMessageAsync(arg1.Id).Result as IUserMessage;
 
             if (userMessage != null)
