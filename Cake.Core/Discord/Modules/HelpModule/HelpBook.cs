@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Timers;
 using Cake.Core.Discord.Embed.Builder;
 using Cake.Core.Discord.Handlers;
-using Cake.Core.Logging;
 using Discord;
 using Discord.WebSocket;
 
@@ -204,7 +201,7 @@ namespace Cake.Core.Discord.Modules
             {
                 _currentPageIndex = 0;
             }
-            else if (_currentPageIndex <= 0)
+            else if (_currentPageIndex < 0)
             {
                 _currentPageIndex = _helpPages.Count - 1;
             }

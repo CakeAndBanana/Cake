@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Embed.Builder;
-using Cake.Database.Queries;
 using Discord;
 using Discord.Commands;
 
@@ -15,6 +12,8 @@ namespace Cake.Core.Discord.Services
         public Task<List<CakeEmbedBuilder>> FetchAllCommandInfoAsPages(CommandService service, string commandSearchFilter = "")
         {
             List<CakeEmbedBuilder> helpPage = new List<CakeEmbedBuilder>();
+
+            int pageNumber = 1;
 
             foreach (ModuleInfo module in service.Modules)
             {
@@ -27,7 +26,9 @@ namespace Cake.Core.Discord.Services
 
                 if (newEmbedPage.Fields.Count > 0)
                 {
+                    newEmbedPage.WithFooter(pageNumber.ToString());
                     helpPage.Add(newEmbedPage);
+                    ++pageNumber;
                 }
             }
 
@@ -102,7 +103,7 @@ namespace Cake.Core.Discord.Services
 
             string GetCommandDescriptionFromCommandInfo(CommandInfo commandInfo)
             {
-                return $"`{commandInfo.Summary}`{ System.Environment.NewLine + commandInfo.Remarks}";
+                return $"`{commandInfo.Summary}` { System.Environment.NewLine + commandInfo.Remarks}";
             }
 
             #endregion
