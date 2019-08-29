@@ -11,7 +11,7 @@ namespace Cake.Core.Discord.Services
     {
         public Task<List<CakeEmbedBuilder>> FetchAllCommandInfoAsPages(CommandService service, string commandSearchFilter = "")
         {
-            List<CakeEmbedBuilder> helpPage = new List<CakeEmbedBuilder>();
+            List<CakeEmbedBuilder> helpBook = new List<CakeEmbedBuilder>();
 
             int pageNumber = 1;
 
@@ -27,12 +27,13 @@ namespace Cake.Core.Discord.Services
                 if (newEmbedPage.Fields.Count > 0)
                 {
                     newEmbedPage.WithFooter(pageNumber.ToString());
-                    helpPage.Add(newEmbedPage);
                     ++pageNumber;
+
+                    helpBook.Add(newEmbedPage);
                 }
             }
 
-            return Task.FromResult(helpPage);
+            return Task.FromResult(helpBook);
         }
 
         private void PopulateEmbedFieldsWithModuleCommands(ModuleInfo moduleInfo, ref CakeEmbedBuilder cakeEmbedBuilder, string commandSearchFilter = "")
@@ -103,7 +104,7 @@ namespace Cake.Core.Discord.Services
 
             string GetCommandDescriptionFromCommandInfo(CommandInfo commandInfo)
             {
-                return $"`{commandInfo.Summary}` { System.Environment.NewLine + commandInfo.Remarks}";
+                return $"`{commandInfo.Summary}`{ System.Environment.NewLine + commandInfo.Remarks}";
             }
 
             #endregion

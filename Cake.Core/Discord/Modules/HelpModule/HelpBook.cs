@@ -126,12 +126,12 @@ namespace Cake.Core.Discord.Modules
 
                 if (arg3.Emote.Name.Equals(RightArrowEmojiDisplayName))
                 {
-                    FlipNextHelpPage();
+                    FlipPreviousHelpPage();
                     pageFlipped = true;
                 }
                 else if (arg3.Emote.Name.Equals(LeftArrowEmojiDisplayName))
                 {
-                    FlipPreviousHelpPage();
+                    FlipNextHelpPage();
                     pageFlipped = true;
                 }
 
