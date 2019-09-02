@@ -1,138 +1,174 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Embed.Builder;
-using Cake.Database.Queries;
+using Discord;
 using Discord.Commands;
 
 namespace Cake.Core.Discord.Services
 {
     public class HelpService : CustomBaseService
     {
-        public async Task HelpAll(CommandService service)
+        public Task<List<CakeEmbedBuilder>> FetchAllCommandInfoAsPages(CommandService service, string commandSearchFilter = "")
         {
-            var builder = new CakeEmbedBuilder(EmbedType.Info)
+            List<CakeEmbedBuilder> helpBook = new List<CakeEmbedBuilder>();
+
+            int pageNumber = 1;
+
+            foreach (ModuleInfo module in service.Modules)
             {
-                Title = "My commands: "
-            };
+                if (ModuleHasHideAttribute(module) || module.Commands.Count == 0) { continue; }
 
-            var isAdmin = UserQueries.FindOrCreateUser(Module.Context.User.Id).Result.Admin;
-            var guild = await GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id).ConfigureAwait(false);
+                CakeEmbedBuilder newEmbedPage = new CakeEmbedBuilder();
 
-            foreach (var module in service.Modules)
-            {
-                var hideModule = false;
-                string description = null;
+                PopulateEmbedWithModuleInfo(module, ref newEmbedPage);
+                PopulateEmbedFieldsWithModuleCommands(module, ref newEmbedPage, commandSearchFilter);
 
-                var moduleAttributes = module.Attributes.ToList();
-                if (moduleAttributes.Find(m => m.TypeId.ToString() == "Cake.Core.Discord.Attributes.HideAttribute") != null)
+                if (newEmbedPage.Fields.Count > 0)
                 {
-                    var preconditions = module.Preconditions.ToList();
-                    foreach (var pre in preconditions)
-                    {
-                        if (pre.TypeId.ToString() == "Cake.Core.Discord.Attributes.RequireBotAdminAttribute" || !isAdmin)
-                        {
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    hideModule = true;
-                }
+                    newEmbedPage.WithFooter(pageNumber.ToString());
+                    ++pageNumber;
 
-
-                if (hideModule)
-                {
-                    var commands = new List<CommandInfo>();
-                    foreach (var command in module.Commands)
-                    {
-                        var showCommand = true;
-                        var result = await command.CheckPreconditionsAsync(Module.Context);
-
-                        var commandAttributes = command.Attributes.ToList();
-                        if (commandAttributes.Find(m => m.Match(typeof(HideAttribute))) != null)
-                        {
-                            showCommand = false;
-                        }
-
-                        if (!result.IsSuccess || !showCommand) break;
-
-                        commands.Add(command);
-                    }
-
-                    if (commands.Count > 0)
-                    {
-                        var lastCommand = commands.Last();
-                        foreach (var command in commands)
-                        {
-                            if (lastCommand.Name == command.Name)
-                                description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__";
-                            else
-                                description += $"__{guild.Prefix}{command.Module.Group} {command.Name}__ ``|`` ";
-                        }
-                    }
-                }
-
-
-                if (!string.IsNullOrWhiteSpace(description))
-                {
-                    builder.AddField(x =>
-                    {
-                        x.Name = $"{module.Name}";
-                        x.Value = description;
-                        x.IsInline = false;
-                    });
+                    helpBook.Add(newEmbedPage);
                 }
             }
 
-            var dmChannel = await Module.Context.User.GetOrCreateDMChannelAsync();
-            await SendEmbedAsync(builder, dmChannel);
+            return Task.FromResult(helpBook);
         }
 
-        public async Task HelpCommand(CommandService service, string command)
+        private void PopulateEmbedFieldsWithModuleCommands(ModuleInfo moduleInfo, ref CakeEmbedBuilder cakeEmbedBuilder, string commandSearchFilter = "")
         {
-            var guild = await GuildQueries.FindOrCreateGuild(Module.Context.Guild.Id).ConfigureAwait(false);
-            var dmChannel = await Module.Context.User.GetOrCreateDMChannelAsync();
-            var result = service.Search(Module.Context, command);
-            if (!result.IsSuccess)
-            {
-                var builder1 = new CakeEmbedBuilder(EmbedType.Error)
-                {
 
-                    Title = "Error",
-                    Description = $"the command: **{command}** doesn't exist.\n{guild.Prefix}help for all commands."
-                };
-                await dmChannel.SendMessageAsync("", false, builder1.Build());
-                return;
+            foreach (CommandInfo command in moduleInfo.Commands)
+            {
+                if (!CanAddCommandToEmbedField(command)) { continue; }
+
+                EmbedFieldBuilder commandField = GetEmbedFieldWithCommandInfo(command);
+                cakeEmbedBuilder.AddField(commandField);
             }
 
-            var builder = new CakeEmbedBuilder(EmbedType.Info)
-            {
-                Description = $"Help about: **{command}**"
-            };
+            #region Local_Function
 
-            foreach (var match in result.Commands)
+            bool CanAddCommandToEmbedField(CommandInfo command)
             {
-                var cmd = match.Command;
-                string preconditions = null;
-                foreach (var precondition in cmd.Preconditions)
+                if (CommandHasHideAttribute(command)) { return false; }
+
+                if (!string.IsNullOrWhiteSpace(commandSearchFilter))
                 {
-                    preconditions += $"{precondition.TypeId}\n";
+                    if (!CommandContainsSearchFilter(command))
+                    {
+                        return false;
+                    }
                 }
 
-                builder.AddField(x =>
-                {
-                    x.Name = "Command: " + string.Join(", ", cmd.Aliases);
-                    x.Value = $"**Usage:** {cmd.Summary}\n" +
-                              $"**Info:** {cmd.Remarks}\n" +
-                              $"**Preconditions:** {preconditions}";
-                    x.IsInline = false;
-                });
+                return true;
             }
 
-            await dmChannel.SendMessageAsync("", false, builder.Build());
+            bool CommandContainsSearchFilter(CommandInfo command)
+            {
+                if (!string.IsNullOrWhiteSpace(command.Name))
+                {
+                    if (command.Name.Contains(commandSearchFilter))
+                    {
+                        return true;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(command.Remarks))
+                {
+                    if (command.Remarks.Contains(commandSearchFilter))
+                    {
+                        return true;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(command.Summary))
+                {
+                    if (command.Summary.Contains(commandSearchFilter))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            EmbedFieldBuilder GetEmbedFieldWithCommandInfo(CommandInfo commandInfo)
+            {
+                EmbedFieldBuilder commandField = new EmbedFieldBuilder();
+                commandField.WithIsInline(true);
+                commandField.WithName(commandInfo.Name);
+                commandField.WithValue(GetCommandDescriptionFromCommandInfo(commandInfo));
+                return commandField;
+            }
+
+            string GetCommandDescriptionFromCommandInfo(CommandInfo commandInfo)
+            {
+                return $"`{commandInfo.Summary}`{ System.Environment.NewLine + commandInfo.Remarks}";
+            }
+
+            #endregion
+        }
+
+        private void PopulateEmbedWithModuleInfo(ModuleInfo moduleInfo, ref CakeEmbedBuilder cakeEmbedBuilder)
+        {
+            cakeEmbedBuilder.WithTitle(GetModuleName());
+            cakeEmbedBuilder.WithDescription(GetModuleDescription());
+
+            #region Local_Function
+
+            string GetModuleDescription()
+            {
+                string moduleDescription = moduleInfo.Summary;
+
+                if (string.IsNullOrWhiteSpace(moduleDescription))
+                {
+                    moduleDescription = moduleInfo.Remarks;
+                }
+
+                return moduleDescription;
+            }
+
+            string GetModuleName()
+            {
+                string moduleName = moduleInfo.Name;
+                // TODO: Possible refactor?
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    moduleName = moduleInfo.Summary;
+                }
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    moduleName = moduleInfo.Remarks;
+                }
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    moduleName = moduleInfo.Group;
+                }
+
+                if (string.IsNullOrWhiteSpace(moduleName))
+                {
+                    // No 'name', 'group', 'summary' or 'remark' attribute attached to it;
+                    moduleName = moduleInfo.GetType().Name;
+                }
+
+                return moduleName;
+            }
+
+            #endregion
+        }
+
+        private bool ModuleHasHideAttribute(ModuleInfo module)
+        {
+            return module.Attributes.Any(x => x.TypeId.ToString() == "Cake.Core.Discord.Attributes.HideAttribute");
+        }
+
+        private bool CommandHasHideAttribute(CommandInfo command)
+        {
+            return command.Attributes.Any(x => x.TypeId.ToString() == "Cake.Core.Discord.Attributes.HideAttribute");
         }
     }
 }

@@ -30,6 +30,10 @@ namespace Cake.Core.Discord.Handlers
             _client.UserJoined += JoinHandler.UserJoined;
             _client.UserLeft += JoinHandler.UserLeft;
 
+            _client.ReactionAdded += MessageReactionHandler.OnReactionAdded;
+            _client.ReactionRemoved += MessageReactionHandler.OnReactionRemoved;
+            _client.ReactionsCleared += MessageReactionHandler.OnReactionCleared;
+
             await _commandService.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
         }
 
@@ -88,9 +92,9 @@ namespace Cake.Core.Discord.Handlers
                                 await context.Channel.SendMessageAsync($"``{context.User} lack the sufficient permissions, check usage of command.``");
                                 break;
                             case CommandError.Exception:
-                                if(result.ErrorReason.Contains("Missing Permissions"))
+                                if (result.ErrorReason.Contains("Missing Permissions"))
                                 {
-                                    _logger.Log(Type.Info,$"\nNo permissions in guild {context.Guild}{context.Guild.Id}\nTrying to PM {context.User}.");
+                                    _logger.Log(Type.Info, $"\nNo permissions in guild {context.Guild}{context.Guild.Id}\nTrying to PM {context.User}.");
                                     try
                                     {
                                         var dmChannel = await context.User.GetOrCreateDMChannelAsync();

@@ -181,6 +181,7 @@ namespace Cake.Core.Discord.Modules
         [Command("setadmin")]
         [Alias("sa")]
         [RequireBotAdmin]
+        [Hide]
         public async Task SetAdminMention(SocketGuildUser user)
         {
             await _service.SetAdmin(user.Id);
