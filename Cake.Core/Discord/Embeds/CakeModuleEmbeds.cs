@@ -43,14 +43,26 @@ namespace Cake.Core.Discord.Embed
                 AppendTimeToStringIfPositive(ref message, "Hour", upTimeSpan.Hours);
                 AppendTimeToStringIfPositive(ref message, "Minute", upTimeSpan.Minutes);
 
-                return message.ToString();
+                var upTimeString = message.ToString();
+                RemoveLastCommaIfExists(ref upTimeString);
+
+                return upTimeString;
+            }
+
+            void RemoveLastCommaIfExists(ref string str)
+            {
+                int lastCommaIndex = str.LastIndexOf(",");
+                if (lastCommaIndex != -1)
+                {
+                    str = str.Substring(0, lastCommaIndex);
+                }
             }
 
             void AppendTimeToStringIfPositive(ref StringBuilder str, string timeText, int time)
             {
                 if (time > 0)
                 {
-                    str.Append($"{time} {timeText}{GivePluralIfNeeded(time)}; ");
+                    str.Append($"{time} {timeText}{GivePluralIfNeeded(time)}, ");
                 }
             }
 
@@ -94,14 +106,9 @@ namespace Cake.Core.Discord.Embed
                     );
 
                 statusFields.Add(
-                    new EmbedFieldBuilder().WithName("Shards")
-                       .WithValue($"{Main.GetClient().Shards.Count}")
+                    new EmbedFieldBuilder().WithName("Guild Shards / Total Shards")
+                       .WithValue($"{Main.GetClient().GetShardIdFor(guild) + 1} / {Main.GetClient().Shards.Count}")
                     );
-
-                statusFields.Add(
-                    new EmbedFieldBuilder().WithName("Guild Shard")
-                        .WithValue($"{Main.GetClient().GetShardIdFor(guild) + 1}")
-                );
 
                 return statusFields.ToArray();
             }
