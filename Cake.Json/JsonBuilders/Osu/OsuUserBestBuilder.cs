@@ -31,7 +31,6 @@ namespace Cake.Json.CakeBuilders.Osu
 
         private OsuJsonUserBest[] ProcessJson(OsuJsonUserBest[] array)
         {
-            var play = 1;
             var oldarray = array;
             if (Recent)
             {
