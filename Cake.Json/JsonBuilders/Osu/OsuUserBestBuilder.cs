@@ -32,9 +32,16 @@ namespace Cake.Json.CakeBuilders.Osu
         private OsuJsonUserBest[] ProcessJson(OsuJsonUserBest[] array)
         {
             var play = 1;
+            var oldarray = array;
+            if (Recent)
+            {
+                array = array.OrderByDescending(x => x.date).Take(5).ToArray();
+            }
+
             foreach (var item in array)
             {
-                item.play_number = play;
+                item.play_number = (Array.IndexOf(oldarray, item) + 1);
+
                 OsuUtil.GetCalculatedAccuracy(item, Mode);
 
                 if (item.enabled_mods > 0)
