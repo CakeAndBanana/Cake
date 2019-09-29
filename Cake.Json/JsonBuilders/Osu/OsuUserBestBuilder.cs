@@ -29,7 +29,6 @@ namespace Cake.Json.CakeBuilders.Osu
 
             osuJsonUserBestArray = ProcessJson(osuJsonUserBestArray);
 
-
             return Recent ? osuJsonUserBestArray.OrderByDescending(x => x.date).Take(5).ToList() : osuJsonUserBestArray.ToList();
         }
 
