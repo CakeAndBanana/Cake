@@ -20,12 +20,16 @@ namespace Cake.Json.CakeBuilders.Osu
         public List<OsuJsonUserBest> Execute()
         {
             var osuJsonUserBestArray = ExecuteJson(OsuApiRequest.BestPerformance);
-            osuJsonUserBestArray = ProcessJson(osuJsonUserBestArray);
 
             if (PlayNumber != null)
             {
-                return osuJsonUserBestArray.ToList().FindAll(x => x.play_number == PlayNumber);
+                var beatmapid = osuJsonUserBestArray[0].beatmap_id;
+                return osuJsonUserBestArray.ToList().TakeWhile(c => c.beatmap_id == beatmapid).ToList();
             }
+
+            osuJsonUserBestArray = ProcessJson(osuJsonUserBestArray);
+
+
             return Recent ? osuJsonUserBestArray.OrderByDescending(x => x.date).Take(5).ToList() : osuJsonUserBestArray.ToList();
         }
 
@@ -50,8 +54,6 @@ namespace Cake.Json.CakeBuilders.Osu
                     var diff = new DiffCalc().Calc(Beatmap.Read(new StreamReader(new MemoryStream(data, false))), (Mods)item.enabled_mods);
                     item.starrating = diff.Total;
                 }
-
-                play++;
             }
             return array;
         }
