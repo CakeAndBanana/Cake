@@ -30,7 +30,7 @@ namespace Cake.Core.Discord.Services
             }
             catch (CakeException e)
             {
-                _1.LogError(e);
+                _logger.LogError(e);
             }
 
             return databaseProfile;
