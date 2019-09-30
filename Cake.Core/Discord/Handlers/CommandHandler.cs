@@ -62,7 +62,7 @@ namespace Cake.Core.Discord.Handlers
 
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
-                    if (user.Restrict && guild.Restrict)
+                    if (user.Restrict || guild.Restrict)
                     {
                         return;
                     }
