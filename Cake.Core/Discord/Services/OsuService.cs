@@ -1,7 +1,6 @@
 ﻿using Cake.Core.Discord.Modules;
 using Cake.Core.Exceptions;
 using Cake.Core.Extensions;
-using Cake.Core.Logging;
 using Cake.Database.Models;
 using Cake.Json.CakeBuilders.Osu;
 using Cake.Json.CakeModels.Osu;
@@ -15,8 +14,6 @@ namespace Cake.Core.Discord.Services
 {
     public class OsuService : CustomBaseService
     {
-        private readonly Logger _logger = Logger.Get() as Logger;
-
         private async Task<CakeUser> GetDatabaseEntityAsync(ulong discordId)
         {
             var databaseProfile = await Database.Queries.UserQueries.FindOrCreateUser(discordId);
@@ -30,13 +27,13 @@ namespace Cake.Core.Discord.Services
             }
             catch (CakeException e)
             {
-                _logger.LogError(e);
+                await SendMessageAsync(e.Message);
             }
 
             return databaseProfile;
         }
 
-        private OsuJsonUser GetJsonUser(string osuId, bool findWithUsername, int mode = -1)
+        private async Task<OsuJsonUser> GetJsonUserAsync(string osuId, bool findWithUsername, int mode = -1)
         {
             var userBuilder = new OsuUserBuilder
             {
@@ -46,24 +43,36 @@ namespace Cake.Core.Discord.Services
             };
 
             var user = userBuilder.Execute();
-
-            if (user == null)
+            try
             {
-                throw new CakeException("``User with given username or id is not found on osu!``");
+                if (user == null)
+                {
+                    throw new CakeException("``User with given username or id is not found on osu!``");
+                }
             }
-
+            catch (CakeException e)
+            {
+                await SendMessageAsync(e.Message);
+            }
             return user;
         }
 
         public async Task SetAccount(string username)
         {
-            var databaseprofile = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id).ConfigureAwait(false);
-            var user = GetJsonUser(username, true);
+            try
+            {
+                var databaseprofile = await Database.Queries.UserQueries.FindOrCreateUser(Module.Context.User.Id).ConfigureAwait(false);
+                var user = await GetJsonUserAsync(username, true);
 
-            databaseprofile.OsuId = user.user_id;
-            await Database.Queries.UserQueries.Update(databaseprofile);
+                databaseprofile.OsuId = user.user_id;
+                await Database.Queries.UserQueries.Update(databaseprofile);
 
-            await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnSetAccountEmbed(user));
+                await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnSetAccountEmbed(user));
+            }
+            catch (CakeException e)
+            {
+                await SendMessageAsync(e.Message);
+            }
         }
 
         public async Task SetMode(int mode)
@@ -94,7 +103,7 @@ namespace Cake.Core.Discord.Services
                     osuId = databaseUser.OsuId.ToString();
                     findWithUsername = false;
                 }
-                var user = GetJsonUser(osuId, findWithUsername, mode);
+                var user = await GetJsonUserAsync(osuId, findWithUsername, mode);
 
                 await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserProfile(user, mode));
             }
@@ -119,7 +128,7 @@ namespace Cake.Core.Discord.Services
                     findWithUsername = false;
                 }
 
-                var user = GetJsonUser(osuId, findWithUsername, mode);
+                var user = await GetJsonUserAsync(osuId, findWithUsername, mode);
 
                 var bestBuilder = new OsuUserBestBuilder
                 {
@@ -198,7 +207,7 @@ namespace Cake.Core.Discord.Services
                     findWithUsername = false;
                 }
 
-                var user = GetJsonUser(osuId, findWithUsername, mode);
+                var user = await GetJsonUserAsync(osuId, findWithUsername, mode);
 
                 var recentBuilder = new OsuUserRecentBuilder
                 {
@@ -325,7 +334,7 @@ namespace Cake.Core.Discord.Services
                     findWithUsername = false;
                 }
 
-                var user = GetJsonUser(osuId, findWithUsername, mode);
+                var user = await GetJsonUserAsync(osuId, findWithUsername, mode);
                 var info = "";
                 var mapId = Database.Queries.ChannelQueries.FindOrCreateChannel(Module.Context.Channel.Id).Result.OsuMapId;
 
