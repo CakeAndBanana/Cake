@@ -145,6 +145,11 @@ namespace Cake.Core.Discord.Services
                     {
                         thumbnail = $"https://b.ppy.sh/thumb/{result[0].beatmapset_id}l.jpg";
                     }
+                    
+                    if (play != null)
+                    {
+                        item.play_number = (int)play;
+                    }
 
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.Ticks);
 
