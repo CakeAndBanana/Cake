@@ -37,8 +37,8 @@ namespace Cake.Database.Queries
             using (var db = new CakeDb())
             {
                 await db.UpdateAsync(channel);
-                return channel;
             }
+            return channel;
         }
 
         public static async Task<CakeChannel> CreateChannel(ulong channelId, ulong guildId)

@@ -36,8 +36,8 @@ namespace Cake.Database.Queries
             using (var db = new CakeDb())
             {
                 await db.UpdateAsync(user);
-                return user;
             }
+            return user;
         }
 
         private static async Task<CakeUser> CreateUser(ulong userId)
