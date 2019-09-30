@@ -15,6 +15,8 @@ namespace Cake.Core.Discord.Services
 {
     public class OsuService : CustomBaseService
     {
+        private readonly Logger _logger = Logger.Get() as Logger;
+
         private async Task<CakeUser> GetDatabaseEntityAsync(ulong discordId)
         {
             var databaseProfile = await Database.Queries.UserQueries.FindOrCreateUser(discordId);
@@ -28,7 +30,7 @@ namespace Cake.Core.Discord.Services
             }
             catch (CakeException e)
             {
-                Logger.Get().LogError(e);
+                _1.LogError(e);
             }
 
             return databaseProfile;
