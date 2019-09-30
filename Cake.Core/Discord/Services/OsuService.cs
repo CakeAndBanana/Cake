@@ -15,6 +15,8 @@ namespace Cake.Core.Discord.Services
 {
     public class OsuService : CustomBaseService
     {
+        private readonly Logger _logger = Logger.Get() as Logger;
+
         private async Task<CakeUser> GetDatabaseEntityAsync(ulong discordId)
         {
             var databaseProfile = await Database.Queries.UserQueries.FindOrCreateUser(discordId);
@@ -28,7 +30,7 @@ namespace Cake.Core.Discord.Services
             }
             catch (CakeException e)
             {
-                Logger.Get().LogError(e);
+                _logger.LogError(e);
             }
 
             return databaseProfile;
@@ -144,6 +146,11 @@ namespace Cake.Core.Discord.Services
                     if (best.First() == item)
                     {
                         thumbnail = $"https://b.ppy.sh/thumb/{result[0].beatmapset_id}l.jpg";
+                    }
+                    
+                    if (play != null)
+                    {
+                        item.play_number = (int)play;
                     }
 
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.Ticks);

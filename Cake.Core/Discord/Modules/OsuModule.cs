@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cake.Core.Discord.Services;
 using Cake.Core.Exceptions;
 using Cake.Core.Extensions;
+using Cake.Core.Logging;
 using Discord.Commands;
 using static System.Int32;
 
@@ -84,6 +85,7 @@ namespace Cake.Core.Discord.Modules
     {
         private readonly OsuService _service;
         private static int? _mapId;
+        private readonly Logger _logger = Logger.Get() as Logger;
 
         public static int? GetMapId()
         {
@@ -127,7 +129,7 @@ namespace Cake.Core.Discord.Modules
             }
             catch (Exception e)
             {
-                Logging.Logger.Get().LogException(e);
+                _logger.LogException(e);
             }
         }
 
@@ -149,7 +151,7 @@ namespace Cake.Core.Discord.Modules
             }
             catch (Exception e)
             {
-                Logging.Logger.Get().LogException(e);
+                _logger.LogException(e);
             }
 
             await _service.GetUserProfile(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
@@ -173,7 +175,7 @@ namespace Cake.Core.Discord.Modules
             }
             catch (Exception e)
             {
-                Logging.Logger.Get().LogException(e);
+                _logger.LogException(e);
             }
 
             if (osuDiscordArg != null)
@@ -200,7 +202,7 @@ namespace Cake.Core.Discord.Modules
             }
             catch (Exception e)
             {
-                Logging.Logger.Get().LogException(e);
+                _logger.LogException(e);
             }
 
             await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), n);
@@ -231,7 +233,7 @@ namespace Cake.Core.Discord.Modules
             }
             catch (Exception e)
             {
-                Logging.Logger.Get().LogException(e);
+                _logger.LogException(e);
             }
 
             await _service.GetCompare(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
