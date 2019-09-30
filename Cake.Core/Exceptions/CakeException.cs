@@ -7,6 +7,7 @@ namespace Cake.Core.Exceptions
     public class CakeException : Exception
     {
         private const string DefaultErrorMessage = "Error!";
+        private readonly Logger _logger = Logger.Get() as Logger;
 
         private CakeEmbedBuilder _embedError;
 
@@ -25,7 +26,7 @@ namespace Cake.Core.Exceptions
 
         private void Init(string message)
         {
-            Logger.Get().Log(Logging.Type.Error, message);
+            _logger.Log(Logging.Type.Error, message);
 
             _embedError = new CakeEmbedBuilder(EmbedType.Error);
             _embedError.AddField("Error", message);

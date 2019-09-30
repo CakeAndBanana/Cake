@@ -36,8 +36,8 @@ namespace Cake.Database.Queries
             using (var db = new CakeDb())
             {
                 await db.UpdateAsync(guild);
-                return guild;
             }
+            return guild;
         }
 
         private static async Task<CakeGuild> CreateGuild(ulong guildId)
