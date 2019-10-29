@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
+using Cake.Core.Exceptions;
 using Cake.Core.Logging;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -68,8 +69,21 @@ namespace Cake.Core.Discord.Handlers
                     }
 
                     var stopwatch = Stopwatch.StartNew();
-                    //Execute Command
-                    var result = await _commandService.ExecuteAsync(context, 1, _services);
+
+                    IResult result = null;
+                    try
+                    {
+                        result = await _commandService.ExecuteAsync(context, 1, _services);
+                    } 
+                    catch (OverflowException e)
+                    {
+                        _logger.Log(Type.Fatal, e.Message);
+                    } 
+                    catch (CakeException e)
+                    {
+                        _logger.Log(Type.Fatal, e.Message);
+                    }
+                    
                     stopwatch.Stop();
 
                     if (!result.IsSuccess)
