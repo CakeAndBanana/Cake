@@ -361,7 +361,7 @@ namespace Cake.Core.Discord.Services
 
                 var score = scoreBuilder.Execute();
 
-                if (score.Count == 0)
+                if (!score.Any())
                 {
                     throw new CakeException($"`No score(s) found found in {beatmap.complete_title}`");
                 }

@@ -2,10 +2,10 @@
 
 namespace Cake.Database.Models
 {
-    [Table(Name = "CakeUser")]
+    [Table(Schema = "dbo", Name = "CakeUser")]
     public class CakeUser
     {
-        [PrimaryKey]
+        [PrimaryKey, NotNull]
         public ulong Id { get; set; }
         [Column(Name = "Restrict"), NotNull]
         public bool Restrict { get; set; }

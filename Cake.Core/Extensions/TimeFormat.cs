@@ -59,11 +59,11 @@ namespace Cake.Core.Extensions
             }
             if (day > 1)
             {
-                timestamp += $"{day} days ";
+                timestamp += $"and {day} days ";
             }
             if (day == 1)
             {
-                timestamp += $"{day} day ";
+                timestamp += $"and {day} day ";
             }
 
             return timestamp;
@@ -77,7 +77,6 @@ namespace Cake.Core.Extensions
             var day = time.Days;
             var hour = time.Hours;
             var minute = time.Minutes;
-            var second = time.Seconds;
 
             if (day >= 30)
             {
@@ -139,19 +138,11 @@ namespace Cake.Core.Extensions
             }
             if (minute == 1)
             {
-                timestamp += $"{minute} minute ";
+                timestamp += $"and {minute} minute ";
             }
             if (minute > 1)
             {
-                timestamp += $"{minute} minutes ";
-            }
-            if (second == 1)
-            {
-                timestamp += $"{second} second ";
-            }
-            if (second > 1)
-            {
-                timestamp += $"{second} seconds ";
+                timestamp += $"and {minute} minutes ";
             }
 
             return timestamp;

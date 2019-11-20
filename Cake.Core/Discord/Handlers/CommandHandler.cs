@@ -63,17 +63,17 @@ namespace Cake.Core.Discord.Handlers
 
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
-                    if (user.Restrict || guild.Restrict)
-                    {
-                        return;
-                    }
-
-                    var stopwatch = Stopwatch.StartNew();
-
                     IResult result = null;
+                    var stopwatch = new Stopwatch();
                     try
                     {
+                        if (user.Restrict || guild.Restrict)
+                        {
+                            return;
+                        }
+                        stopwatch.Start();
                         result = await _commandService.ExecuteAsync(context, 1, _services);
+                        stopwatch.Stop();
                     } 
                     catch (OverflowException e)
                     {
@@ -83,8 +83,6 @@ namespace Cake.Core.Discord.Handlers
                     {
                         _logger.Log(Type.Fatal, e.Message);
                     }
-                    
-                    stopwatch.Stop();
 
                     if (!result.IsSuccess)
                     {
