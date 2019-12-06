@@ -57,6 +57,7 @@ namespace Cake.Core.Discord.Handlers
 
             try
             {
+                _logger.Log(Type.Info, $"Executing Command: {context.Message}");
                 //Get or generation of user.
                 var user = await Database.Queries.UserQueries.FindOrCreateUser(context.User.Id);
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);

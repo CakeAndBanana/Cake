@@ -103,7 +103,7 @@ namespace Cake.Core.Discord.Modules
             _service.SetBaseModule(this);
         }
 
-        [Command("set")]
+        [Command("set", RunMode = RunMode.Async)]
         [Summary("osu set (?username)")]
         [Alias("s")]
         [Remarks("Binds your osu account to your discord user.")]
@@ -113,7 +113,7 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Alias("m")]
-        [Command("mode")]
+        [Command("mode", RunMode = RunMode.Async)]
         [Summary(">osu mode (0-3)")]
         [Remarks("Changes the mode of your username.")]
         public async Task SetMode(string mode)
@@ -133,7 +133,7 @@ namespace Cake.Core.Discord.Modules
             }
         }
 
-        [Command("profile")]
+        [Command("profile", RunMode = RunMode.Async)]
         [Summary("osu profile (?user)")]
         [Alias("u", "p")]
         [Remarks("Gets profile of current user or given user.")]
@@ -157,8 +157,8 @@ namespace Cake.Core.Discord.Modules
             await _service.GetUserProfile(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
 
+        [Command("best", RunMode = RunMode.Async)]
         [Alias("b")]
-        [Command("best")]
         [Summary(">osu best (mode) (username)")]
         [Remarks("Returns someones best plays.")]
         public async Task GetUserBest([Remainder] string arg = "")
@@ -184,8 +184,8 @@ namespace Cake.Core.Discord.Modules
             }
         }
 
+        [Command("recent", RunMode = RunMode.Async)]
         [Alias("r")]
-        [Command("recent")]
         [Summary(">osu recent (amount) (username)")]
         [Remarks("Returns someones recently played maps")]
         public async Task Recent(int n = 1, [Remainder] string arg = "")
@@ -215,8 +215,8 @@ namespace Cake.Core.Discord.Modules
             }
         }
 
+        [Command("compare", RunMode = RunMode.Async)]
         [Alias("c")]
-        [Command("compare")]
         [Summary(">osu compare")]
         [Remarks("Compare your score on a recently played map")]
         public async Task GetCompare([Remainder] string arg = "")
