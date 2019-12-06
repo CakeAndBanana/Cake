@@ -91,11 +91,20 @@ namespace Cake.Core.Discord.Services
             }
         }
 
-        public async Task GetUserProfile(string osuId, bool findWithUsername)
+        public async Task GetUserProfile(string osuId, bool findWithUsername, bool dUser = false, ulong dUserId = 0)
         {
             try
             {
-                var databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
+                CakeUser databaseUser = null;
+                if (!dUser)
+                {
+                    databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
+                }
+                else
+                {
+                    databaseUser = await GetDatabaseEntityAsync(dUserId).ConfigureAwait(false);
+                }
+
                 var mode = databaseUser.OsuMode;
 
                 if (osuId.IsNullOrEmpty())
@@ -113,18 +122,27 @@ namespace Cake.Core.Discord.Services
             }
         }
 
-        public async Task GetUserBest(string osuId, bool findWithUsername, bool recent, int? play)
+        public async Task GetUserBest(string osuId, bool findWithUsername, bool recent, int? play, bool dUser = false, ulong dUserId = 0)
         {
             try
             {
                 string thumbnail = null;
                 var fields = new List<Tuple<string, string>>();
-                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
-                var mode = databaseProfile.OsuMode;
+                CakeUser databaseUser = null;
+                if (!dUser)
+                {
+                    databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
+                }
+                else
+                {
+                    databaseUser = await GetDatabaseEntityAsync(dUserId).ConfigureAwait(false);
+                }
+
+                var mode = databaseUser.OsuMode;
 
                 if (osuId.IsNullOrEmpty())
                 {
-                    osuId = databaseProfile.OsuId.ToString();
+                    osuId = databaseUser.OsuId.ToString();
                     findWithUsername = false;
                 }
 
@@ -187,7 +205,7 @@ namespace Cake.Core.Discord.Services
             }
         }
 
-        public async Task GetUserRecent(string osuId, bool findWithUsername, int total = 1)
+        public async Task GetUserRecent(string osuId, bool findWithUsername, int total = 1, bool dUser = false, ulong dUserId = 0)
         {
             try
             {
@@ -196,14 +214,22 @@ namespace Cake.Core.Discord.Services
                     throw new CakeException("`Total amount must be lower than 5`");
                 }
 
-                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
+                CakeUser databaseUser = null;
+                if (!dUser)
+                {
+                    databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
+                }
+                else
+                {
+                    databaseUser = await GetDatabaseEntityAsync(dUserId).ConfigureAwait(false);
+                }
                 var mapId = 0;
                 var info = "";
-                var mode = databaseProfile.OsuMode;
+                var mode = databaseUser.OsuMode;
 
                 if (osuId.IsNullOrEmpty())
                 {
-                    osuId = databaseProfile.OsuId.ToString();
+                    osuId = databaseUser.OsuId.ToString();
                     findWithUsername = false;
                 }
 
@@ -321,16 +347,24 @@ namespace Cake.Core.Discord.Services
             }
         }
 
-        public async Task GetCompare(string osuId, bool findWithUsername)
+        public async Task GetCompare(string osuId, bool findWithUsername, bool dUser = false, ulong dUserId = 0)
         {
             try
             {
-                var databaseProfile = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
-                var mode = databaseProfile.OsuMode;
+                CakeUser databaseUser = null;
+                if (!dUser)
+                {
+                    databaseUser = await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false);
+                }
+                else
+                {
+                    databaseUser = await GetDatabaseEntityAsync(dUserId).ConfigureAwait(false);
+                }
+                var mode = databaseUser.OsuMode;
 
                 if (osuId.IsNullOrEmpty())
                 {
-                    osuId = databaseProfile.OsuId.ToString();
+                    osuId = databaseUser.OsuId.ToString();
                     findWithUsername = false;
                 }
 
