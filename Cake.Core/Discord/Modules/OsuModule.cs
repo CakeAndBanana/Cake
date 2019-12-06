@@ -213,7 +213,7 @@ namespace Cake.Core.Discord.Modules
 
             if (osuDiscordArg != null)
             {
-                await _service.GetUserBest("", false, true, osuDiscordArg.GetPlayNumber(), true, user.Id);
+                await _service.GetUserBest("", false, false, osuDiscordArg.GetPlayNumber(), true, user.Id);
             }
         }
 
