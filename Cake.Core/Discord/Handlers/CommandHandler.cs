@@ -63,7 +63,7 @@ namespace Cake.Core.Discord.Handlers
 
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
-                    _logger.Log(Type.Info, $"Executing Command: {context.Message} | User {context.User.Id}");
+                    _logger.Log(Type.Info, $"Executing Command: {context.Message}");
                     IResult result = null;
                     var stopwatch = new Stopwatch();
                     try
