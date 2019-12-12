@@ -14,6 +14,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\Osu\BeatmapReader\**" />
+    <EmbeddedResource Remove="Extensions\Osu\BeatmapReader\**" />
+    <None Remove="Extensions\Osu\BeatmapReader\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.2.9" />
     <PackageReference Include="Discord.Net" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0.0" />

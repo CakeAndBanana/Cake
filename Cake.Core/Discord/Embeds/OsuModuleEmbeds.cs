@@ -1,6 +1,6 @@
 ﻿using Cake.Core.Discord.Embed.Builder;
 using Cake.Core.Exceptions;
-using Cake.Core.Extensions;
+using Cake.Core.Extensions.Osu;
 using Cake.Json.CakeModels.Osu;
 using System;
 using System.Collections.Generic;

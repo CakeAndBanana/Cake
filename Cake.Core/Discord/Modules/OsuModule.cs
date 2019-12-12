@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Cake.Core.Discord.Services;
 using Cake.Core.Exceptions;
-using Cake.Core.Extensions;
+using Cake.Core.Extensions.Osu;
 using Cake.Core.Logging;
 using Discord;
 using Discord.Commands;

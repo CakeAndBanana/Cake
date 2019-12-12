@@ -1,5 +1,6 @@
 ﻿using Cake.Core.Discord.Modules;
 using Cake.Core.Exceptions;
+using Cake.Core.Extensions.Osu;
 using Cake.Core.Extensions;
 using Cake.Database.Models;
 using Cake.Json.CakeBuilders.Osu;
@@ -245,7 +246,6 @@ namespace Cake.Core.Discord.Services
                 var recent = recentBuilder.Execute(true);
                 var first = true;
                 OsuJsonBeatmap firstBeatmap = null;
-                OsuJsonUserRecent firstRecent = null;
                 var retryCount = 0;
 
                 if (recent.Count == 0)
@@ -272,8 +272,6 @@ namespace Cake.Core.Discord.Services
                         first = false;
                     }
 
-                    var fc = t.maxcombo >= (beatmap[0].max_combo - 15) && t.countmiss == 0;
-
                     if (total > 1)
                     {
                         info += $"**#{i + 1}** ♢ [{beatmap[0].complete_title}]({beatmap[0].beatmap_url}) **{Math.Round(t.starrating, 2)}★**\n" +
@@ -282,7 +280,7 @@ namespace Cake.Core.Discord.Services
 
                         if (t.rank != "F")
                         {
-                            if (fc)
+                            if (!t.choked)
                             {
                                 info += $" **{Math.Round(t.pp, 2)} PP**\n\n";
                             }
@@ -300,7 +298,6 @@ namespace Cake.Core.Discord.Services
                     }
                     else
                     {
-                        firstRecent = t;
                         retryCount = OsuCheckRetries.Tries(mode.ToString(), t.user_id, beatmap[0].beatmap_id);
 
                         info = $"**{t.rounded_score} ♢ " +
@@ -313,7 +310,7 @@ namespace Cake.Core.Discord.Services
                         }
                         else
                         {
-                            if (fc)
+                            if (!t.choked)
                             {
                                 info += $"**{Math.Round(t.pp, 2)} PP**\n\n";
                             }
@@ -329,7 +326,7 @@ namespace Cake.Core.Discord.Services
 
                 if (total == 1)
                 {
-                    await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserRecent(user, firstBeatmap, firstRecent, info, mode, retryCount));
+                    await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserRecent(user, firstBeatmap, recent[0], info, mode, retryCount));
                 }
                 else
                 {
@@ -413,7 +410,7 @@ namespace Cake.Core.Discord.Services
                             $"**Rank:**{t.rank.LevelEmotes()} " +
                             $"**Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
                             $"**Combo:** {t.maxcombo}({beatmap.max_combo}) \n" +
-                            $" {OsuEmoteCodes.Emote300} {t.count300} | {OsuEmoteCodes.Emote100} {t.count100} | {OsuEmoteCodes.Emote50} {t.count50} | {OsuEmoteCodes.EmoteX} {t.countmiss}\n " +
+                            $" {OsuEmoteCodes.Emote300} {t.count300} ♢ {OsuEmoteCodes.Emote100} {t.count100} ♢ {OsuEmoteCodes.Emote50} {t.count50} ♢ {OsuEmoteCodes.EmoteX} {t.countmiss}\n " +
                             $" {date} ago\n\n";
                 }
 

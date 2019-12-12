@@ -3,7 +3,7 @@ using Cake.Core.Exceptions;
 using Cake.Json.CakeBuilders.Osu;
 using System.Linq;
 
-namespace Cake.Core.Extensions
+namespace Cake.Core.Extensions.Osu
 {
     public class OsuMode
     {
@@ -159,7 +159,7 @@ namespace Cake.Core.Extensions
             var recentBuilder = new OsuUserRecentBuilder()
             {
                 Mode = mode,
-                Limit = "50",
+                Limit = "20",
                 UserId = userid
             };
 
