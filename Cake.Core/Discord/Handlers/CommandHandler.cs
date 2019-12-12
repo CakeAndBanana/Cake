@@ -57,13 +57,13 @@ namespace Cake.Core.Discord.Handlers
 
             try
             {
-                _logger.Log(Type.Info, $"Executing Command: {context.Message}");
                 //Get or generation of user.
                 var user = await Database.Queries.UserQueries.FindOrCreateUser(context.User.Id);
                 var guild = await Database.Queries.GuildQueries.FindOrCreateGuild(context.Guild.Id);
 
                 if (context.Message.HasCharPrefix(Convert.ToChar(guild.Prefix), ref argPos))
                 {
+                    _logger.Log(Type.Info, $"Executing Command: {context.Message} | User {context.User.Id}");
                     IResult result = null;
                     var stopwatch = new Stopwatch();
                     try
