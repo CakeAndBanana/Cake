@@ -12,7 +12,6 @@ namespace Cake.Core.Configuration
             services.AddSingleton<HelpService>();
             services.AddSingleton<OsuService>();
             services.AddSingleton<UserService>();
-            services.AddSingleton<MalService>();
             return services;
         }
     }
