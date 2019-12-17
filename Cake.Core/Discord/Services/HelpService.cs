@@ -24,7 +24,7 @@ namespace Cake.Core.Discord.Services
                 PopulateEmbedWithModuleInfo(module, ref newEmbedPage);
                 PopulateEmbedFieldsWithModuleCommands(module, ref newEmbedPage, commandSearchFilter);
 
-                if (!newEmbedPage.Fields.Any())
+                if (newEmbedPage.Fields.Any())
                 {
                     newEmbedPage.WithFooter(pageNumber.ToString());
                     ++pageNumber;

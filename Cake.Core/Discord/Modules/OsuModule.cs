@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Services;
 using Cake.Core.Exceptions;
 using Cake.Core.Extensions.Osu;
@@ -159,6 +160,7 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Command("profile", RunMode = RunMode.Async)]
+        [Hide]
         [Alias("u", "p")]
         public async Task GetProfileDUser(IGuildUser user)
         {
@@ -193,6 +195,7 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Command("best", RunMode = RunMode.Async)]
+        [Hide]
         [Alias("b")]
         public async Task GetUserBestDUser(IGuildUser user, [Remainder]string arg = "")
         {
@@ -249,6 +252,7 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Command("recent", RunMode = RunMode.Async)]
+        [Hide]
         [Alias("r")]
         public async Task RecentDUser(IGuildUser user, int n = 1)
         {
