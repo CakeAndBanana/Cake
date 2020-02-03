@@ -394,7 +394,7 @@ namespace Cake.Core.Discord.Services
 
                 if (!score.Any())
                 {
-                    throw new CakeException($"`No score(s) found found in {beatmap.complete_title}`");
+                    throw new CakeException($"`No score(s) found in {beatmap.complete_title}`");
                 }
 
                 foreach (var t in score)
