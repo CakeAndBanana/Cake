@@ -25,7 +25,7 @@ namespace Cake.Json.JsonModels.Mal
         [DataMember]
         public int? episodes { get; set; }
         [DataMember]
-        public Genres[] genres { get; set; } = null;
+        public MalGenres[] genres { get; set; } = null;
         [DataMember]
         public decimal? score { get; set; }
         [DataMember]
@@ -37,9 +37,5 @@ namespace Cake.Json.JsonModels.Mal
         [DataMember]
         public int? volumes { get; set; }
     }
-    public class Genres
-    {
-        [DataMember]
-        public string name { get; set; }
-    }
+
 }
