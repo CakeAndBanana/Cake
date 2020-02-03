@@ -37,5 +37,4 @@ namespace Cake.Json.JsonModels.Mal
         [DataMember]
         public int? volumes { get; set; }
     }
-
 }
