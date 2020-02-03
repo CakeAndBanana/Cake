@@ -9,5 +9,6 @@
         public int countkatu { get; set; }
         public int countgeki { get; set; }
         public double calculated_accuracy { get; set; }
+        public bool choked { get; set; } = false;
     }
 }

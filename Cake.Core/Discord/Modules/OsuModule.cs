@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Services;
 using Cake.Core.Exceptions;
-using Cake.Core.Extensions;
+using Cake.Core.Extensions.Osu;
 using Cake.Core.Logging;
+using Discord;
 using Discord.Commands;
 using static System.Int32;
 
@@ -103,7 +105,7 @@ namespace Cake.Core.Discord.Modules
             _service.SetBaseModule(this);
         }
 
-        [Command("set")]
+        [Command("set", RunMode = RunMode.Async)]
         [Summary("osu set (?username)")]
         [Alias("s")]
         [Remarks("Binds your osu account to your discord user.")]
@@ -113,7 +115,7 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Alias("m")]
-        [Command("mode")]
+        [Command("mode", RunMode = RunMode.Async)]
         [Summary(">osu mode (0-3)")]
         [Remarks("Changes the mode of your username.")]
         public async Task SetMode(string mode)
@@ -133,7 +135,7 @@ namespace Cake.Core.Discord.Modules
             }
         }
 
-        [Command("profile")]
+        [Command("profile", RunMode = RunMode.Async)]
         [Summary("osu profile (?user)")]
         [Alias("u", "p")]
         [Remarks("Gets profile of current user or given user.")]
@@ -157,11 +159,19 @@ namespace Cake.Core.Discord.Modules
             await _service.GetUserProfile(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
         }
 
+        [Command("profile", RunMode = RunMode.Async)]
+        [Hide]
+        [Alias("u", "p")]
+        public async Task GetProfileDUser(IGuildUser user)
+        {
+            await _service.GetUserProfile("", false, true, user.Id);
+        }
+
+        [Command("best", RunMode = RunMode.Async)]
         [Alias("b")]
-        [Command("best")]
         [Summary(">osu best (mode) (username)")]
         [Remarks("Returns someones best plays.")]
-        public async Task GetUserBest([Remainder] string arg = "")
+        public async Task GetUserBest([Remainder]string arg = "")
         {
             OsuArg osuDiscordArg = null;
 
@@ -184,8 +194,34 @@ namespace Cake.Core.Discord.Modules
             }
         }
 
+        [Command("best", RunMode = RunMode.Async)]
+        [Hide]
+        [Alias("b")]
+        public async Task GetUserBestDUser(IGuildUser user, [Remainder]string arg = "")
+        {
+            OsuArg osuDiscordArg = null;
+
+            try
+            {
+                osuDiscordArg = new OsuArg(arg, true);
+            }
+            catch (CakeException e)
+            {
+                await Context.Channel.SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
+            }
+
+            if (osuDiscordArg != null)
+            {
+                await _service.GetUserBest("", false, false, osuDiscordArg.GetPlayNumber(), true, user.Id);
+            }
+        }
+
+        [Command("recent", RunMode = RunMode.Async)]
         [Alias("r")]
-        [Command("recent")]
         [Summary(">osu recent (amount) (username)")]
         [Remarks("Returns someones recently played maps")]
         public async Task Recent(int n = 1, [Remainder] string arg = "")
@@ -215,8 +251,23 @@ namespace Cake.Core.Discord.Modules
             }
         }
 
+        [Command("recent", RunMode = RunMode.Async)]
+        [Hide]
+        [Alias("r")]
+        public async Task RecentDUser(IGuildUser user, int n = 1)
+        {
+            await _service.GetUserRecent("", false, 1, true, user.Id);
+
+            if (GetMapId() != null)
+            {
+                var channel = await Database.Queries.ChannelQueries.FindOrCreateChannel(Context.Channel.Id, Context.Guild.Id);
+                channel.OsuMapId = (int)GetMapId();
+                await Database.Queries.ChannelQueries.Update(channel);
+            }
+        }
+
+        [Command("compare", RunMode = RunMode.Async)]
         [Alias("c")]
-        [Command("compare")]
         [Summary(">osu compare")]
         [Remarks("Compare your score on a recently played map")]
         public async Task GetCompare([Remainder] string arg = "")
@@ -237,6 +288,13 @@ namespace Cake.Core.Discord.Modules
             }
 
             await _service.GetCompare(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
+        }
+
+        [Command("compare", RunMode = RunMode.Async)]
+        [Alias("c")]
+        public async Task GetCompareDUser(IGuildUser user)
+        {
+            await _service.GetCompare("", false, true, user.Id);
         }
     }
 }

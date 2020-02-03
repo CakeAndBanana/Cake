@@ -3,7 +3,6 @@ using Cake.Core.Discord.Attributes;
 using Cake.Core.Discord.Services;
 using Discord.Commands;
 using Discord.WebSocket;
-
 using System.Linq;
 using Discord.Rest;
 
@@ -125,7 +124,7 @@ namespace Cake.Core.Discord.Modules
             }
             else
             {
-;               await _service.SetPrefix(newPrefix);
+                await _service.SetPrefix(newPrefix);
             }
         }
 
