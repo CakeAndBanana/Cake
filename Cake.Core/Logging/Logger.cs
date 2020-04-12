@@ -9,7 +9,6 @@ namespace Cake.Core.Logging
 {
     public class Logger : ILogger
     {
-        private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
         private static Logger _instance;
         private static bool _isDebugging;
         private const string FinalMessageFormat = "{0} {1} {3}:{4} | {2}";
@@ -25,7 +24,6 @@ namespace Cake.Core.Logging
                 _isDebugging = true;
                 #endif
 
-                _instance.CreateLog();
                 _instance.SendWelcomeMessage();
             }
 
@@ -35,14 +33,6 @@ namespace Cake.Core.Logging
         ILogger ILogger.Get()
         {
             return Get();
-        }
-        
-        public void CreateLog()
-        {
-            if (!File.Exists(Path))
-            {
-                File.Create(Path);
-            }
         }
 
         public void SendWelcomeMessage()
@@ -104,43 +94,27 @@ namespace Cake.Core.Logging
             var now = DateTime.UtcNow;
             try
             {
-                if (!CakeJson.GetConfig().LogEnabled) return;
-                using (var tw = new StreamWriter(Path, true))
+                foreach (var message in messages)
                 {
-                    try
+                    if (!_isDebugging && message.Type == Type.Debug)
                     {
-                        foreach (var message in messages)
-                        {
-                            if (!_isDebugging && message.Type == Type.Debug)
-                            {
-                                return;
-                            }
-                            var typeName = TypeHelper.GetName(message.Type);
-                            Console.WriteLineFormatted(FinalMessageFormat, 
-                                DefaultColor, 
-                                message.GetDefaultFormatter(now));
-                            tw.WriteLine($"{typeName} {now} {message.SourceFilePath}:{message.SourceLine} | {message.Text}");
-                        }
+                        return;
                     }
-                    catch (Exception exception) when (
-                        exception is IOException 
-                        || exception is ObjectDisposedException)
-                    {
-                        var exceptionMessage = new ExceptionMessage(exception);
-
-                        Console.WriteLineFormatted(FinalMessageFormat, 
-                            DefaultColor, 
-                            exceptionMessage.GetDefaultFormatter(now));
-                    }
-                    finally
-                    {
-                        tw.Close();
-                    }
+                    var typeName = TypeHelper.GetName(message.Type);
+                    Console.WriteLineFormatted(FinalMessageFormat,
+                        DefaultColor,
+                        message.GetDefaultFormatter(now));
                 }
             }
-            catch (Exception e)
+            catch (Exception exception) when (
+                exception is IOException
+                || exception is ObjectDisposedException)
             {
-                LogException(e);
+                var exceptionMessage = new ExceptionMessage(exception);
+
+                Console.WriteLineFormatted(FinalMessageFormat,
+                    DefaultColor,
+                    exceptionMessage.GetDefaultFormatter(now));
             }
         }
 
