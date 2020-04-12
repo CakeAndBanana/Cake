@@ -17,9 +17,9 @@ namespace Cake.Json
             {
                 return GetMap(beatmapId);
             }
-            catch
+            catch (Exception e)
             {
-               //
+                Console.WriteLine(e.Message);
             }
 
             return null;
