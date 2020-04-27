@@ -11,14 +11,14 @@ namespace Cake.Core.Extensions
             this.time = time;
         }
 
-        public string toShortString()
+        public string ToShortString()
         {
             var monthsCalculation = ConvertionTupleDate(time.Days, 30);
             var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
             return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, 0, 0));
         }
 
-        public string toLongString()
+        public string ToLongString()
         {
             var monthsCalculation = ConvertionTupleDate(time.Days, 30);
             var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);

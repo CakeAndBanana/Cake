@@ -186,7 +186,7 @@ namespace Cake.Core.Discord.Services
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.Ticks);
                     var timeFormat = new TimeFormat(dateTicks);
 
-                    var date = dateTicks.TotalDays > 30 ? timeFormat.toShortString() : timeFormat.toLongString();
+                    var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
 
                     var starRating = Math.Abs(item.starrating) <= 0 ? result[0].difficultyrating : item.starrating;
 
@@ -362,7 +362,7 @@ namespace Cake.Core.Discord.Services
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - t.date.Ticks);
                     var timeFormat = new TimeFormat(dateTicks);
 
-                    var date = dateTicks.TotalDays > 30 ? timeFormat.toShortString() : timeFormat.toLongString();
+                    var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
 
                     info += $"***{modName}*** \n" +
                             $"⤷ **PP:** {Math.Round(t.pp, 0)} " +
