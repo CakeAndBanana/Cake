@@ -3,23 +3,29 @@ using System.Reflection;
 
 namespace Cake.Core.Extensions
 {
-    public class TimeFormat
+    internal class TimeFormat
     {
-        public static string ToShortTimeSpan(TimeSpan time)
+        public TimeSpan time { get; set; }
+        public TimeFormat(TimeSpan time)
+        {
+            this.time = time;
+        }
+
+        public string toShortString()
         {
             var monthsCalculation = ConvertionTupleDate(time.Days, 30);
             var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
             return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, 0, 0));
         }
 
-        public static string ToLongTimeSpan(TimeSpan time)
+        public string toLongString()
         {
             var monthsCalculation = ConvertionTupleDate(time.Days, 30);
             var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
             return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, time.Hours, time.Minutes));
         }
 
-        private static string TimetoString(Time model)
+        private string TimetoString(Time model)
         {
             var output = "";
             var properties = model.GetType().GetProperties();
@@ -41,7 +47,7 @@ namespace Cake.Core.Extensions
             return output;
         }
 
-        private static Tuple<int, int> ConvertionTupleDate(int convertdate, int multipier)
+        internal Tuple<int, int> ConvertionTupleDate(int convertdate, int multipier)
         {
             int calcInt = 0;
             if (convertdate >= multipier)
