@@ -92,6 +92,7 @@ namespace Cake.Core.Logging
         private void Log(params Message[] messages)
         {
             var now = DateTime.UtcNow;
+            if (!CakeJson.GetConfig().LogEnabled) return;
             try
             {
                 foreach (var message in messages)
@@ -102,7 +103,7 @@ namespace Cake.Core.Logging
                     }
                     var typeName = TypeHelper.GetName(message.Type);
                     Console.WriteLineFormatted(FinalMessageFormat,
-                        DefaultColor,
+                        message.DefaultColor,
                         message.GetDefaultFormatter(now));
                 }
             }

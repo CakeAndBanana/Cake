@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -47,7 +48,7 @@ namespace Cake.Json.CakeBuilders.Osu
 
                 if(item.maxcombo <= (beatmapData.GetMaxCombo() - (item.count100 + item.count50)) || item.rank == "XH" || item.rank == "SH")
                     item.choked = true;
-                    else if (item.countmiss > 0)
+                else if (item.countmiss > 0)
                     item.choked = true;
 
                 item.starrating = diff.Total;

@@ -4,41 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace Cake.Database.Queries
 {
     public class ChannelQueries
     {
-        protected ChannelQueries()
+        public static List<CakeChannel> GetAll()
         {
+            return new DataContext().GetTable<CakeChannel>().ToList();
         }
+        private static CakeChannel Get(ulong id) => GetAll().Where(cg => cg.Id == id).FirstOrDefault();
 
-        public static async Task<List<CakeChannel>> GetAll()
-        {
-            using (var db = new CakeDb())
-            {
-                return await db.GetTable<CakeChannel>().ToListAsync();
-            }
-        }
-
-        private static async Task<CakeChannel> Get(ulong id)
-        {
-            using (var db = new CakeDb())
-            {
-                var result = await (from cc in db.CakeChannels
-                                    where cc.Id == id
-                                    select cc).ToListAsync();
-                return result.FirstOrDefault();
-            }
-        }
-
-        public static async Task<CakeChannel> Update(CakeChannel channel)
+        public static async Task Update(CakeChannel channel)
         {
             using (var db = new CakeDb())
             {
                 await db.UpdateAsync(channel);
             }
-            return channel;
         }
 
         public static async Task<CakeChannel> CreateChannel(ulong channelId, ulong guildId)
@@ -58,6 +39,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeChannel> FindOrCreateChannel(ulong channelId, ulong guildId = 0) => await Get(channelId).ConfigureAwait(false) ?? await CreateChannel(channelId, guildId).ConfigureAwait(false);
+        public static async Task<CakeChannel> FindOrCreateChannel(ulong channelId, ulong guildId = 0) => Get(channelId) ?? await CreateChannel(channelId, guildId).ConfigureAwait(false);
     }
 }

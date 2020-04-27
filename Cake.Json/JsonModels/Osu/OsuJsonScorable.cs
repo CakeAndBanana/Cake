@@ -1,7 +1,10 @@
-﻿namespace Cake.Json.CakeModels.Osu
+﻿using System;
+
+namespace Cake.Json.CakeModels.Osu
 {
     public class OsuJsonScorable : OsuJsonModel
     {
+        public int score { get; set; }
         public int count50 { get; set; }
         public int count100 { get; set; }
         public int count300 { get; set; }
@@ -10,5 +13,6 @@
         public int countgeki { get; set; }
         public double calculated_accuracy { get; set; }
         public bool choked { get; set; } = false;
+        public DateTimeOffset date { get; set; }
     }
 }

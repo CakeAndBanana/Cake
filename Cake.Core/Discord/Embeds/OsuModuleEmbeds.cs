@@ -120,15 +120,6 @@ namespace Cake.Core.Discord.Embeds
             }) as CakeEmbedBuilder;
         }
 
-        public static CakeEmbedBuilder ReturnUserRecentList(OsuJsonUser user, OsuJsonBeatmap beatmap, string description, int mode)
-        {
-            return ReturnUserRecentBase(user)
-                .WithUrl(beatmap.beatmap_url)
-                .WithThumbnailUrl(beatmap.thumbnail)
-                .WithFooter($"{OsuMode.GetOfficialName(mode)}")
-                .WithDescription(description) as CakeEmbedBuilder;
-        }
-
         public static CakeEmbedBuilder ReturnUserRecent(OsuJsonUser user, OsuJsonBeatmap beatmap, OsuJsonUserRecent recent, string description, int mode, int retryCount)
         {
             return ReturnUserRecentBase(user)

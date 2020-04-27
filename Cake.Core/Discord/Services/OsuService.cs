@@ -159,6 +159,9 @@ namespace Cake.Core.Discord.Services
                 };
 
                 var best = bestBuilder.Execute();
+                best = OsuTimeConverter.ConvertBestScores(user.country, best);
+                
+                
 
                 foreach (var item in best)
                 {
@@ -168,7 +171,6 @@ namespace Cake.Core.Discord.Services
                         ConvertedIncluded = "1",
                         BeatmapId = item.beatmap_id
                     };
-
                     var result = beatmapBuilder.Execute();
 
                     if (best.First() == item)
@@ -182,8 +184,9 @@ namespace Cake.Core.Discord.Services
                     }
 
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.Ticks);
+                    var timeFormat = new TimeFormat(dateTicks);
 
-                    var date = dateTicks.TotalDays > 30 ? TimeFormat.ToShortTimeSpan(dateTicks) : TimeFormat.ToLongTimeSpan(dateTicks);
+                    var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
 
                     var starRating = Math.Abs(item.starrating) <= 0 ? result[0].difficultyrating : item.starrating;
 
@@ -213,7 +216,7 @@ namespace Cake.Core.Discord.Services
                 CakeUser databaseUser = !dUser
                     ? await GetDatabaseEntityAsync(Module.Context.User.Id).ConfigureAwait(false)
                     : await GetDatabaseEntityAsync(dUserId).ConfigureAwait(false);
-
+                    
                 var mapId = 0;
                 var info = "";
                 var mode = databaseUser.OsuMode;
@@ -232,8 +235,8 @@ namespace Cake.Core.Discord.Services
                     Limit = "1",
                     UserId = user.user_id.ToString()
                 };
+                var recent = OsuTimeConverter.ConvertRecentScores(user.country, recentBuilder.Execute());
 
-                var recent = recentBuilder.Execute();
                 var beatmapList = new List<OsuJsonBeatmap>();
                 var retryCount = 0;
 
@@ -257,7 +260,6 @@ namespace Cake.Core.Discord.Services
                     var beatmap = beatmapList.First();
 
                     retryCount = OsuCheckRetries.Tries(mode.ToString(), t.user_id, beatmap.beatmap_id);
-
                     info = $"**{t.rounded_score} ♢ " +
                                   $"{t.rank.LevelEmotes()} ♢ {t.maxcombo}x*({beatmap.max_combo}x)*** {OsuMods.Modnames(Convert.ToInt32(t.enabled_mods))} \n " +
                                   $"{OsuEmoteCodes.Emote300} {t.count300} ♢ {OsuEmoteCodes.Emote100} {t.count100} ♢ {OsuEmoteCodes.Emote50} {t.count50} ♢ {OsuEmoteCodes.EmoteX} {t.countmiss} ♢ {Math.Round(t.calculated_accuracy, 2)}%\n";
@@ -280,9 +282,9 @@ namespace Cake.Core.Discord.Services
 
                     mapId = Convert.ToInt32(beatmap.beatmap_id);
                 }
-
+                
                 await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserRecent(user, beatmapList.First(), recent[0], info, mode, retryCount));
-
+                
                 if (mapId != 0)
                 {
                     OsuModule.SetMapId(mapId);
@@ -352,8 +354,9 @@ namespace Cake.Core.Discord.Services
                     var modName = t.enabled_mods == "0" ? "No Mod" : OsuMods.Modnames(Convert.ToInt32(t.enabled_mods));
 
                     var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - t.date.Ticks);
+                    var timeFormat = new TimeFormat(dateTicks);
 
-                    var date = dateTicks.TotalDays > 60 ? TimeFormat.ToShortTimeSpan(dateTicks) : TimeFormat.ToLongTimeSpan(dateTicks);
+                    var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
 
                     info += $"***{modName}*** \n" +
                             $"⤷ **PP:** {Math.Round(t.pp, 0)} " +

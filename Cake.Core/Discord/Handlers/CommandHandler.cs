@@ -137,6 +137,7 @@ namespace Cake.Core.Discord.Handlers
                         stopwatch.Stop();
                         _logger.Log(Type.Info, $"\nCommand {context.Message} executed by {context.User}({context.User.Id}) in guild {context.Guild}({context.Guild.Id})\nTime taken to execute command is {stopwatch.ElapsedMilliseconds}ms");
                     }
+                    stopwatch.Stop();
                 }
             }
             catch (Exception e)

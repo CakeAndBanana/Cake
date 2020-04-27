@@ -8,43 +8,25 @@ namespace Cake.Database.Queries
 {
     public class UserQueries
     {
-        protected UserQueries()
+        public static List<CakeUser> GetAll()
         {
+            return new DataContext().GetTable<CakeUser>().ToList();
         }
+        private static CakeUser Get(ulong id) => GetAll().Where(cu => cu.Id == id).FirstOrDefault();
 
-        public static async Task<List<CakeUser>> GetAll()
-        {
-            using (var db = new CakeDb())
-            {
-                return await db.GetTable<CakeUser>().ToListAsync();
-            }
-        }
-
-        private static async Task<CakeUser> Get(ulong id)
-        {
-            using (var db = new CakeDb())
-            {
-                var result = await (from cu in db.CakeUsers
-                                    where cu.Id == id
-                                    select cu).ToListAsync();
-                return result.FirstOrDefault();
-            }
-        }
-
-        public static async Task<CakeUser> Update(CakeUser user)
+        public static async Task Update(CakeUser user)
         {
             using (var db = new CakeDb())
             {
                 await db.UpdateAsync(user);
             }
-            return user;
         }
 
         private static async Task<CakeUser> CreateUser(ulong userId)
         {
             using (var db = new CakeDb())
             {
-                var newUser = new CakeUser
+                CakeUser newUser = new CakeUser
                 {
                     Id = userId,
                     TotalXp = 0,
@@ -60,6 +42,6 @@ namespace Cake.Database.Queries
             }
         }
 
-        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => await Get(userId).ConfigureAwait(false) ?? await CreateUser(userId).ConfigureAwait(false);
+        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => Get(userId) ?? await CreateUser(userId).ConfigureAwait(false);
     }
 }

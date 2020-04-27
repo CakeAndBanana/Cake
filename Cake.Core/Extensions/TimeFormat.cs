@@ -1,151 +1,86 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Cake.Core.Extensions
 {
-    public class TimeFormat
+    internal class TimeFormat
     {
-        protected TimeFormat()
+        public TimeSpan time { get; set; }
+        public TimeFormat(TimeSpan time)
         {
+            this.time = time;
         }
 
-        public static string ToShortTimeSpan(TimeSpan time)
+        public string ToShortString()
         {
-            var timestamp = "";
-            var year = 0;
-            var month = 0;
-            var day = time.Days;
-
-            if (day >= 30)
-            {
-                while (true)
-                {
-                    month++;
-                    day -= 30;
-                    if (day < 30)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            if (month >= 12)
-            {
-                while (true)
-                {
-                    year++;
-                    month -= 12;
-                    if (month < 12)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            if (year > 1)
-            {
-                timestamp += $"{year} years ";
-            }
-            if (year == 1)
-            {
-                timestamp += $"{year} year ";
-            }
-            if (month > 1)
-            {
-                timestamp += $"{month} months ";
-            }
-            if (month == 1)
-            {
-                timestamp += $"{month} month ";
-            }
-            if (day > 1)
-            {
-                timestamp += $"and {day} days ";
-            }
-            if (day == 1)
-            {
-                timestamp += $"and {day} day ";
-            }
-
-            return timestamp;
+            var monthsCalculation = ConvertionTupleDate(time.Days, 30);
+            var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
+            return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, 0, 0));
         }
 
-        public static string ToLongTimeSpan(TimeSpan time)
+        public string ToLongString()
         {
-            var timestamp = "";
-            var year = 0;
-            var month = 0;
-            var day = time.Days;
-            var hour = time.Hours;
-            var minute = time.Minutes;
+            var monthsCalculation = ConvertionTupleDate(time.Days, 30);
+            var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
+            return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, time.Hours, time.Minutes));
+        }
 
-            if (day >= 30)
+        private string TimetoString(Time model)
+        {
+            var output = "";
+            var properties = model.GetType().GetProperties();
+
+            foreach (PropertyInfo propertyInfo in properties)
+            {
+                var value = (int)propertyInfo.GetValue(model, null);
+                string name = propertyInfo.Name;
+                if (value == 1)
+                {
+                    name = name.Remove(name.Length - 1);
+                }
+
+                if (value != 0)
+                {
+                    output += $"{value} {name} ";
+                }
+            }
+            return output;
+        }
+
+        internal Tuple<int, int> ConvertionTupleDate(int convertdate, int multipier)
+        {
+            int calcInt = 0;
+            if (convertdate >= multipier)
             {
                 while (true)
                 {
-                    month++;
-                    day -= 30;
-                    if (day < 30)
+                    calcInt++;
+                    convertdate -= multipier;
+                    if (convertdate < multipier)
                     {
                         break;
                     }
                 }
             }
+            return Tuple.Create(calcInt, convertdate);
+        }
 
-            if (month >= 12)
-            {
-                while (true)
-                {
-                    month++;
-                    month -= 12;
-                    if (month < 12)
-                    {
-                        break;
-                    }
-                }
-            }
+        private class Time
+        {
+            public int years { get; set; }
+            public int months { get; set; }
+            public int days { get; set; }
+            public int hours { get; set; }
+            public int minutes { get; set; }
 
-            if (year > 1)
+            public Time(int years, int months, int days, int hours, int minutes)
             {
-                timestamp += $"{year} years ";
+                this.years = years;
+                this.months = months;
+                this.days = days;
+                this.hours = hours;
+                this.minutes = minutes;
             }
-            if (year == 1)
-            {
-                timestamp += $"{year} year ";
-            }
-            if (month > 1)
-            {
-                timestamp += $"{month} months ";
-            }
-            if (month == 1)
-            {
-                timestamp += $"{month} month ";
-            }
-            if (day > 1)
-            {
-                timestamp += $"{day} days ";
-            }
-            if (day == 1)
-            {
-                timestamp += $"{day} day ";
-            }
-            if (hour == 1)
-            {
-                timestamp += $"{hour} hour ";
-            }
-            if (hour > 1)
-            {
-                timestamp += $"{hour} hours ";
-            }
-            if (minute == 1)
-            {
-                timestamp += $"and {minute} minute ";
-            }
-            if (minute > 1)
-            {
-                timestamp += $"and {minute} minutes ";
-            }
-
-            return timestamp;
         }
     }
 }
