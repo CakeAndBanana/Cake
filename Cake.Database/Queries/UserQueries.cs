@@ -1,5 +1,6 @@
 ﻿using Cake.Database.Models;
 using LinqToDB;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,15 +8,13 @@ namespace Cake.Database.Queries
 {
     public class UserQueries
     {
-        public static IQueryable<CakeUser> GetAll()
+        public static List<CakeUser> GetAll()
         {
-            using (var db = new CakeDb())
-            {
-                return db.GetTable<CakeUser>().AsQueryable();
-            }
+            return new DataContext().GetTable<CakeUser>().ToList();
         }
+        private static CakeUser Get(ulong id) => GetAll().Where(cu => cu.Id == id).FirstOrDefault();
 
-        public static async void Update(CakeUser user)
+        public static async Task Update(CakeUser user)
         {
             using (var db = new CakeDb())
             {
@@ -42,7 +41,7 @@ namespace Cake.Database.Queries
                 return newUser;
             }
         }
-        private static async Task<CakeUser> Get(ulong id) => await GetAll().Where(cu => cu.Id == id).FirstOrDefaultAsync();
-        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => await Get(userId).ConfigureAwait(false) ?? await CreateUser(userId).ConfigureAwait(false);
+
+        public static async Task<CakeUser> FindOrCreateUser(ulong userId) => Get(userId) ?? await CreateUser(userId).ConfigureAwait(false);
     }
 }

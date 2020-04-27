@@ -159,6 +159,8 @@ namespace Cake.Core.Discord.Services
                 };
 
                 var best = bestBuilder.Execute();
+                best = OsuTimeConverter.ConvertBestScores(user.country, best);
+                thumbnail = $"https://b.ppy.sh/thumb/{best.First().beatmap_id}l.jpg";
 
                 foreach (var item in best)
                 {
@@ -170,11 +172,6 @@ namespace Cake.Core.Discord.Services
                     };
 
                     var result = beatmapBuilder.Execute();
-
-                    if (best.First() == item)
-                    {
-                        thumbnail = $"https://b.ppy.sh/thumb/{result[0].beatmapset_id}l.jpg";
-                    }
                     
                     if (play != null)
                     {
@@ -244,10 +241,9 @@ namespace Cake.Core.Discord.Services
                 };
 
                 var recent = recentBuilder.Execute(true);
-                var first = true;
+                recent = OsuTimeConverter.ConvertRecentScores(user.country, recent);
                 OsuJsonBeatmap firstBeatmap = null;
                 var retryCount = 0;
-                //recent = OsuTimeConverter(countryCode, list of plays to convert)
 
                 if (recent.Count == 0)
                 {
@@ -267,10 +263,9 @@ namespace Cake.Core.Discord.Services
 
                     var beatmap = beatmapBuilder.Execute();
 
-                    if (first)
+                    if (recent[0] == t)
                     {
                         firstBeatmap = beatmap[0];
-                        first = false;
                     }
 
                     if (total > 1)
