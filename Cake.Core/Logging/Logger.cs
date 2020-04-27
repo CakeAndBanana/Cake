@@ -9,7 +9,6 @@ namespace Cake.Core.Logging
 {
     public class Logger : ILogger
     {
-        private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
         private static Logger _instance;
         private static bool _isDebugging;
         private const string FinalMessageFormat = "{0} {1} {3}:{4} | {2}";

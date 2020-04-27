@@ -46,7 +46,7 @@ namespace Cake.Json.CakeBuilders.Osu
 
                 item.rounded_score = item.score.ToString("C0", _nfi);
 
-                if (item.maxcombo <= (beatmapData.GetMaxCombo() - (item.count100 + item.count50)) || item.rank == "XH" || item.rank == "SH")
+                if(item.maxcombo <= (beatmapData.GetMaxCombo() - (item.count100 + item.count50)) || item.rank == "XH" || item.rank == "SH")
                     item.choked = true;
                 else if (item.countmiss > 0)
                     item.choked = true;
