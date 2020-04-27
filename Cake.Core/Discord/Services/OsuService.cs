@@ -247,6 +247,7 @@ namespace Cake.Core.Discord.Services
                 var first = true;
                 OsuJsonBeatmap firstBeatmap = null;
                 var retryCount = 0;
+                //recent = OsuTimeConverter(countryCode, list of plays to convert)
 
                 if (recent.Count == 0)
                 {
@@ -310,13 +311,13 @@ namespace Cake.Core.Discord.Services
                         }
                         else
                         {
-                            if (!t.choked)
+                            if (t.choked)
                             {
-                                info += $"**{Math.Round(t.pp, 2)} PP**\n\n";
+                                info += $"**{Math.Round(t.pp, 2)} PP** ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
                             }
                             else
                             {
-                                info += $"**{Math.Round(t.pp, 2)} PP** ♢ {Math.Round(t.nochokepp, 2)} PP if FC ({Math.Round(t.nochokeaccuracy, 2)}%)\n\n";
+                                info += $"**{Math.Round(t.pp, 2)} PP**\n\n";
                             }
                         }
 

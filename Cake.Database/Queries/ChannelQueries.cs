@@ -1,34 +1,17 @@
 ﻿using Cake.Database.Models;
 using LinqToDB;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 
 namespace Cake.Database.Queries
 {
     public class ChannelQueries
     {
-        protected ChannelQueries()
-        {
-        }
-
-        public static async Task<List<CakeChannel>> GetAll()
+        public static IQueryable<CakeChannel> GetAll()
         {
             using (var db = new CakeDb())
             {
-                return await db.GetTable<CakeChannel>().ToListAsync();
-            }
-        }
-
-        private static async Task<CakeChannel> Get(ulong id)
-        {
-            using (var db = new CakeDb())
-            {
-                var result = await (from cc in db.CakeChannels
-                                    where cc.Id == id
-                                    select cc).ToListAsync();
-                return result.FirstOrDefault();
+                return db.GetTable<CakeChannel>().AsQueryable();
             }
         }
 
@@ -57,7 +40,7 @@ namespace Cake.Database.Queries
                 return newChannel;
             }
         }
-
+        private static async Task<CakeChannel> Get(ulong id) => await GetAll().Where(cc => cc.Id == id).FirstOrDefaultAsync();
         public static async Task<CakeChannel> FindOrCreateChannel(ulong channelId, ulong guildId = 0) => await Get(channelId).ConfigureAwait(false) ?? await CreateChannel(channelId, guildId).ConfigureAwait(false);
     }
 }

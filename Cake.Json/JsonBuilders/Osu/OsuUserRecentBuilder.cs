@@ -54,6 +54,7 @@ namespace Cake.Json.CakeBuilders.Osu
 
                 item.hitted = item.countkatu + item.countgeki + item.count300 + item.count100 + item.count50 +
                               item.countmiss;
+
                 if(item.maxcombo <= (beatmapData.GetMaxCombo() - (item.count100 + item.count50)))
                     item.choked = true;
                     else if (item.countmiss > 0)

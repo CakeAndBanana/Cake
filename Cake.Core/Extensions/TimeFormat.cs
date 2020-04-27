@@ -108,7 +108,7 @@ namespace Cake.Core.Extensions
             {
                 timestamp += $"{year} years ";
             }
-            if (year == 1)
+            else
             {
                 timestamp += $"{year} year ";
             }
@@ -116,7 +116,7 @@ namespace Cake.Core.Extensions
             {
                 timestamp += $"{month} months ";
             }
-            if (month == 1)
+            else
             {
                 timestamp += $"{month} month ";
             }
@@ -124,25 +124,25 @@ namespace Cake.Core.Extensions
             {
                 timestamp += $"{day} days ";
             }
-            if (day == 1)
+            else
             {
                 timestamp += $"{day} day ";
-            }
-            if (hour == 1)
-            {
-                timestamp += $"{hour} hour ";
             }
             if (hour > 1)
             {
                 timestamp += $"{hour} hours ";
             }
-            if (minute == 1)
+            else
             {
-                timestamp += $"and {minute} minute ";
+                timestamp += $"{hour} hour ";
             }
             if (minute > 1)
             {
                 timestamp += $"and {minute} minutes ";
+            }
+            else
+            {
+                timestamp += $"and {minute} minute ";
             }
 
             return timestamp;

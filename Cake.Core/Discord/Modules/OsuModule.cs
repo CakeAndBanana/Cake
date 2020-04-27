@@ -243,26 +243,24 @@ namespace Cake.Core.Discord.Modules
 
             await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), n);
 
-            if (GetMapId() != null)
+            var mapId = GetMapId();
+            if (mapId != null)
             {
-                var channel = await Database.Queries.ChannelQueries.FindOrCreateChannel(Context.Channel.Id, Context.Guild.Id);
-                channel.OsuMapId = (int)GetMapId();
-                await Database.Queries.ChannelQueries.Update(channel);
+                await SaveMapId(Context.Channel.Id, Context.Guild.Id, (int)mapId);
             }
         }
 
         [Command("recent", RunMode = RunMode.Async)]
         [Hide]
         [Alias("r")]
-        public async Task RecentDUser(IGuildUser user, int n = 1)
+        public async Task RecentDUser(IGuildUser user)
         {
             await _service.GetUserRecent("", false, 1, true, user.Id);
 
-            if (GetMapId() != null)
+            var mapId = GetMapId();
+            if (mapId != null)
             {
-                var channel = await Database.Queries.ChannelQueries.FindOrCreateChannel(Context.Channel.Id, Context.Guild.Id);
-                channel.OsuMapId = (int)GetMapId();
-                await Database.Queries.ChannelQueries.Update(channel);
+                await SaveMapId(Context.Channel.Id, Context.Guild.Id, (int)mapId);
             }
         }
 
@@ -291,10 +289,19 @@ namespace Cake.Core.Discord.Modules
         }
 
         [Command("compare", RunMode = RunMode.Async)]
+        [Hide]
         [Alias("c")]
         public async Task GetCompareDUser(IGuildUser user)
         {
             await _service.GetCompare("", false, true, user.Id);
+        }
+
+        private async Task SaveMapId(ulong channelId, ulong guildId, int mapId)
+        {
+            var channel = await Database.Queries.ChannelQueries.FindOrCreateChannel(channelId, guildId);
+            channel.OsuMapId = mapId;
+
+            await Database.Queries.ChannelQueries.Update(channel);
         }
     }
 }
