@@ -222,9 +222,9 @@ namespace Cake.Core.Discord.Modules
 
         [Command("recent", RunMode = RunMode.Async)]
         [Alias("r")]
-        [Summary(">osu recent (amount) (username)")]
+        [Summary(">osu recent (username)")]
         [Remarks("Returns someones recently played maps")]
-        public async Task Recent(int n = 1, [Remainder] string arg = "")
+        public async Task Recent([Remainder] string arg = "")
         {
             OsuArg osuDiscordArg = null;
 
@@ -241,7 +241,7 @@ namespace Cake.Core.Discord.Modules
                 _logger.LogException(e);
             }
 
-            await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername(), n);
+            await _service.GetUserRecent(osuDiscordArg.GetUserId(), osuDiscordArg.UseUsername());
 
             var mapId = GetMapId();
             if (mapId != null)
@@ -255,7 +255,7 @@ namespace Cake.Core.Discord.Modules
         [Alias("r")]
         public async Task RecentDUser(IGuildUser user)
         {
-            await _service.GetUserRecent("", false, 1, true, user.Id);
+            await _service.GetUserRecent("", false, true, user.Id);
 
             var mapId = GetMapId();
             if (mapId != null)

@@ -7,18 +7,16 @@ namespace Cake.Core.Extensions
     {
         public static string ToShortTimeSpan(TimeSpan time)
         {
-            var days = time.Days;
-            var months = ConvertionDate(days, 30);
-            var years = ConvertionDate(months, 12);
-            return TimetoString(new Time(years, months, days, 0, 0));
+            var monthsCalculation = ConvertionTupleDate(time.Days, 30);
+            var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
+            return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, 0, 0));
         }
 
         public static string ToLongTimeSpan(TimeSpan time)
         {
-            var days = time.Days;
-            var months = ConvertionDate(days, 30);
-            var years = ConvertionDate(months, 12);
-            return TimetoString(new Time(years, months, days, time.Hours, time.Minutes));
+            var monthsCalculation = ConvertionTupleDate(time.Days, 30);
+            var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
+            return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, time.Hours, time.Minutes));
         }
 
         private static string TimetoString(Time model)
@@ -43,10 +41,10 @@ namespace Cake.Core.Extensions
             return output;
         }
 
-        private static int ConvertionDate(int convertdate, int multipier)
+        private static Tuple<int, int> ConvertionTupleDate(int convertdate, int multipier)
         {
             int calcInt = 0;
-            if (convertdate >= 12)
+            if (convertdate >= multipier)
             {
                 while (true)
                 {
@@ -58,7 +56,7 @@ namespace Cake.Core.Extensions
                     }
                 }
             }
-            return calcInt;
+            return Tuple.Create(calcInt, convertdate);
         }
 
         private class Time

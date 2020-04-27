@@ -25,7 +25,6 @@ namespace Cake.Core.Logging
                 _isDebugging = true;
                 #endif
 
-                _instance.CreateLog();
                 _instance.SendWelcomeMessage();
             }
 
@@ -35,14 +34,6 @@ namespace Cake.Core.Logging
         ILogger ILogger.Get()
         {
             return Get();
-        }
-        
-        public void CreateLog()
-        {
-            if (!File.Exists(Path))
-            {
-                File.Create(Path);
-            }
         }
 
         public void SendWelcomeMessage()

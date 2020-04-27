@@ -15,7 +15,7 @@ namespace Cake.Core.Extensions.Osu
                 UserId = userid
             };
 
-            var result = recentBuilder.Execute(false, true);
+            var result = recentBuilder.Execute(true);
 
             foreach (var recent in result)
             {

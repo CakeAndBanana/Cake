@@ -5,7 +5,6 @@ namespace Cake.Json.CakeModels.Osu
     public class OsuJsonScore : OsuJsonScorable
     {
         public string score_id { get; set; }
-        public int score { get; set; }
         public string rounded_score { get; set; }
         public string username { get; set; }
         public int maxcombo { get; set; }
@@ -13,7 +12,6 @@ namespace Cake.Json.CakeModels.Osu
         public string perfect { get; set; }
         public string enabled_mods { get; set; }
         public string user_id { get; set; }
-        public DateTime date { get; set; }
         public string rank { get; set; }
         public double pp { get; set; }
     }

@@ -51,22 +51,22 @@ namespace Cake.Json.CakeBuilders.Osu
                 switch (item.approved)
                 {
                     case "-2":
-                        item.approved_string = "Graveyard";
+                        item.approved_string = "graveyard";
                         break;
                     case "-1":
-                        item.approved_string = "Pending";
+                        item.approved_string = "pending";
                         break;
                     case "1":
-                        item.approved_string = "Ranked";
+                        item.approved_string = "ranked";
                         break;
                     case "2":
-                        item.approved_string = "Approved";
+                        item.approved_string = "approved";
                         break;
                     case "3":
-                        item.approved_string = "Qualified";
+                        item.approved_string = "qualified";
                         break;
                     case "4":
-                        item.approved_string = "Loved";
+                        item.approved_string = "loved";
                         break;
                     default:
                         item.approved_string = "NULL";
