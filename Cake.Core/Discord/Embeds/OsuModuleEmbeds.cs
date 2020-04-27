@@ -136,7 +136,7 @@ namespace Cake.Core.Discord.Embeds
                 .WithThumbnailUrl(beatmap.thumbnail)
                 .WithTimestamp(recent.date)
                 .WithTitle($"{beatmap.complete_title} {Math.Round(recent.starrating, 2)}★")
-                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {beatmap.approved_string} ⌑ #{retryCount} Try")
+                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {beatmap.approved_string} ⌑ #{retryCount} try")
                 .WithDescription(description)
                 as CakeEmbedBuilder;
         }

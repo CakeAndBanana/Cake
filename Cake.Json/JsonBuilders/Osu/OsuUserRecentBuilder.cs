@@ -15,18 +15,18 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public string UserId; // u
         public string Mode; // m
-        public string Limit; // limit
-        public string Type; // type
+        public string Limit; // limit (not used)
+        public string Type; // type (not used)
 
-        public List<OsuJsonUserRecent> Execute(bool pp = false, bool retry = false)
+        public List<OsuJsonUserRecent> Execute(bool retry = false)
         {
             var recentArray = ExecuteJson(OsuApiRequest.RecentPlayed);
-            recentArray = ProcessJson(recentArray, pp, retry);
+            recentArray = ProcessJson(recentArray, retry);
 
             return recentArray.ToList();
         }
 
-        private OsuJsonUserRecent[] ProcessJson(OsuJsonUserRecent[] array, bool pp, bool retrycount)
+        private OsuJsonUserRecent[] ProcessJson(OsuJsonUserRecent[] array, bool retrycount)
         {
             foreach (var item in array)
             {
@@ -37,24 +37,15 @@ namespace Cake.Json.CakeBuilders.Osu
                 var beatmapData = Beatmap.Read(new StreamReader(new MemoryStream(data, false)));
                 var diff = new DiffCalc().Calc(beatmapData, (Mods)item.enabled_mods);
 
-                if (pp && Mode == "0")
-                {
-                    var rawPp = new PPv2(new PPv2Parameters(beatmapData, diff, new Accuracy(item.count300, item.count100, item.count50, item.countmiss).Value(), item.countmiss, item.maxcombo, (Mods)item.enabled_mods));
-                    item.nochokeaccuracy = new Accuracy(item.count300 + item.countmiss, item.count100, item.count50, 0).Value() * 100;
-                    var nochokePp = new PPv2(new PPv2Parameters(beatmapData, diff, item.nochokeaccuracy / 100, 0, diff.Beatmap.GetMaxCombo(), (Mods)item.enabled_mods));
-                    item.pp = rawPp.Total;
-                    item.nochokepp = nochokePp.Total;
-                }
-                else
-                    item.pp = 0;
-
-                item.date = new DateTimeOffset(item.date.DateTime, TimeSpan.Zero).AddHours(item.date.Offset.TotalHours);
+                var rawPp = new PPv2(new PPv2Parameters(beatmapData, diff, new Accuracy(item.count300, item.count100, item.count50, item.countmiss).Value(), item.countmiss, item.maxcombo, (Mods)item.enabled_mods));
+                item.nochokeaccuracy = new Accuracy(item.count300 + item.countmiss, item.count100, item.count50, 0).Value() * 100;
+                var nochokePp = new PPv2(new PPv2Parameters(beatmapData, diff, item.nochokeaccuracy / 100, 0, diff.Beatmap.GetMaxCombo(), (Mods)item.enabled_mods));
+                item.pp = rawPp.Total;
+                item.nochokepp = nochokePp.Total;
 
                 item.rounded_score = item.score.ToString("C0", _nfi);
 
-                item.hitted = item.countkatu + item.countgeki + item.count300 + item.count100 + item.count50 +
-                              item.countmiss;
-                if(item.maxcombo <= (beatmapData.GetMaxCombo() - (item.count100 + item.count50)))
+                if(item.maxcombo <= (beatmapData.GetMaxCombo() - (item.count100 + item.count50)) || item.rank == "XH" || item.rank == "SH")
                     item.choked = true;
                     else if (item.countmiss > 0)
                     item.choked = true;
@@ -65,11 +56,9 @@ namespace Cake.Json.CakeBuilders.Osu
 
                 item.rounded_score = item.score.ToString("C0", _nfi);
 
-                item.standardhit = item.count300 + item.count100 + item.count50 +
-                                   item.countmiss;
+                item.standardhit = item.count300 + item.count100 + item.count50 + item.countmiss;
 
-                item.hitted = item.countkatu + item.countgeki + item.count300 + item.count100 + item.count50 +
-                              item.countmiss;
+                item.hitted = item.countkatu + item.countgeki + item.count300 + item.count100 + item.count50 + item.countmiss;
 
                 item.completion = item.standardhit / (double)item.counttotal * 100;
             }
