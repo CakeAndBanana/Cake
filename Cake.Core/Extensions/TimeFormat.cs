@@ -15,14 +15,13 @@ namespace Cake.Core.Extensions
         {
             var monthsCalculation = ConvertionTupleDate(time.Days, 30);
             var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
-            return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, 0, 0));
+            return TimetoString(new Time(yearsCalculation.Item1, yearsCalculation.Item2, monthsCalculation.Item2, 0, 0));
         }
 
         public string ToLongString()
         {
             var monthsCalculation = ConvertionTupleDate(time.Days, 30);
-            var yearsCalculation = ConvertionTupleDate(monthsCalculation.Item1, 12);
-            return TimetoString(new Time(yearsCalculation.Item1, monthsCalculation.Item1, monthsCalculation.Item2, time.Hours, time.Minutes));
+            return TimetoString(new Time(0, monthsCalculation.Item1, monthsCalculation.Item2, time.Hours, time.Minutes));
         }
 
         private string TimetoString(Time model)

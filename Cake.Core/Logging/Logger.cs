@@ -42,9 +42,12 @@ namespace Cake.Core.Logging
             styleSheet.AddStyle("a", Color.Orange);
             styleSheet.AddStyle("k", Color.Yellow);
             styleSheet.AddStyle("e", Color.Lime);
-            styleSheet.AddStyle("!", Color.DeepSkyBlue);
-            var font = FigletFont.Load(Properties.Resources.colossal);
-            Console.WriteAsciiStyled("~ Cake! ~", font, styleSheet);
+            var colossal = Properties.Resources.colossal;
+            if (colossal.GetType() == typeof(byte[]))
+            {
+                var font = FigletFont.Load(Properties.Resources.colossal);
+                Console.WriteAsciiStyled("~ Cake ~", font, styleSheet);
+            }
         }
 
         public void Log(Type type, 
