@@ -38,6 +38,7 @@ namespace Cake.Core.Discord.Modules
             if (arg.Contains("-r"))
             {
                 _recent = true;
+                arg.Replace("-r", "");
             }
             else if (arg.Contains("-p"))
             {
@@ -46,16 +47,16 @@ namespace Cake.Core.Discord.Modules
                 {
                     throw new CakeException("``Play number has to be between 1 and 100``");
                 }
+                arg.Replace("-p", "");
             }
-            else if (arg.Contains("-id"))
+            _userId = arg;
+            _userUsername = true;
+
+            if (arg.Contains("-id"))
             {
                 _userId = Regex.Match(arg, @"\d+").Value;
                 _userUsername = false;
-            }
-            else
-            {
-                _userId = arg;
-                _userUsername = true;
+                arg.Replace("-p", "");
             }
         }
 
@@ -216,7 +217,7 @@ namespace Cake.Core.Discord.Modules
 
             if (osuDiscordArg != null)
             {
-                await _service.GetUserBest("", false, false, osuDiscordArg.GetPlayNumber(), true, user.Id);
+                await _service.GetUserBest("", false, osuDiscordArg.IsRecent(), osuDiscordArg.GetPlayNumber(), true, user.Id);
             }
         }
 

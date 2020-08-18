@@ -183,7 +183,7 @@ namespace Cake.Core.Discord.Services
                         item.play_number = (int)play;
                     }
 
-                    var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.Ticks);
+                    var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.UtcTicks);
                     var timeFormat = new TimeFormat(dateTicks);
 
                     var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
