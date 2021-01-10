@@ -7,6 +7,17 @@ using System.Collections.Generic;
 
 namespace Cake.Core.Discord.Embeds
 {
+    public enum OsuMapEnum
+    {
+        Loved = 4,
+        Qualified = 3,
+        Approved = 2,
+        Ranked = 1,
+        Pending = 0,
+        WIP = -1,
+        Graveyard = -2
+    }
+
     public enum OsuModeEnum
     {
         osu,
@@ -127,7 +138,7 @@ namespace Cake.Core.Discord.Embeds
                 .WithThumbnailUrl(beatmap.thumbnail)
                 .WithTimestamp(recent.date)
                 .WithTitle($"{beatmap.complete_title} {Math.Round(recent.starrating, 2)}★")
-                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {beatmap.approved_string} ⌑ #{retryCount} try")
+                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {GetNameofApproved(beatmap.approved)} ⌑ #{retryCount} try")
                 .WithDescription(description)
                 as CakeEmbedBuilder;
         }
@@ -146,7 +157,14 @@ namespace Cake.Core.Discord.Embeds
                 .WithTitle(beatmap.complete_title)
                 .WithUrl(beatmap.beatmap_url)
                 .WithDescription(description)
-                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {beatmap.approved_string}") as CakeEmbedBuilder;
+                .WithFooter($"{OsuMode.GetOfficialName(mode)} ⌑ {GetNameofApproved(beatmap.approved)}") as CakeEmbedBuilder;
+        }
+
+        private static string GetNameofApproved(int approved)
+        {
+            var mapApproved = (OsuMapEnum)approved;
+
+            return mapApproved.ToString();
         }
     }
 }

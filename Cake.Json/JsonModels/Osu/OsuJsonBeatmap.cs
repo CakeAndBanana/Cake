@@ -4,7 +4,7 @@
     {
         public int beatmapset_id { get; set; }
         public int beatmap_id { get; set; }
-        public string approved { get; set; }
+        public int approved { get; set; }
         public string total_length { get; set; }
         public string hit_length { get; set; }
         public string version { get; set; }
@@ -37,6 +37,5 @@
         public string download_no_video { get; set; }
         public string osu_direct { get; set; }
         public string bloodcat { get; set; }
-        public string approved_string { get; set; }
     }
 }
