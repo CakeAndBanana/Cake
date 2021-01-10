@@ -40,7 +40,8 @@ namespace Cake.Json
                     BotKey = "Bot Key here",
                     OsuApiKey = "Osu Api Here",
                     LogEnabled = true,
-                    ConnectionString = null
+                    ConnectionString = null, 
+                    DatabaseProvider = "SqlServer"
                 };
             }
 

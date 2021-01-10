@@ -48,30 +48,6 @@ namespace Cake.Json.CakeBuilders.Osu
                 item.download_no_video = OsuUtil.OsuDownload + item.beatmapset_id + "n";
                 item.osu_direct = OsuUtil.OsuDirect + item.beatmapset_id;
                 item.bloodcat = OsuUtil.Bloodcat + item.beatmapset_id;
-                switch (item.approved)
-                {
-                    case "-2":
-                        item.approved_string = "graveyard";
-                        break;
-                    case "-1":
-                        item.approved_string = "pending";
-                        break;
-                    case "1":
-                        item.approved_string = "ranked";
-                        break;
-                    case "2":
-                        item.approved_string = "approved";
-                        break;
-                    case "3":
-                        item.approved_string = "qualified";
-                        break;
-                    case "4":
-                        item.approved_string = "loved";
-                        break;
-                    default:
-                        item.approved_string = "NULL";
-                        break;
-                }
             }
 
             return array;

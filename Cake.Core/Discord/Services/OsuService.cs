@@ -183,7 +183,7 @@ namespace Cake.Core.Discord.Services
                         item.play_number = (int)play;
                     }
 
-                    var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.Ticks);
+                    var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - item.date.UtcTicks);
                     var timeFormat = new TimeFormat(dateTicks);
 
                     var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
@@ -353,7 +353,7 @@ namespace Cake.Core.Discord.Services
                 {
                     var modName = t.enabled_mods == "0" ? "No Mod" : OsuMods.Modnames(Convert.ToInt32(t.enabled_mods));
 
-                    var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - t.date.Ticks);
+                    var dateTicks = TimeSpan.FromTicks(DateTime.UtcNow.Ticks - t.date.UtcTicks);
                     var timeFormat = new TimeFormat(dateTicks);
 
                     var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
