@@ -10,12 +10,12 @@ namespace Cake.Json
     {
         private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory + @"\osu";
 
-        public static byte[] FindMap(int beatmapId)
+        public static byte[] FindMap(int beatmapId, DateTime mapDate)
         {
             CreateFolder();
             try
             {
-                return GetMap(beatmapId);
+                return GetMap(beatmapId, mapDate);
             }
             catch (Exception e)
             {
@@ -38,15 +38,20 @@ namespace Cake.Json
         private static byte[] DownloadData(string filename, int beatmapId)
         {
             var data = new WebClient().DownloadData($"https://osu.ppy.sh/osu/{beatmapId}");
-            if (!File.Exists(filename))
-                File.WriteAllBytes($@"osu\{beatmapId}.txt", data.ToArray());
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            File.WriteAllBytes($@"osu\{beatmapId}.txt", data.ToArray());
             return data;
         }
 
-        private static byte[] GetMap(int beatmapId)
+        private static byte[] GetMap(int beatmapId, DateTime mapDate)
         {
             var filename = Path + $@"\{beatmapId}.txt";
-            if (File.Exists(filename))
+            var writeTime = File.GetLastWriteTime(filename);
+            if (File.Exists(filename) && writeTime > mapDate)
             {
                 return File.ReadAllBytes(filename);
             }

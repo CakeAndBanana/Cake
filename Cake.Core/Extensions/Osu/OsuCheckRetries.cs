@@ -4,7 +4,7 @@ namespace Cake.Core.Extensions.Osu
 {
     public class OsuCheckRetries
     {
-        public static int Tries(string mode, string userid, int beatmapid)
+        public static int Tries(int mode, int userid, int beatmapid)
         {
             int count = 0;
 

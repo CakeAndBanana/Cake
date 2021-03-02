@@ -8,11 +8,11 @@ namespace Cake.Json.CakeBuilders.Osu
     public class OsuBeatmapBuilder : OsuJsonBaseBuilder<OsuJsonBeatmap>
     {
         public string Since; // since
-        public string BeatmapSetId; // s
+        public int? BeatmapSetId; // s
         public int? BeatmapId; // b
-        public string UserId; // u
+        public int? UserId; // u
         public string Type; // type
-        public string Mode; // m
+        public int? Mode; // m
         public string ConvertedIncluded; // a
         public string Hash; // h
         public string Limit; // limit
@@ -49,7 +49,6 @@ namespace Cake.Json.CakeBuilders.Osu
                 item.osu_direct = OsuUtil.OsuDirect + item.beatmapset_id;
                 item.bloodcat = OsuUtil.Bloodcat + item.beatmapset_id;
             }
-
             return array;
         }
 
@@ -60,7 +59,7 @@ namespace Cake.Json.CakeBuilders.Osu
                 urlBuilder.Append("&since=").Append(Since);
             }
 
-            if (!string.IsNullOrEmpty(BeatmapSetId))
+            if (BeatmapSetId != null)
             {
                 urlBuilder.Append("&s=").Append(BeatmapSetId);
             }
@@ -70,12 +69,12 @@ namespace Cake.Json.CakeBuilders.Osu
                 urlBuilder.Append("&b=").Append(BeatmapId);
             }
 
-            if (!string.IsNullOrEmpty(UserId))
+            if (UserId != null)
             {
                 urlBuilder.Append("&u=").Append(UserId);
             }
 
-            if (!string.IsNullOrEmpty(Mode))
+            if (Mode != null)
             {
                 urlBuilder.Append("&m=").Append(Mode);
             }

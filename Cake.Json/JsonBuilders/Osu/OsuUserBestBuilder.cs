@@ -10,8 +10,8 @@ namespace Cake.Json.CakeBuilders.Osu
 {
     public class OsuUserBestBuilder : OsuJsonBaseBuilder<OsuJsonUserBest>
     {
-        public string UserId; // u
-        public string Mode; // m
+        public int UserId; // u
+        public int Mode; // m
         public string Limit; // limit
         public string Type; // type
         public bool Recent; // recent best
@@ -45,11 +45,20 @@ namespace Cake.Json.CakeBuilders.Osu
                 item.play_number = (Array.IndexOf(oldarray, item) + 1);
 
                 OsuUtil.GetCalculatedAccuracy(item, Mode);
+                //Get Beatmap last update
+                var beatmapBuilder = new OsuBeatmapBuilder
+                {
+                    Mode = Mode,
+                    ConvertedIncluded = "1",
+                    BeatmapId = item.beatmap_id
+                };
+
+                item.Beatmap = beatmapBuilder.Execute().First();
 
                 if (item.enabled_mods > 0)
                 {
                     //Star rating
-                    var data = OsuDlBeatmap.FindMap(item.beatmap_id);
+                    var data = OsuDlBeatmap.FindMap(item.beatmap_id, item.Beatmap.last_update.DateTime);
                     var diff = new DiffCalc().Calc(Beatmap.Read(new StreamReader(new MemoryStream(data, false))), (Mods)item.enabled_mods);
                     item.starrating = diff.Total;
                 }
@@ -59,12 +68,12 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public override string Build(StringBuilder urlBuilder)
         {
-            if (!string.IsNullOrEmpty(UserId))
+            if (!string.IsNullOrEmpty(UserId.ToString()))
             {
                 urlBuilder.Append("&u=").Append(UserId);
             }
 
-            if (!string.IsNullOrEmpty(Mode))
+            if (!string.IsNullOrEmpty(Mode.ToString()))
             {
                 urlBuilder.Append("&m=").Append(Mode);
             }

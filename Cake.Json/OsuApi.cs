@@ -42,20 +42,20 @@ namespace Cake.Json
             return OsuAvatarUrl + userId + "_1512645682.png";
         }
 
-        public static void GetCalculatedAccuracy(OsuJsonScorable item, string mode)
+        public static void GetCalculatedAccuracy(OsuJsonScorable item, int mode)
         {
             switch (mode)
             {
-                case "0":
+                case 0:
                     item.calculated_accuracy = CalculateOsuAccuracy(item);
                     break;
-                case "1":
+                case 1:
                     item.calculated_accuracy = CalculateTaikoAccuracy(item);
                     break;
-                case "2":
+                case 2:
                     item.calculated_accuracy = CalculateCatchAccuracy(item);
                     break;
-                case "3":
+                case 3:
                     item.calculated_accuracy = CalculateManiaAccuracy(item);
                     break;
             }

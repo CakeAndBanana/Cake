@@ -13,26 +13,14 @@ namespace Cake.Core.Extensions.Osu
             .Where(x => x.CountryCode == countryCode).FirstOrDefault();
 
         private static TimeZoneInfo GetTimeZoneInfo(string countryCode) => TimeZoneInfo.FindSystemTimeZoneById(TZConvert.IanaToWindows(GetTzdbZoneLocationFromCountryCode(countryCode).ZoneId));
-        public static List<OsuJsonUserRecent> ConvertRecentScores(string countryCode, List<OsuJsonUserRecent> scores)
+
+        public static List<T> ConvertScorableDate<T>(string countryCode, List<T> scores) where T: OsuJsonScorable
         {
             var timeZoneInfo = GetTimeZoneInfo(countryCode);
 
             foreach (var score in scores)
             {
-                DateTimeOffset cetTime = TimeZoneInfo.ConvertTime(score.date, timeZoneInfo);
-                score.date = score.date.AddHours(cetTime.Offset.TotalHours);
-            }
-
-            return scores;
-        }
-
-        public static List<OsuJsonUserBest> ConvertBestScores(string countryCode, List<OsuJsonUserBest> scores)
-        {
-            var timeZoneInfo = GetTimeZoneInfo(countryCode);
-
-            foreach (var score in scores)
-            {
-                DateTimeOffset cetTime = TimeZoneInfo.ConvertTime(score.date, timeZoneInfo);
+                DateTimeOffset cetTime = TimeZoneInfo.ConvertTime(score.date.UtcDateTime, timeZoneInfo);
                 score.date = score.date.AddHours(cetTime.Offset.TotalHours);
             }
 

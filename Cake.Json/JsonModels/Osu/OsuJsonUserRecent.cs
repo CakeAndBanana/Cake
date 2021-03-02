@@ -2,6 +2,7 @@
 {
     public class OsuJsonUserRecent : OsuJsonScorable
     {
+        public OsuJsonBeatmap Beatmap { get; set; }
         public int beatmap_id { get; set; }
         public string rounded_score { get; set; }
         public double starrating { get; set; }
@@ -11,7 +12,7 @@
         public int hitted { get; set; }
         public string perfect { get; set; }
         public int enabled_mods { get; set; }
-        public string user_id { get; set; }
+        public int user_id { get; set; }
         public string rank { get; set; }
         public string accuracy { get; set; }
         public double nochokeaccuracy { get; set; }

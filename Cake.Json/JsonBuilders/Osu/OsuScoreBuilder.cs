@@ -11,9 +11,9 @@ namespace Cake.Json.CakeBuilders.Osu
     {
         private readonly NumberFormatInfo Nfi = new NumberFormatInfo { NumberDecimalSeparator = ".", NumberGroupSeparator = ".", CurrencySymbol = "" };
 
-        public string BeatmapId; // b
-        public string UserId; // u
-        public string Mode; // m
+        public int BeatmapId; // b
+        public int UserId; // u
+        public int Mode; // m
         public string Mods; // mods
         public string Limit; // limit
 
@@ -28,25 +28,34 @@ namespace Cake.Json.CakeBuilders.Osu
         {
             foreach (var item in scoreArray)
             {
+                var beatmapBuilder = new OsuBeatmapBuilder
+                {
+                    Mode = Mode,
+                    ConvertedIncluded = "1",
+                    BeatmapId = BeatmapId
+                };
+
+                item.Beatmap = beatmapBuilder.Execute().First();
+
                 item.rounded_score = item.score.ToString("C0", Nfi);
 
                 switch (Mode)
                 {
-                    case "0":
+                    case 0:
                         item.calculated_accuracy = 100.0 * (6 * item.count300 + 2 * item.count100 + item.count50) /
                                                    (6 * (item.count50 + item.count100 + item.count300 +
                                                          item.countmiss));
                         break;
-                    case "1":
+                    case 1:
                         item.calculated_accuracy = 100.0 * (2 * item.count300 + item.count100) /
                                                    (2 * (item.count300 + item.count100 + item.countmiss));
                         break;
-                    case "2":
+                    case 2:
                         item.calculated_accuracy = 100.0 * (item.count300 + item.count100 + item.count50) /
                                                    (item.count300 + item.count100 + item.count50 + item.countkatu +
                                                     item.countmiss);
                         break;
-                    case "3":
+                    case 3:
                         item.calculated_accuracy =
                             100.0 * (6 * item.countgeki + 6 * item.count300 + 4 * item.countkatu + 2 * item.count100 +
                                      item.count50) /
@@ -63,17 +72,17 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public override string Build(StringBuilder urlBuilder)
         {
-            if (!string.IsNullOrEmpty(BeatmapId))
+            if (!string.IsNullOrEmpty(BeatmapId.ToString()))
             {
                 urlBuilder.Append("&b=").Append(BeatmapId);
             }
 
-            if (!string.IsNullOrEmpty(UserId))
+            if (!string.IsNullOrEmpty(UserId.ToString()))
             {
                 urlBuilder.Append("&u=").Append(UserId);
             }
 
-            if (!string.IsNullOrEmpty(Mode))
+            if (!string.IsNullOrEmpty(Mode.ToString()))
             {
                 urlBuilder.Append("&m=").Append(Mode);
             }

@@ -97,7 +97,7 @@ namespace Cake.Core.Discord.Modules
                     doesNotHaveMaxUses = invite.MaxUses == 0;
                 }
 
-                return doesNotAge && doesNotHaveMaxUses && !invite.IsTemporary && !invite.IsRevoked;
+                return doesNotAge && doesNotHaveMaxUses && !invite.IsTemporary;
             }
 
             #endregion

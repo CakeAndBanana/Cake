@@ -144,7 +144,7 @@ namespace Cake.Core.Discord.Handlers
             }
             catch (Exception e)
             {
-                _logger.LogError(e);
+                _logger.Log(Type.Error, e.Message);
             }
         }
     }

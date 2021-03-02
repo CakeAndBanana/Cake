@@ -2,6 +2,7 @@
 {
     public class OsuJsonUserBest : OsuJsonScorable
     {
+        public OsuJsonBeatmap Beatmap { get; set; }
         public int play_number { get; set; }
         public int beatmap_id { get; set; }
         public double starrating { get; set; }

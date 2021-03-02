@@ -14,8 +14,8 @@ namespace Cake.Json.CakeBuilders.Osu
     {
         private readonly NumberFormatInfo _nfi = new NumberFormatInfo { NumberDecimalSeparator = ".", NumberGroupSeparator = ".", CurrencySymbol = "" };
 
-        public string UserId; // u
-        public string Mode; // m
+        public int UserId; // u
+        public int Mode; // m
         public string Limit; // limit (not used)
         public string Type; // type (not used)
 
@@ -33,8 +33,18 @@ namespace Cake.Json.CakeBuilders.Osu
             {
                 if (retrycount) continue;
 
+                //Get Beatmap last update
+                var beatmapBuilder = new OsuBeatmapBuilder
+                {
+                    Mode = Mode,
+                    ConvertedIncluded = "1",
+                    BeatmapId = item.beatmap_id
+                };
+
+                item.Beatmap = beatmapBuilder.Execute().First();
+
                 OsuUtil.GetCalculatedAccuracy(item, Mode);
-                var data = OsuDlBeatmap.FindMap(item.beatmap_id);
+                var data = OsuDlBeatmap.FindMap(item.beatmap_id, item.Beatmap.last_update.DateTime);
                 var beatmapData = Beatmap.Read(new StreamReader(new MemoryStream(data, false)));
                 var diff = new DiffCalc().Calc(beatmapData, (Mods)item.enabled_mods);
 
@@ -69,12 +79,12 @@ namespace Cake.Json.CakeBuilders.Osu
 
         public override string Build(StringBuilder urlBuilder)
         {
-            if (!string.IsNullOrEmpty(UserId))
+            if (!string.IsNullOrEmpty(UserId.ToString()))
             {
                 urlBuilder.Append("&u=").Append(UserId);
             }
 
-            if (!string.IsNullOrEmpty(Mode))
+            if (!string.IsNullOrEmpty(Mode.ToString()))
             {
                 urlBuilder.Append("&m=").Append(Mode);
             }
