@@ -46,7 +46,7 @@ namespace Cake.Json.CakeBuilders.Osu
 
                 OsuUtil.GetCalculatedAccuracy(item, Mode);
                 //Get Beatmap last update
-                item.Beatmap = getBeatmap(item.beatmap_id);
+                item.Beatmap = GetBeatmap(item.beatmap_id);
 
                 if (item.enabled_mods > 0)
                 {
@@ -73,10 +73,10 @@ namespace Cake.Json.CakeBuilders.Osu
                 list[0].starrating = diff.Total;
             }
             
-            list[0].Beatmap = getBeatmap(list[0].beatmap_id);
+            list[0].Beatmap = GetBeatmap(list[0].beatmap_id);
             return list;
         }
-        private OsuJsonBeatmap getBeatmap(int beatmap_id)
+        private OsuJsonBeatmap GetBeatmap(int beatmap_id)
         {
             var beatmapBuilder = new OsuBeatmapBuilder
             {
