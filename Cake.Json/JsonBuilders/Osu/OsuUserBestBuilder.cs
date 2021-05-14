@@ -23,8 +23,8 @@ namespace Cake.Json.CakeBuilders.Osu
 
             if (PlayNumber != null)
             {
-                var beatmapid = osuJsonUserBestArray[0].beatmap_id;
-                return osuJsonUserBestArray.ToList().TakeWhile(c => c.beatmap_id == beatmapid).ToList();
+                var list = ProcessSingle(osuJsonUserBestArray);
+                return list;
             }
 
             osuJsonUserBestArray = ProcessJson(osuJsonUserBestArray);
@@ -46,14 +46,7 @@ namespace Cake.Json.CakeBuilders.Osu
 
                 OsuUtil.GetCalculatedAccuracy(item, Mode);
                 //Get Beatmap last update
-                var beatmapBuilder = new OsuBeatmapBuilder
-                {
-                    Mode = Mode,
-                    ConvertedIncluded = "1",
-                    BeatmapId = item.beatmap_id
-                };
-
-                item.Beatmap = beatmapBuilder.Execute().First();
+                item.Beatmap = getBeatmap(item.beatmap_id);
 
                 if (item.enabled_mods > 0)
                 {
@@ -64,6 +57,35 @@ namespace Cake.Json.CakeBuilders.Osu
                 }
             }
             return array;
+        }
+
+        private List<OsuJsonUserBest> ProcessSingle(OsuJsonUserBest[] array)
+        {
+            List<OsuJsonUserBest> list = new List<OsuJsonUserBest>
+                {
+                    array[(int)PlayNumber - 1]
+                };
+
+            if (list[0].enabled_mods > 0)
+            {
+                var data = OsuDlBeatmap.FindMap(list[0].beatmap_id, list[0].Beatmap.last_update.DateTime);
+                var diff = new DiffCalc().Calc(Beatmap.Read(new StreamReader(new MemoryStream(data, false))), (Mods)list[0].enabled_mods);
+                list[0].starrating = diff.Total;
+            }
+            
+            list[0].Beatmap = getBeatmap(list[0].beatmap_id);
+            return list;
+        }
+        private OsuJsonBeatmap getBeatmap(int beatmap_id)
+        {
+            var beatmapBuilder = new OsuBeatmapBuilder
+            {
+                Mode = Mode,
+                ConvertedIncluded = "1",
+                BeatmapId = beatmap_id
+            };
+
+            return beatmapBuilder.Execute().First();
         }
 
         public override string Build(StringBuilder urlBuilder)

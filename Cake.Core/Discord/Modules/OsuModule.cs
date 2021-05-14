@@ -14,49 +14,49 @@ namespace Cake.Core.Discord.Modules
 {
     public class OsuArg
     {
-        private readonly bool _userUsername;
+        private readonly bool _userUsername = true;
         private readonly bool _recent;
         private readonly int? _play;
         private readonly string _userId;
 
-        public OsuArg(string arg)
+        public OsuArg(string arg, bool best)
         {
             if (arg.Contains("-id"))
             {
                 _userId = Regex.Match(arg, @"\d+").Value;
                 _userUsername = false;
             }
-            else
-            {
-                _userId = arg;
-                _userUsername = true;
-            }
-        }
-
-        public OsuArg(string arg, bool best)
-        {
-            if (arg.Contains("-r"))
-            {
-                _recent = true;
-                arg.Replace("-r", "");
-            }
-            else if (arg.Contains("-p"))
+            else if (arg.Contains("-p") && best)
             {
                 _play = Parse(Regex.Match(arg, @"\d+").Value);
                 if (_play > 100 || _play == 0)
                 {
                     throw new CakeException("``Play number has to be between 1 and 100``");
                 }
-                arg.Replace("-p", "");
+                arg = arg.Replace("-p " + _play, "");
+                if (!string.IsNullOrEmpty(arg))
+                {
+                    _userId = arg;
+                }
             }
-            _userId = arg;
-            _userUsername = true;
-
-            if (arg.Contains("-id"))
+            else if (arg.Contains("-r") && best)
+            {
+                _recent = true;
+                arg = arg.Replace("-r", "");
+                if (!string.IsNullOrEmpty(arg))
+                {
+                    _userId = arg;
+                }
+            }
+            else if (arg.Contains("-id"))
             {
                 _userId = Regex.Match(arg, @"\d+").Value;
                 _userUsername = false;
                 arg.Replace("-p", "");
+            }
+            else
+            {
+                _userId = arg;
             }
         }
 
@@ -146,7 +146,7 @@ namespace Cake.Core.Discord.Modules
 
             try
             {
-                osuDiscordArg = new OsuArg(args);
+                osuDiscordArg = new OsuArg(args, false);
             }
             catch (CakeException e)
             {
@@ -231,7 +231,7 @@ namespace Cake.Core.Discord.Modules
 
             try
             {
-                osuDiscordArg = new OsuArg(arg);
+                osuDiscordArg = new OsuArg(arg, false);
             }
             catch (CakeException e)
             {
@@ -275,7 +275,7 @@ namespace Cake.Core.Discord.Modules
 
             try
             {
-                osuDiscordArg = new OsuArg(arg);
+                osuDiscordArg = new OsuArg(arg, false);
             }
             catch (CakeException e)
             {
