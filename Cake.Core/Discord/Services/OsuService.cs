@@ -333,7 +333,6 @@ namespace Cake.Core.Discord.Services
             }
             catch (Exception e)
             {
-                await SendMessageAsync(e.ToString());
                 _logger.LogError(e);
             }
         }
