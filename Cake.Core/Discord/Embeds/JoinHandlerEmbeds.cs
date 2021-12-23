@@ -25,7 +25,7 @@ namespace Cake.Core.Discord.Embed
                 .WithTimestamp(DateTime.Now) as CakeEmbedBuilder;
         }
 
-        public static CakeEmbedBuilder ReturnLeaveEmbed(SocketGuildUser leftUser, string username, string avatarUrl)
+        public static CakeEmbedBuilder ReturnLeaveEmbed(SocketUser leftUser, string username, string avatarUrl)
         {
             return new CakeEmbedBuilder()
                 .AddField("User left... :(", leftUser.Mention + " left the server!")

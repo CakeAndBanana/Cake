@@ -17,11 +17,10 @@ namespace Cake.Core.Discord.Handlers
             await channel.SendMessageAsync("", false, embed.Build());
         }
 
-        public static async Task UserLeft(SocketGuildUser leftUser)
+        public static async Task UserLeft(SocketGuild guild, SocketUser leftUser)
         {
             var embed = JoinHandlerEmbeds.ReturnLeaveEmbed(leftUser, Main.GetClient().CurrentUser.Username, Main.GetClient().CurrentUser.GetAvatarUrl());
 
-            var guild = leftUser.Guild;
             var cakeGuild = await Database.Queries.GuildQueries.FindOrCreateGuild(guild.Id);
             var channel = cakeGuild.LeaveId == null ? guild.DefaultChannel : guild.GetTextChannel(cakeGuild.LeaveId.Value);
 

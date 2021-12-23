@@ -10,7 +10,6 @@ namespace Cake.Core.Logging
     public class Logger : ILogger
     {
         private static Logger _instance;
-        private static bool _isDebugging;
         private const string FinalMessageFormat = "{0} {1} {3}:{4} | {2}";
         private static readonly Color DefaultColor = Color.DarkGray;
 
@@ -100,7 +99,7 @@ namespace Cake.Core.Logging
             {
                 foreach (var message in messages)
                 {
-                    if (!_isDebugging && message.Type == Type.Debug)
+                    if (message.Type == Type.Debug)
                     {
                         return;
                     }

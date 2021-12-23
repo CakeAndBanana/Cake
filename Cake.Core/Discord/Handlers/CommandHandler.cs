@@ -111,7 +111,7 @@ namespace Cake.Core.Discord.Handlers
                                     _logger.Log(Type.Info, $"\nNo permissions in guild {context.Guild}{context.Guild.Id}\nTrying to PM {context.User}.");
                                     try
                                     {
-                                        var dmChannel = await context.User.GetOrCreateDMChannelAsync();
+                                        var dmChannel = await context.User.CreateDMChannelAsync();
                                         await dmChannel.SendMessageAsync("I couldn't respond to your message because I lack the permissions to respond.\nHave you given me the correct permissions?");
                                         _logger.Log(Type.Info, $"Successfully send a PM to {context.User}");
                                     }

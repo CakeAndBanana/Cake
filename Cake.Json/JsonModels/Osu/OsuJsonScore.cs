@@ -14,6 +14,6 @@ namespace Cake.Json.CakeModels.Osu
         public string enabled_mods { get; set; }
         public string user_id { get; set; }
         public string rank { get; set; }
-        public double pp { get; set; }
+        public double? pp { get; set; }
     }
 }

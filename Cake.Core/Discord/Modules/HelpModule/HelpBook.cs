@@ -75,7 +75,7 @@ namespace Cake.Core.Discord.Modules
             DisposeThisHelpBook();
         }
 
-        public Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
+        public async Task<Task> OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2, SocketReaction arg3)
         {
             if (ReactionAdderIsBot() || arg1.Id != _targetMessageID)
             {
@@ -84,12 +84,12 @@ namespace Cake.Core.Discord.Modules
 
             if (TryFlipPageByEmojiReaction())
             {
-                IUserMessage userMessage = arg2.GetMessageAsync(arg1.Id).Result as IUserMessage;
+                var channel = await arg2.GetOrDownloadAsync();
 
-                if (userMessage != null)
+                if (channel.GetMessageAsync(arg1.Id) is IUserMessage userMessage)
                 {
-                    userMessage.RemoveReactionAsync(arg3.Emote, arg3.User.Value);
-                    ShowNewPageOnMessage(ref userMessage);
+                    await userMessage.RemoveReactionAsync(arg3.Emote, arg3.User.Value);
+                    await ShowNewPageOnMessage(ref userMessage);
                     ResetTimer();
                 }
                 else
@@ -141,16 +141,15 @@ namespace Cake.Core.Discord.Modules
             #endregion
         }
 
-        public Task OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2)
+        public async Task<Task> OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2)
         {
             if (arg1.Id != _targetMessageID) { return Task.CompletedTask; }
+            var channel = await arg2.GetOrDownloadAsync();
 
-            IUserMessage userMessage = arg2.GetMessageAsync(arg1.Id).Result as IUserMessage;
-
-            if (userMessage != null)
+            if (channel.GetMessageAsync(arg1.Id) is IUserMessage userMessage)
             {
                 // Add back the bot's reaction
-                userMessage.AddReactionsAsync(new Emoji[] { RightArrowEmoji, LeftArrowEmoji });
+                await userMessage.AddReactionsAsync(new Emoji[] { RightArrowEmoji, LeftArrowEmoji });
             }
             else
             {
@@ -160,7 +159,7 @@ namespace Cake.Core.Discord.Modules
             return Task.CompletedTask;
         }
 
-        public Task OnReactionRemoved(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
+        public Task OnReactionRemoved(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2, SocketReaction arg3)
         {
             return Task.CompletedTask;
         }

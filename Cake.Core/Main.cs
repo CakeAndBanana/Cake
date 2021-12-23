@@ -68,8 +68,11 @@ namespace Cake.Core
         public void SetupBot()
         {
             _logger.Log(Type.Info, "Setting up Cake");
-
-            _client = new DiscordShardedClient();
+            var config = new DiscordSocketConfig()
+            {
+                GatewayIntents = GatewayIntents.All
+            };
+            _client = new DiscordShardedClient(config);
             _commandHandler = new CommandHandler(_client, new SetupServices().ReturnProvider());
             _cakeConfiguration = new CakeConfiguration();
             _ = new Database.Init();

@@ -10,11 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cake.Core.Logging;
 
 namespace Cake.Core.Discord.Services
 {
     public class OsuService : CustomBaseService
     {
+        private readonly Logger _logger = Logger.Get() as Logger;
+
         private async Task<CakeUser> GetDatabaseEntityAsync(ulong discordId)
         {
             var databaseProfile = await Database.Queries.UserQueries.FindOrCreateUser(discordId);
@@ -166,9 +169,13 @@ namespace Cake.Core.Discord.Services
 
                 await SendEmbedAsync(Embeds.OsuModuleEmbeds.ReturnUserBest(user, $"https://b.ppy.sh/thumb/{best.First().Beatmap.beatmapset_id}l.jpg", fields, databaseUser.OsuMode));
             }
-            catch (Exception e)
+            catch (CakeException e)
             {
                 await SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
             }
         }
 
@@ -242,6 +249,10 @@ namespace Cake.Core.Discord.Services
             {
                 await SendMessageAsync(e.Message);
             }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
+            }
         }
 
         public async Task GetCompare(string osuId, bool findWithUsername, bool dUser = false, ulong dUserId = 0)
@@ -297,10 +308,19 @@ namespace Cake.Core.Discord.Services
 
                     var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
 
-                    info += $"***{modName}*** \n" +
-                            $"⤷ **PP:** {Math.Round(t.pp, 0)} " +
-                            $"**Rank:**{t.rank.LevelEmotes()} " +
-                            $"**Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
+                    info += $"***{modName}*** \n";
+                    await SendMessageAsync(t.pp.ToString());
+                    if(t.pp != null)
+                    {
+                        info += $"⤷ **PP:** {Math.Round((double)t.pp, 0)} " +
+                            $"**Rank:**{t.rank.LevelEmotes()} ";
+                    }
+                    else
+                    {
+                        info += $"⤷ **Rank:**{t.rank.LevelEmotes()} ";
+                    }
+
+                    info += $"**Accuracy:** {Math.Round(t.calculated_accuracy, 2)}% " +
                             $"**Combo:** {t.maxcombo}({t.Beatmap.max_combo}) \n" +
                             $" {OsuEmoteCodes.Emote300} {t.count300} ♢ {OsuEmoteCodes.Emote100} {t.count100} ♢ {OsuEmoteCodes.Emote50} {t.count50} ♢ {OsuEmoteCodes.EmoteX} {t.countmiss}\n " +
                             $" {date} ago\n\n";
@@ -311,6 +331,10 @@ namespace Cake.Core.Discord.Services
             catch (CakeException e)
             {
                 await SendMessageAsync(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
             }
         }
     }

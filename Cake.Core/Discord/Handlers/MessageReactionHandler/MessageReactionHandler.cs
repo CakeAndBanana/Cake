@@ -1,10 +1,7 @@
 ﻿using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
-using System.Text;
-
 using System.Linq;
-
 using Discord;
 using System.Threading.Tasks;
 
@@ -20,7 +17,7 @@ namespace Cake.Core.Discord.Handlers
             _messageReactionHandlers = new HashSet<IMessageReactionHandle>();
         }
 
-        internal static Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
+        internal static Task OnReactionAdded(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2, SocketReaction arg3)
         {
             foreach (var handle in _messageReactionHandlers.ToArray())
             {
@@ -30,7 +27,7 @@ namespace Cake.Core.Discord.Handlers
             return Task.CompletedTask;
         }
 
-        internal static Task OnReactionRemoved(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3) {
+        internal static Task OnReactionRemoved(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2, SocketReaction arg3) {
 
             foreach (var handle in _messageReactionHandlers.ToArray())
             {
@@ -40,7 +37,7 @@ namespace Cake.Core.Discord.Handlers
             return Task.CompletedTask;
         }
 
-        internal static Task OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2) {
+        internal static Task OnReactionCleared(Cacheable<IUserMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2) {
 
             foreach (var handle in _messageReactionHandlers.ToArray())
             {
