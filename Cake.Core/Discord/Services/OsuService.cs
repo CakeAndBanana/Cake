@@ -175,7 +175,7 @@ namespace Cake.Core.Discord.Services
             }
             catch (Exception e)
             {
-                _logger.LogException(e);
+                _logger.LogError(e);
             }
         }
 
@@ -251,7 +251,7 @@ namespace Cake.Core.Discord.Services
             }
             catch (Exception e)
             {
-                _logger.LogException(e);
+                _logger.LogError(e);
             }
         }
 
@@ -309,8 +309,7 @@ namespace Cake.Core.Discord.Services
                     var date = dateTicks.TotalDays > 30 ? timeFormat.ToShortString() : timeFormat.ToLongString();
 
                     info += $"***{modName}*** \n";
-                    await SendMessageAsync(t.pp.ToString());
-                    if(t.pp != null)
+                    if (t.pp != null)
                     {
                         info += $"⤷ **PP:** {Math.Round((double)t.pp, 0)} " +
                             $"**Rank:**{t.rank.LevelEmotes()} ";
@@ -334,7 +333,8 @@ namespace Cake.Core.Discord.Services
             }
             catch (Exception e)
             {
-                _logger.LogException(e);
+                await SendMessageAsync(e.ToString());
+                _logger.LogError(e);
             }
         }
     }
