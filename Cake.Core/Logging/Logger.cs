@@ -19,10 +19,6 @@ namespace Cake.Core.Logging
             {
                 _instance = new Logger();
 
-                #if DEBUG
-                _isDebugging = true;
-                #endif
-
                 _instance.SendWelcomeMessage();
             }
 

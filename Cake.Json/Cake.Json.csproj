@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cake.OppaiSharp\Cake.OppaiSharp.csproj" />
+    <ProjectReference Include="..\OppaiSharp\OppaiSharp\OppaiSharp.csproj" />
   </ItemGroup>
   
 </Project>
